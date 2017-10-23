@@ -104,6 +104,16 @@ export default [
                         }
                     },
                     {
+                        name: 'editCaseSort',
+                        path: 'sort/sortSort/:id',
+                        meta: {
+                            title: '修改案例分类'
+                        },
+                        component: function(resolve) {
+                            require(['./view/case/caseSortEdit.vue'], resolve)
+                        }
+                    },
+                    {
                         name: 'classify',
                         path: 'classify',
                         meta: {

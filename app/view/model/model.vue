@@ -74,18 +74,13 @@ export default {
                 self.loading="";
                 self.tips="删除失败，已经删除，或不存在";
             }
-
         })
-
-
     },
     watch: {
-
         '$route': function(to, from) {
             if (this.$route.query.page) {
                 this.$refs.page.change({});
             }
-
             //   console.log(this.$route.query);
         }
     },

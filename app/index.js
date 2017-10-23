@@ -29,7 +29,7 @@ import code_box from './commpents/input/code-box';
 import input_text from './commpents/input/input-text';
 import VueSelect from './commpents/input/vue-select';
 import search from './commpents/meun/search';
-import Tool from  './common/tool.js';
+import Tool from  './common/tool';
 import api from './api';
 import loading from './commpents/ui/loading.vue';
 import vueTips from './commpents/ui/vue-tips.vue'
@@ -74,12 +74,12 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueResource);
 Vue.use(http,{url:'http://192.168.26.86/3dplay/public/'});
+Vue.use(Tool);
 
 window.Vue = Vue || {};
 window.Vuex=Vuex || {};
 window.Schema=Schema||{};
 window.Api=api;
-window.Tool= new Tool(Vue);
 
 Vue.config.devtools = true;
 Vue.prototype.fun=fun;

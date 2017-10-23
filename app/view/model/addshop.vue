@@ -8,7 +8,6 @@
       <code-box  :value.sync="shop.code"   toggleTitle=1  tw="1rem" title="上传二维码"  ></code-box>
     </form-edit>
 
-
     <addbtn :btn="btn"></addbtn>
     <page ref="page" url="/admin/model/index"  page=20></page>
 

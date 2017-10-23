@@ -1,39 +1,23 @@
-export default function Tool(Vue) {
-    this.Vue;
+export default function(Vue, opt) {
+    Vue.prototype.$tool={
+        formatDate:function (arg) {
+            var now = new Date(parseInt(arg) * 1000)
+            var   year=now.getFullYear();
+            var   month=now.getMonth()+1;
+                  month=month>=10?month:'0'+month;
+            var   date=now.getDate();
+                  date=date>=10?date:'0'+date;
+            var   hour=now.getHours();
+                  hour=hour>=10?hour:'0'+hour;
+            var   minute=now.getMinutes();
+                  minute=minute>=10?minute:'0'+minute;
+            var   second=now.getSeconds();
+                  second=second>=10?second:'0'+second;
+            return   year+"-"+month+"-"+date+"   "+hour+":"+minute+":"+second;
 
 
-}
-
-Tool.prototype = {
-    constructor: Tool,
-    init: function(valname, val) {
-
-    },
-    post:function(url,data){
-      let Vue=this.Vue;
-      return new Promise(function(resolve, reject) {
-          Vue.$http.post(url,data).then(response => {
-
-              // get status
-              response.status;
-
-              // get status text
-              response.statusText;
-
-              // get 'Expires' header
-              response.headers.get('Expires');
-
-              // get body data
-              resolve(response.body);
-              //this.someData = response.body;
-
-          }, response => {
-            reject(response);
-              // error callback
-          });
-      });
+        }
     }
 
 
-
-};
+}

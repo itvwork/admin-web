@@ -684,9 +684,18 @@
 
 //后端列表
 .list-table{
-    background-color: #fff;
+    background-color: @white/1.4;
     width:100%;
-    thead{ background-color: @white/1.2;}
+    td { text-align: center; padding: 10px 0px;}
+    thead{  background-color: @white/1.1;}
+    th{ line-height: 30px; }
+    tbody tr:nth-child(2n-1) td{
+        background-color: @color4*1.95;
+    }
+    tbody tr:nth-child(2n) td{
+        background-color: @white/1.04;
+    }
+
 }
 
 
