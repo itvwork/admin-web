@@ -32,10 +32,8 @@ import search from './commpents/meun/search';
 import Tool from  './common/tool';
 import api from './api';
 import loading from './commpents/ui/loading.vue';
-import vueTips from './commpents/ui/vue-tips.vue'
-
-
-
+import vueTips from './commpents/ui/vue-tips.vue';
+import VueMarkdown from 'vue-markdown';
 import stateManage from './modules/index';
 
 
@@ -60,13 +58,14 @@ export let Components = {
     input_text,
     search,
     loading,
-    vueTips
+    vueTips,
+    VueMarkdown
+
 };
 
 for(let i in Components){
   let name = i.replace('_', '-');
   Vue.component(name,Components[i]);
-
 };
 
 Vue.use(VueRouter);

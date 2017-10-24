@@ -12,7 +12,7 @@
             </thead>
             <tbody>
             <tr v-for="(item,index) in list">
-                <td>{{item._id}}<img width="50" height="50" :src="Api.imgurl+item.cover.url"/></td>
+                <td><img width="50" height="50" :src="Api.imgurl+item.cover.url"/></td>
                 <td>{{item.title}}</td>
                 <td>{{$tool.formatDate(item.add_time)}}</td>
                 <td>  <router-link :to="{ name:'editCaseSort',params:{id:item._id} }">修改</router-link>
@@ -22,8 +22,20 @@
 
             </tbody>
         </table>
+
+        <vue-markdown >
+            ```javascript
+            var foo = function (bar) {
+            return bar++;
+            };
+
+            console.log(foo(5));
+            ```
+
+        </vue-markdown>
         <loading v-show="loading" :loading="loading"></loading>
         <vue-tips v-if="tips" :tips.sync="tips"></vue-tips>
+
     </indoor>
 </template>
 
@@ -53,20 +65,20 @@
         created() {
                 let self=this;
                 this.getdata();
-                this.$root.uievent.$on('delCaseSort',async function () {
+                if(this.$root.uievent._events['delCaseSort']) return false ;
+                this.$root.uievent.$on('delCaseSort',async function (id) {
                     self.num++;
                     self.loading="删除中";
                     self.$store.commit('uiclose',{type:'confirm'});
-                    console.log(self.num,self.delid);
-//                    let data=await this.$ajax.post(self.Api.caseSortDel,{_id:self.delid,token:self.$store.state.token});
-//                    if(data.err==1){
-//                        self.loading="";
-//                        self.tips="删除成功";
-//                        self.getdata();
-//                    }else{
-//                        self.loading="";
-//                        self.tips="删除失败，已经删除，或不存在";
-//                    }
+                    let data=await this.$ajax.post(self.Api.caseSortDel,{data:{_id:id},token:self.$store.state.token});
+                    if(data.err_code==200){
+                        self.loading="";
+                        self.tips="删除成功";
+                        self.getdata();
+                    }else{
+                        self.loading="";
+                        self.tips="删除失败，已经删除，或不存在";
+                    }
                 })
         },
         watch: {
@@ -80,18 +92,17 @@
             },
             async getdata() {
                  let data = await this.$ajax.post(this.Api.caseSort, {data: '', token: this.$store.state.token});
-                this.list=data.data;
+                 this.list=data.data;
             },
             async del(id){
-                console.log(id);
-                this.delid=id;
                 this.$store.commit('uishow',{
                     wrap:'warn',
                     title:'警告',
                     word:'是否删除该分类',
                     type:'confirm',
                     even:'delCaseSort',
-                    isclose:true
+                    isclose:true,
+                    data:id
                 });
 //            let data=await this.$ajax.post(this.Api.storelist,{id:id,token:this.$store.state.token});
 //            console.log(data);

@@ -8,7 +8,8 @@ const state={
     btnsure:'确定',
     btnclose:'关闭',
     evenclose:'close',
-    isclose:true
+    isclose:true,
+    data:''
 }
 
 const mutations ={
@@ -24,6 +25,7 @@ const mutations ={
         state.evenclose=val.btnclosee?val.evenclose:'close';
         state.wrap=val.wrap?val.wrap:'close';
         state.isclose=val.isclose?val.isclose:false;
+        state.data=val.data?val.data:'';
 
     },
     uiclose(state,val){

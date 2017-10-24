@@ -47,6 +47,7 @@
         },
         created() {
             let self = this;
+            console.log(this.$root.uievent);
             this.$root.uievent.$on('caseSortModel', function () {
                 self.$store.commit('uiclose', {type: 'confirm'});
                 self.$router.push({
