@@ -2,11 +2,11 @@
 <template>
 <section  @resize="size($event)" class="wrap-box" @dragleave="dragleave($event)" @drop="drop($event)" @dragenter="dragenter($event)" @dragover="dragover($event)">
     <div class="left-box-meun" v-show="navshow">
-        <div class="logo-admin" >
-            微改车
-        </div>
         <menu>
-            <div class="item-menu">
+          <div class="item-menu" v-for="(item,index) in meun">
+              <router-link :to="item.url" style="padding-left:0px; display:block; text-align:center">{{item.name}}</router-link>
+          </div>
+            <!-- <div class="item-menu">
                 <router-link to="/admin/index"><i class="icon-home"></i>首页</router-link>
             </div>
             <div class="item-menu">
@@ -15,70 +15,28 @@
                     <router-link :to="{ name:'caselist' }">案例列表</router-link>
                     <router-link :to="{ name: 'caseSort' }">案例分类</router-link>
                 </div>
-            </div>
-            <!--<div class="item-menu">-->
-                <!--<router-link :to="{name:'store'}"> <i class="icon-brand"></i>店铺管理</router-link>-->
-            <!--</div>-->
+            </div> -->
+
         </menu>
     </div>
-    <div class="message-bar">
-          <div class="user-bar">
-            <i class="user-header"  @click="userMess=!userMess" ><img src="/wgc/style/file/header.jpg" /></i>
-            <span class="user-word" @click="userMess=!userMess" >欢迎：admin </span>
-            <div class="message-user-box" v-show="userMess">
-              <div class="message-user-indoor">
-                <i class="triangle"></i>
-                <span>修改密码</span>
-                <span>设置信息</span>
-                <span>退出</span>
-              </div>
-            </div>
-          </div>
-          <i class="icon-nav" @click="navshow=!navshow"></i>
-    </div>
 
-    <section class="right-box" @click="userMess=false">
-         <crumbs></crumbs>
-         <router-view></router-view>
+    <section  class="right-box"   style="top:0px;">
+            <router-view></router-view>
     </section>
-    <!-- <div class="loading" v-if="$store.state.loading">
-        <div class="bg-loading" v-if="$store.bg"></div>
-        <span>loading</span>
-    </div> -->
-
-    <alert></alert>
-    <confirm></confirm>
 
 </section>
-<!-- <form-edit>
-    <text-edit type="text" v-model="username"></text-edit>
-    <textarea v-model="login.pwd"></textarea>
-    <editor ref="editors"></editor>
-    <editor id="e4" ref="editor"></editor>
-    <button @click='sub()'>提交</button>
-    <ul>
-      <li>{{username}}</li>
-    </ul>
-    <input type="text" v-model="username" />
-  </form-edit> -->
+
 </template>
 
 <script>
 export default {
     data() {
         return {
-            login: {
-                username: 'admmin',
-                pwd: '123'
-            },
-            username: 'adminstreis',
-            navshow:true,
-            userMess:false,
-            bg:false
+          meun:apidata.meun
         }
     },
     created(){
-
+      console.log(this.meun);
       var width=document.body.offsetWidth;
 
       if(width<=780){

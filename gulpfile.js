@@ -17,6 +17,7 @@ var uglify = require('gulp-uglify');
 
 var src={
   html:'./app/index.html',
+  html2:'./app/index1.html',
   other:'./app/other/*.js',
   less:'./app/style/styles.less',
   css:'./app/style/*.less',
@@ -62,6 +63,18 @@ function html(done) {
         done();
 }
 
+function html1(){
+  return gulp.src(src.html2)
+      .pipe(plumber())
+      .pipe(cached('html')) // 只传递更改过的文件
+      .pipe(replace(/\~\/(\S.*.(js|css|png|jpg|gif))/g, function(match, p1) {
+           return '192.168.26.144:9090/' + p1;
+      }))
+      .pipe(remember('html')) // 把所有的文件放回 stream
+      .pipe(gulp.dest(dist.root));
+      done();
+}
+
 function editor(done){
     return gulp.src(src.editor)
     .pipe(gulp.dest('./dist/wgc/fonts'));
@@ -95,11 +108,14 @@ function watch() {
     gulp.watch([
         './app/commpents/**/*.vue',
         './app/view/**/*.vue',
+        './app/view1/**/*.vue',
         './app/**/*.js',
         './app/*.html',
         './app/commpents/editor/**/*',
         './app/common/**/*',
-        './app/validator/**/*'
+        './app/validator/**/*',
+        './app/*.vue',
+        './app/*.js'
     ], gulp.series(devWebpack, reload));
       gulp.watch(src.css, gulp.parallel('css'));
       gulp.watch(src.file, gulp.parallel('file'));
@@ -144,4 +160,4 @@ function reload() {
         .pipe(connect.reload()); //自动刷新
 }
 
-gulp.task("default", gulp.series(clean,devWebpack,html,editor,'css','file','other',connectServer,watch));
+gulp.task("default", gulp.series(clean,devWebpack,html,html1,editor,'css','file','other',connectServer,watch));
