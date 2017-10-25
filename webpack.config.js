@@ -10,8 +10,8 @@ module.exports = function() {
                 ".vue"
             ],
             "modules": [
-                "./node_modules",
                 "./node_modules"
+
             ],
             "symlinks": true
         },
@@ -34,9 +34,11 @@ module.exports = function() {
 
                 }, {
                     test: /\.css$/,
-                    use: ExtractTextPlugin.extract({
-                        use: 'css-loader'
-                    })
+                    loader: 'css-loader'
+                    // use: ExtractTextPlugin.extract({
+                    //     fallback: "style-loader",
+                    //     use: "css-loader"
+                    // })
                 }, {
                     test: /\.js/,
                     loader: 'babel-loader',

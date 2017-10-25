@@ -5,6 +5,11 @@
         <menu>
           <div class="item-menu" v-for="(item,index) in meun">
               <router-link :to="item.url" style="padding-left:0px; display:block; text-align:center">{{item.name}}</router-link>
+              <div class="meun-sub">
+                  <template v-for="(items,indexs) in item.children">
+                  <router-link style="padding-left: 0px; text-align:center;"  :to="items.url">{{items.name}}</router-link>
+                  </template>
+              </div>
           </div>
             <!-- <div class="item-menu">
                 <router-link to="/admin/index"><i class="icon-home"></i>首页</router-link>
@@ -29,14 +34,16 @@
 </template>
 
 <script>
+
 export default {
+
     data() {
         return {
           meun:apidata.meun
         }
     },
     created(){
-      console.log(this.meun);
+
       var width=document.body.offsetWidth;
 
       if(width<=780){
@@ -49,16 +56,7 @@ export default {
 
     },
     mounted(){
-      let self=this;
-      window.onresize = function temp() {
-        var width=document.body.offsetWidth;
-          console.log(width);
-        if(width<=780){
-            self.navshow=false;
-        }else{
-            self.navshow=true;
-        }
-        };
+
 
 
 

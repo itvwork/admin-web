@@ -4,20 +4,22 @@ import routes from './router1';
 import App from './app2.vue';
 
 
-//components
-import formEdit from './commpents/form/form-edit.vue';
-export let Components = {
-    formEdit
 
+//components
+
+//import VueMarkdown from 'vue-markdown';
+import VueMarkdown from './commpents/editor/vue-markdown.vue';
+
+export let Components = {
+    VueMarkdown
 };
+
 for(let i in Components){
-  Vue.component(name,Components[i]);
+    let name = i.replace('_', '-');
+    Vue.component(name,Components[i]);
 };
 
 Vue.use(VueRouter);
-
-
-
 
 
 Vue.config.devtools = true;
@@ -27,6 +29,8 @@ const router = new VueRouter({
      //mode: 'history',
     routes
 })
+
+
 
 
 

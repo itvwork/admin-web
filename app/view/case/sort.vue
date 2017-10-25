@@ -23,14 +23,9 @@
             </tbody>
         </table>
 
-        <vue-markdown >
-            ```javascript
-            var foo = function (bar) {
-            return bar++;
-            };
+        <vue-markdown>
 
-            console.log(foo(5));
-            ```
+          ####dfasfsadf
 
         </vue-markdown>
         <loading v-show="loading" :loading="loading"></loading>
