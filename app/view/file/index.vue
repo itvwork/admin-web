@@ -1,6 +1,6 @@
 <template>
     <indoor>
-        <addbtn :btn="btn"></addbtn>
+
         <table class="list-table" >
             <thead>
             <tr>
@@ -60,14 +60,36 @@
                 ]
             }
         },
+        created() {
+            let self=this;
+            this.getdata();
+            if(this.$root.uievent._events['flieDel']) return false ;
+            this.$root.uievent.$on('flieDel',async function (id) {
+                self.num++;
+                self.loading="删除中";
+                self.$store.commit('uiclose',{type:'confirm'});
+                let data=await this.$ajax.post(self.Api.caseSortDel,{data:{_id:id},token:self.$store.state.token});
+                if(data.err_code==200){
+                    self.loading="";
+                    self.tips="删除成功";
+                    self.getdata();
+                }else{
+                    self.loading="";
+                    self.tips="删除失败，已经删除，或不存在";
+                }
+            })
+        },
+
         watch: {
+
             username: function (val, oldval) {
                 console.log(this.login);
             }
         },
         methods: {
-            sub() {
-                console.log(this.$data);
+            async getdata() {
+                let data = await this.$ajax.post(this.Api.file, {data: '', token: this.$store.state.token});
+                this.list=data.data;
             }
         },
         events: {}

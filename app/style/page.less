@@ -217,7 +217,7 @@
 //分页组件
 .page-btn {
     display: inline-block;
-
+     padding: 10px 0px;
     left: 1.3rem;
     bottom: 0.05rem;
     .btn-add-model {
@@ -684,16 +684,16 @@
 
 //后端列表
 .list-table{
-    background-color: @white/1.4;
-    width:100%;
-    td { text-align: center; padding: 10px 0px;}
+     border: @line solid 1px; border-collapse:collapse;
+     width:100%;
+    td { text-align: center; padding: 10px 0px;border: @line solid 1px;}
     thead{  background-color: @white/1.1;}
-    th{ line-height: 30px; }
+    th{ line-height: 30px; border: @line solid 1px;}
     tbody tr:nth-child(2n-1) td{
         background-color: @color4*1.95;
     }
     tbody tr:nth-child(2n) td{
-        background-color: @white/1.04;
+        background-color: @white/1.02;
     }
 
 }

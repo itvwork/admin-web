@@ -16,6 +16,9 @@
                     <router-link :to="{ name: 'caseSort' }">案例分类</router-link>
                 </div>
             </div>
+            <div class="item-menu">
+                <router-link :to="{name:'file'}"><i class="icon-home"></i>附件管理</router-link>
+            </div>
             <!--<div class="item-menu">-->
                 <!--<router-link :to="{name:'store'}"> <i class="icon-brand"></i>店铺管理</router-link>-->
             <!--</div>-->

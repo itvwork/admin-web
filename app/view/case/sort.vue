@@ -23,11 +23,7 @@
             </tbody>
         </table>
 
-        <vue-markdown>
 
-          ####dfasfsadf
-
-        </vue-markdown>
         <loading v-show="loading" :loading="loading"></loading>
         <vue-tips v-if="tips" :tips.sync="tips"></vue-tips>
 

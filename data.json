@@ -1,0 +1,22 @@
+{
+  "memchantID": 5665465456,
+  "data": {
+    "success": true,
+    "message": "出票成功",
+    "orderId": "20141110142228657222",
+    "tickets": [
+      {
+        "ticketNo": "013-1411131130",
+        "passengerName": "赵楠",
+        "certificateNo": "152103177201161535",
+        "tripType": "1",
+        "afterPoint": "3.5",
+        "afterPointType": "1"
+      }
+    ]
+  }
+}
+
+
+
+
