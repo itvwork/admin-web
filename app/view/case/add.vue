@@ -4,6 +4,14 @@
       <input-text toggleTitle=1 title="模型名称："  tips="请输入模型名称"  :value.sync="data.model_name"  :schema="schema" rule="model_name"  tw="1rem"></input-text>
         <input-text toggleTitle=1 title="模型路径："  tips="请入模型路径"  :value.sync="data.url" :schema="schema" rule="url" tw="1rem"></input-text>
         <input-text toggleTitle=1 title="分享题标："  tips="请输入分享标题"  :value.sync="data.share_title"  :schema="schema" rule="share_title" tw="1rem"></input-text>
+        <input-text toggleTitle=1 title="分享题标："  tips="请输入分享标题"  :value.sync="data.share_title"  :schema="schema" rule="share_title" tw="1rem"></input-text>
+        <input-text toggleTitle=1 title="分享题标："  tips="请输入分享标题"  :value.sync="data.share_title"  :schema="schema" rule="share_title" tw="1rem"></input-text>
+        <input-text toggleTitle=1 title="分享题标："  tips="请输入分享标题"  :value.sync="data.share_title"  :schema="schema" rule="share_title" tw="1rem"></input-text>
+        <input-text toggleTitle=1 title="分享题标："  tips="请输入分享标题"  :value.sync="data.share_title"  :schema="schema" rule="share_title" tw="1rem"></input-text>
+        <input-text toggleTitle=1 title="分享题标："  tips="请输入分享标题"  :value.sync="data.share_title"  :schema="schema" rule="share_title" tw="1rem"></input-text>
+        <input-text toggleTitle=1 title="分享题标："  tips="请输入分享标题"  :value.sync="data.share_title"  :schema="schema" rule="share_title" tw="1rem"></input-text>
+        <input-text toggleTitle=1 title="分享题标："  tips="请输入分享标题"  :value.sync="data.share_title"  :schema="schema" rule="share_title" tw="1rem"></input-text>
+        <vue-select toggleTitle=1 title="分享题标："  tips="请输入分享标题"  :value.sync="data.share_title"  :schema="schema" rule="share_title" tw="1rem"></vue-select>
         <textarea-edit toggleTitle=1 title="分享简介："  tips="请输入分简介"  :value.sync="data.share_des" :schema="schema" rule="share_des" tw="1rem"></textarea-edit>
         <code-box  :value.sync="data.share_image"   toggleTitle=1  tw="1rem" title="分享图片" :schema="schema" rule="share_image"    ></code-box>
         <input-text toggleTitle=1 title="数据车型："  tips="多个用英文逗号隔开，如：30945,30946,30948"  :value.sync="data.specid"  tw="1rem"></input-text>
@@ -90,6 +98,9 @@ export default {
 
         });
 
+
+
+
     },
     watch: {
 
@@ -102,6 +113,10 @@ export default {
 
     },
     methods: {
+      async getSort(){
+          let data =await this.$ajax.post(this.Api.caseSort,{data:{},token:this.$store.state.token});
+          console.log(data);
+      },
       async send(){
           if(this.subword=="数据提交中…"){
               return false;
@@ -127,9 +142,6 @@ export default {
           }else{
               this.tips=data.msg;
           }
-
-
-
       }
 
     },

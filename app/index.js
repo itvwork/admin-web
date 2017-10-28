@@ -37,6 +37,7 @@ import VueMarkdown from 'vue-markdown';
 import stateManage from './modules/index';
 
 
+
 export let Components = {
     VueSelect,
     form_edit,
@@ -59,7 +60,8 @@ export let Components = {
     search,
     loading,
     vueTips,
-    VueMarkdown
+    VueMarkdown,
+    VueSelect
 
 };
 

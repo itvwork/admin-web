@@ -40,7 +40,7 @@
           <i class="icon-nav" @click="navshow=!navshow"></i>
     </div>
 
-    <section class="right-box" @click="userMess=false">
+    <section class="right-box" @click="userMess=false" ref="scroll">
          <crumbs></crumbs>
          <router-view></router-view>
     </section>
