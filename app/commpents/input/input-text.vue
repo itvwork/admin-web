@@ -82,7 +82,6 @@ export default {
             document.getElementById(this.id).focus();
     },
     clear: function() {
-
       this.$emit('update:value', "");
     },
     focus(){

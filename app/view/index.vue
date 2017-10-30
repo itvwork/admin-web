@@ -40,7 +40,7 @@
           <i class="icon-nav" @click="navshow=!navshow"></i>
     </div>
 
-    <section class="right-box" @click="userMess=false" ref="scroll">
+    <section class="right-box" @click="userMess=false" ref="scroll" @scroll="scroll">
          <crumbs></crumbs>
          <router-view></router-view>
     </section>
@@ -145,6 +145,9 @@ export default {
         },
         size(e){
           console.log('navs');
+        },
+        scroll(e){
+            this.$root.uievent.$emit("scroll", e);
         }
 
     },

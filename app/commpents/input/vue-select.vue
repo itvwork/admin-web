@@ -2,16 +2,10 @@
     <label class="row-label">
         <span class="row-title" v-if="toggleTitle==1" :style="{width:tw}">{{title}}</span>
         <span class="text-outdoor">
-
-        <div class="vue-select">
-            <input type="text">
-            <div class="vue-option" :class="{up:seat,down:!seat}">
-                <p class="vue-option-item" value="10">10</p>
-                <p class="vue-option-item" value="11">11</p>
-                <p class="vue-option-item" value="12">12</p>
-                <p class="vue-option-item" value="10">10</p>
-                <p class="vue-option-item" value="11">11</p>
-                <p class="vue-option-item" value="12">12</p>
+        <div class="vue-select" @click="option=!option">
+            <input type="text" :placeholder="tips"  readonly="readonly" v-model="showtitle">
+            <div class="vue-option" v-show="option" :class="{up:seat,down:!seat}">
+                <p class="vue-option-item" v-for="(item,index) in sort " :value="item._id" @click="updateValue(index)">{{item.title}}</p>
             </div>
         </div>
 
@@ -48,9 +42,9 @@
                 type: String,
                 default: 'username'
             },
-            type: {
-                type: String,
-                default: 'text'
+            sort: {
+                type: Array,
+                default: []
             },
             toggleTitle: {
                 type: String,
@@ -60,40 +54,63 @@
         computed: {},
         data() {
             return {
-                inputType: this.$props.type,
-                seat: false
+
+                seat: false,
+                des: 10,
+                option: false,
+                showtitle: ''
             }
         },
         created() {
+            let self = this;
+            this.$root.uievent.$on('scroll', function (e) {
+                let scrollHeight = e.target.scrollHeight;
+                let scrollTop = e.target.scrollTop;
+                let height = e.target.offsetHeight;
+                let solt = self.$el.offsetTop;
+                if (solt - scrollTop < height - 260) {
+                    self.seat = false;
+                } else {
+                    self.seat = true;
+                }
 
+            });
+            document.addEventListener('click', function (e) {
+                let node = e.target;
+                while (node.nodeName.toLowerCase() != "body" && node.className.toLowerCase() != "vue-select") {
+                    node = node.parentNode;
+                }
+                if (node.className.toLowerCase() !== "vue-select") {
+                    self.option = false;
+                }
+            })
 
 
         },
 
         methods: {
-            updateValue: function (value) {
-                this.$refs.input.value = value;
-                this.$emit('input', value)
+            updateValue: function (index) {
+
+                this.$emit('update:value',this.sort[index]._id);
+                this.showtitle = this.sort[index].title;
+                this.option=false;
+
             },
-            clear: function () {
-                this.$refs.input.value = "";
-                this.$emit('input', "")
-            },
+
             close: function () {
                 console.log(this.$el)
-            }
-
-        },
-        directives: {
-            close: {
-                // 指令的定义
-                inserted: function (el) {
-
-                    console.log(el);
-
+            },
+            findName() {
+                if (this.value) {
+                    sort.forEach(function (ele) {
+                        console.log(ele);
+                    })
 
                 }
             }
+
+
         }
+
     };
 </script>

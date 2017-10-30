@@ -11,3 +11,4 @@ Highlight.install = function (Vue, options) {
     })
 }
 export default Highlight
+

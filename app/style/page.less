@@ -51,12 +51,12 @@
   max-width: 3.2rem;
   .box-sizing;
   .border-radius(0, 0.06rem);
-  border: @white/1.2 solid 1.5px;
+  border: @line solid 1px; outline:none;
   &[disabled="disabled"] {
     background-color: @white/1.2;
   }
   &:focus {
-    border: @color4 solid 1.5px;;
+    border: @color4 solid 1px;;
   }
 }
 
@@ -708,10 +708,12 @@
   display: inline-block;
   height: 32px;
   overflow: hidden;
+
   .vue-select {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
+    input{ width: 100%; height: 100%;}
   }
 }
 
@@ -753,12 +755,21 @@
   border: @line solid 1px;
   background-color: @white;
   height: 40px;
+
+  input{ height: 40px; padding: 0px 10px};
   .border-radius(0, 4px);
   .vue-option {
+    &.down{
+      top: 42px;
+    }
+    &.up{
+      bottom: 42px;
+    }
+
     position: absolute;
     min-width: 2rem;
-    top: 48px;
-    z-index: 10;
+
+    z-index: 16;
     background-color: @white;
     border: @line solid 1px;
     overflow: auto;

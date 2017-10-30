@@ -450,19 +450,29 @@ export default {
         },
         //quote
         quoteColor: function(color) {
-            this._execCommand('formatBlock', '<p>')
+            this._execCommand('formatBlock', '<blockquote>')
             let section = window.getSelection().anchorNode;
+            let node =section;
 
-            for (var i = 0; i < 100; i++) {
-                if (section.nodeName == 'P') {
-                    section.style.backgroundColor = '#' + color;
-                    section.className = "quto-block";
-                    break;
-
-                } else {
-                    section = section.parentNode;
-                }
+            while(node.nodeName.toLowerCase()!="blockquote" ||node.nodeName.toLowerCase()!="body"||node.className.toLowerCase()!="content"){
+                node=node.parentNode;
             }
+
+            console.log(node.nodeName);
+            if(node.nodeName.toLowerCase()=="blockquote"){
+                node.style.backgroundColor = '#' + color;
+            }
+
+//            for (var i = 0; i < 100; i++) {
+//                if (section.nodeName == 'P') {
+//                    section.style.backgroundColor = '#' + color;
+//                    section.className = "quto-block";
+//                    break;
+//
+//                } else {
+//                    section = section.parentNode;
+//                }
+//            }
         },
         getContent() {
             if (this.nodes) {

@@ -1,4 +1,5 @@
 import ui from './ui/index'
+import other from './other/index'
 export default {
     state:{
         count: 0,
@@ -9,6 +10,7 @@ export default {
         admin:sessionStorage.getItem("itvusername")
     },
     modules: {
-        ui
+        ui,
+        other
     },
 }
