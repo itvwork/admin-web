@@ -8,23 +8,6 @@
 <script>
 
 export default {
-    data() {
-            return {
 
-                str:'首页LOGO--'
-            }
-        },
-        ready() {
-
-        },
-        // components: {
-        //     'main': Main
-        // },
-        methods: {
-
-        },
-        events: {
-
-        }
 };
 </script>

@@ -45,7 +45,7 @@
                 default: false
             },
             width:{
-                type:Number,
+                type:String,
                 default:100
             }
         },

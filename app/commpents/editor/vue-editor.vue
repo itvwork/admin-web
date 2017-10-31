@@ -365,7 +365,7 @@
           <li class="vue-editor-nav-item" @click="_execCommand('subscript')"><i class="icon icon-pic-editor"></i></li>
 
     </ul>
-    <div class="content" @click="colseBox()" v-html="detail" @keydown="key($event)" contenteditable="true" @mouseup="updatePosition" @keyup="updatePosition" :style="{height:editHeight}">
+    <div ref="content" class="content" @click="colseBox()" v-html="content" @keydown="key($event)" @input="sendContent()" contenteditable="true" @mouseup="updatePosition" @keyup="updatePosition" :style="{height:editHeight}">
 
     </div>
     <pic ref="uploapPic"></pic>
@@ -418,7 +418,7 @@ export default {
 
         jscolor();
     },
-    watch: function() {
+    watch:{
 
     },
     methods: {
@@ -445,34 +445,36 @@ export default {
             this._execCommand('foreColor', color)
         },
         backColor: function(color) {
+            this.restoreSelection();
+            let section = window.getSelection().anchorNode;
+            let node =section;
+            if(node.nodeType==3){
+                node=node.parentNode;
+            }
+            while(node.nodeName.toLowerCase()!="body")
+            {
+                if(node.nodeName.toLowerCase()=="blockquote")break;
+                node = node.parentNode;
+            }
 
+            let style=node.style.backgroundColor;
             this._execCommand('backColor', '#' + color);
+            node.style.backgroundColor=style;
         },
         //quote
         quoteColor: function(color) {
             this._execCommand('formatBlock', '<blockquote>')
             let section = window.getSelection().anchorNode;
             let node =section;
-
-            while(node.nodeName.toLowerCase()!="blockquote" ||node.nodeName.toLowerCase()!="body"||node.className.toLowerCase()!="content"){
+            if(node.nodeType==3){
                 node=node.parentNode;
             }
-
-            console.log(node.nodeName);
-            if(node.nodeName.toLowerCase()=="blockquote"){
-                node.style.backgroundColor = '#' + color;
+            while(node.nodeName.toLowerCase()!="blockquote"  )
+            {
+                node = node.parentNode;
             }
+            node.style.backgroundColor = '#' + color;
 
-//            for (var i = 0; i < 100; i++) {
-//                if (section.nodeName == 'P') {
-//                    section.style.backgroundColor = '#' + color;
-//                    section.className = "quto-block";
-//                    break;
-//
-//                } else {
-//                    section = section.parentNode;
-//                }
-//            }
         },
         getContent() {
             if (this.nodes) {
@@ -559,18 +561,27 @@ export default {
             if ((!alt) && (!ctrl) && (!shift)) {
                 switch (ev.keyCode) {
                     case 13:
-                        this._execCommand('insertHTML', '\n')
-                        this._execCommand('formatBlock', '<p>');
-                        setTimeout(function() {
-                            let section = window.getSelection().anchorNode;
-                            section.className = null;
-                            section.style.backgroundColor = null;
-                        }, 1)
+                        this._execCommand('insertHTML', '<br>');
+
+                        let section=window.getSelection();
+                        let node  =  section.anchorNode;
+                        console.log(node);
+
+
+
+
+//                        this._execCommand('insertHTML', '<p id="newption"><br></p>');
+//                        var body = document.getElementById("newption");
+//                        window.getSelection().collapse(body,0);
+//                        this.saveRange();
+//                        ev.preventDefault();
+
+
 
 
                         break;
                     case 8:
-                        console.log(this.getContent().length);
+
                         if (this.getContent().length < 1) {
                             ev.preventDefault();
                             this._execCommand('formatBlock', '<p>')
@@ -645,7 +656,11 @@ export default {
                         break;
                     case 8:
 
-                        console.log(this.getContent().length);
+
+                        if(this.$refs.content.innerHTML==""){
+                            this.$refs.content.innerHTML="<p><br/></p>";
+                            return false;
+                        }
                         ev.preventDefault();
 
                         break;
@@ -662,6 +677,11 @@ export default {
             for (let i in this.meun) {
                 this.meun[i] = false;
             }
+            if(this.$refs.content.innerHTML==""){
+
+                this.$refs.content.innerHTML="<p><br/></p>"
+            }
+
         },
         //添加链接
         //添加链接
@@ -692,6 +712,10 @@ export default {
             this.restoreSelection();
             const selection = window.getSelection();
             this._execCommand('insertHTML', '<span>' + this.getSelectionText() + '</span>');
+        },
+        sendContent(){
+            this.$emit('update:detail', this.$refs.content.innerHTML);
+
         }
     }
 }

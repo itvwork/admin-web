@@ -1,19 +1,19 @@
 <template>
     <indoor>
         <form-edit ref='form'>
-            <input-text toggleTitle=1  title="模型名称：" tips="请输入模型名称" :value.sync="data.model_name" :schema="schema"
-                        rule="model_name" tw="1rem"></input-text>
-            <input-text toggleTitle=1  title="模型路径：" tips="请入模型路径" :value.sync="data.url" :schema="schema" rule="url"
+            <input-text toggleTitle=1   title="标题：" tips="请输入模型名称" :value.sync="data.title" :schema="schema"
+                        rule="title" tw="1rem"></input-text>
+            <input-text toggleTitle=1   title="作者：" tips="请输入作者名称：" :value.sync="data.author" :schema="schema"
+                        rule="author"
                         tw="1rem"></input-text>
-            <vue-select toggleTitle=1  title="分享题标：" :sort="sort" tips="请输入分享标题" :value.sync="data.sort"
-                        :schema="schema" rule="sort" tw="1rem"></vue-select>
-            <code-box width=600   :value.sync="data.share_image" toggleTitle=1   tw="1rem" title="分享图片" :schema="schema"
-                      rule="share_image"></code-box>
-            <input-text toggleTitle=1  title="数据车型：" tips="多个用英文逗号隔开，如：30945,30946,30948" :value.sync="data.specid"
+            <input-text toggleTitle=1   title="作者：" tips="请输入作者名称：" :value.sync="data.source" :schema="schema"
+                        rule="source"
                         tw="1rem"></input-text>
-            <input-text toggleTitle=1  title="配置采集网址：" tips="请输入采集网址" :value.sync="data.autohome_url"
-                        tw="1rem"></input-text>
-            <vue-editor></vue-editor>
+
+            <code-box width=450    :value.sync="data.cover" toggleTitle=1    tw="1rem" title="封面:" :schema="schema"
+                      rule="cover"></code-box>
+
+            <vue-editor :detail.sync="data.content" ></vue-editor>
             <div class="sub-bar" style="padding-left: 1.3rem">
                 <button class="btns btn-sub" @click="send()">{{subword}}</button>
             </div>
@@ -56,6 +56,10 @@
 
                 data: {
                     sort: '',
+                    cover: '',
+                    author: '',
+                    source: '',
+                    content:''
 
                 },
                 sort: [],
@@ -108,6 +112,8 @@
 
             },
             async send() {
+                console.log(this.data);
+                return false;
                 if (this.subword == "数据提交中…") {
                     return false;
                 }

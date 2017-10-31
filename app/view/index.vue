@@ -109,21 +109,7 @@ export default {
 
     },
 
-    watch: {
-        username: function(val, oldval) {
-            console.log(this.login);
-        },
-        '$route': function(to, from) {
-          var width=document.body.offsetWidth
-          if(width<=780){
-              this.navshow=false;
-          }
 
-        },
-        '$store.state.bg':function(){
-          console.log('store----------');
-        }
-    },
     methods: {
         sub() {
             console.log(this.$data);

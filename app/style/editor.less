@@ -104,17 +104,7 @@
 .icon-quote:before{ content: '\e733'}
 .vue-editor-wrap {
   .content{
-    ol{
 
-      li{
-        list-style: decimal-leading-zero inside;
-      }
-    }
-    ul{
-
-      li{  list-style: disc inside;}
-
-    }
 
   }
 
@@ -122,66 +112,6 @@
     border: @gray solid 1px;
     background-color: @white;
 
-    .h1,
-    .h2,
-    .h3,
-    .h4,
-    .h4,
-    .h5,
-    .h6,
-    h1,
-    h2,
-    h3,
-    h4,
-    h4,
-    h5,
-    h6 {
-        font-weight: bold;
-    }
-
-    b {
-        font-weight: bold;
-    }
-
-    i {
-        font-style: italic;
-    }
-
-    .h1,
-    h1,
-    h1 * {
-        font-size: 0.36rem;
-    }
-
-    .h2,
-    h2,
-    h2 * {
-        font-size: 0.30rem;
-    }
-
-    .h3,
-    h3,
-    h3 * {
-        font-size: 0.26rem;
-    }
-
-    .h4,
-    h4,
-    h4 * {
-        font-size: 0.20rem;
-    }
-
-    .h5,
-    h5,
-    h5 * {
-        font-size: 0.16rem;
-    }
-
-    .h6,
-    h6,
-    h6 * {
-        font-size: 0.14rem;
-    }
 
     .vue-editor-nav {
         font-size: 0;
@@ -249,7 +179,13 @@
         z-index: 1;
         background-color: @white;
         border: @gray solid 1px;
-
+        .h1,.h2,.h3,.h4,.h5,.h6{ font-weight: bold;}
+        .h1{ font-size: 2em;
+            -webkit-margin-before: 0.67em;
+            -webkit-margin-after: 0.67em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+           }
         li {
             line-height: 0.45rem;
 

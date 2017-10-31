@@ -46,11 +46,7 @@ export default {
     components: {
 
     },
-    watch: {
 
-
-
-    },
     methods: {
         async submit() {
 

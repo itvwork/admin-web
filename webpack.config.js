@@ -17,7 +17,7 @@ module.exports = function() {
         },
         entry: {
             index: './app/index.js',
-            api:'./app/index1.js'
+            //api:'./app/index1.js'
             // polyfill: './app/other/polyfill.js',
             // jquery:'./app/other/jquery.js'
             //vendor: 'moment'

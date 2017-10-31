@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+
+    function strs(str) {
+        var title = "sad";
+        var reg = new RegExp(title, 'ig');
+        return str.replace(reg, function (val) {
+            return "<span style='color:red'>" + val + "</span>";
+        });
+    }
+
+    var str = 'sad-sad-sgfd-saD-sAD';
+    document.write(strs(str));
+
+
+
+</script>
