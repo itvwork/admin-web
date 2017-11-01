@@ -414,11 +414,11 @@
                 <span class="editor-title-img" :class="{active:tabimg==2}" @click="openPic()">图片库</span>
                 <span class="editor-title-img" :class="{active:tabimg==3}" @click="tabimg=3">网络图片</span>
             </div>
-            <div class="tab1-img upload-tab" v-show="tabimg==1">
-                <img  width="100" height="100" />
-                <i class="icon-pic"></i>
-                <p>将图片拖拽到此处可以上传</p>
-                <label><input type="file"  multiple="true"   />上传图片</label>
+            <div class="tab1-img upload-tab" v-show="tabimg==1" @dragover="allowDrop($event)" @drop="drap($event)">
+
+                <i class="icon icon-pic-editor"></i>
+                <p class="editor-tips-upload">将图片拖拽到此处可以上传</p>
+                <label class="editor-btn-upload"><input type="file"  multiple="true"   />上传图片</label>
                 <span></span>
 
             </div>
@@ -444,6 +444,7 @@
             </div>
             <div class="tab1-img" v-show="tabimg==3">3</div>
         </section>
+        <pic></pic>
     </div>
 </template>
 <script>
@@ -516,6 +517,23 @@
         },
         watch: {},
         methods: {
+            allowDrop(event) {
+                event.preventDefault();
+            },
+            async drap(event) {
+                event.preventDefault();
+                var self=this;
+                var file = event.dataTransfer.files; //获取文件
+                if(file.length>this.$props.num){
+                    this.tips="只能上传"+this.$props.num+'张图片';
+                    return false;
+                }
+                var img=await this.$tool.base64(1024,file);
+                console.log(img);
+
+                //this.upload(img);
+
+            },
             setPic(){
                 const selection = window.getSelection().anchorNode;
 

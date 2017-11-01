@@ -11,16 +11,15 @@
 // .w-e-text { background-color: @white}
 .vue-editor-wrap {
   position: relative;
-}
-
-.vue-editor-wrap .icon {
-  font-family: "editor" !important;
-  font-size: 0.15rem;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: @gray/1.6;
-  line-height: 0.3rem;
+  .icon {
+    font-family: "editor" !important;
+    font-size: 0.15rem;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: @gray/1.6;
+    line-height: 0.3rem;
+  }
 
 }
 
@@ -159,13 +158,13 @@
     }
   }
 
-
 }
 
 .editor-size-item {
   color: @wordColor;
   font-size: 14px;
-  padding: 8px; height: 30px;
+  padding: 8px;
+  height: 30px;
   span {
     display: block;
     float: left;
@@ -174,14 +173,34 @@
     }
 
     input {
-      width: 80px; line-height: 28px;.border-radius(0,4px);
-      padding:0px 8px;
+      width: 80px;
+      line-height: 28px;
+      .border-radius(0, 4px);
+      padding: 0px 8px;
       border: @line solid 1px;
     }
   }
 }
 
 .vue-editor-wrap {
+
+  .tab1-img .icon-pic-editor{ font-size: 1.4rem; color: @gray; display: block; line-height: 1.6rem; text-align: center; margin-top: 20px;}
+  .tab1-img{
+    .editor-tips-upload{ text-align: center;}
+    .editor-btn-upload{
+      background-color: @mainColor;
+      position: relative;
+      display: block;
+      width: 1.6rem;
+      margin: 0.24rem auto;
+      .border-radius(0,0.4rem);
+      color: @white;
+      cursor: pointer;
+      font-size: 0.16rem;
+      height: .4rem; text-align: center; line-height: .4rem; cursor: pointer;
+      input{ width: 100%; height: 100%; position: absolute; top: 0px; left: 0px; opacity: 0; cursor: pointer;}
+    }
+  }
   .content {
 
   }
@@ -215,9 +234,10 @@
         height: .3rem;
         .border-radius(0, 0.06rem)
       }
-      .editor-pic-size-btn{
+      .editor-pic-size-btn {
         background-color: @color4;
-        width:80%; color:@white;
+        width: 80%;
+        color: @white;
 
       }
     }
@@ -689,37 +709,8 @@
     }
 
     .upload-tab {
-      height: 3.24rem;
-      text-align: center;
-      position: relative;
-      p {
-        font-size: 0.17rem;
-        color: @gray/1.4;
-      }
-      .icon-pic {
-        font-size: 1.44rem;
-        color: @gray;
-      }
-      label {
-        background-color: @mcolor;
-        position: relative;
-        display: block;
-        width: 1.6rem;
-        margin: 0.24rem auto;
-        .border-radius(0,
-                0.4rem);
-        line-height: 0.4rem;
-        color: @white;
-        cursor: pointer;
-        font-size: 0.16rem;
-        input {
-          position: absolute;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          opacity: 0;
-          cursor: pointer;
-        }
+      .icon-pic-editor {
+        font-size: 1.8rem;
       }
     }
   }
