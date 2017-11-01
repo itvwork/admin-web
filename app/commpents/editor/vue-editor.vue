@@ -1,8 +1,8 @@
 <template>
     <div class="vue-editor-wrap" :style='{width:width}'>
         <ul class="vue-editor-nav">
-            <li class="vue-editor-nav-item" @mouseover="meun.title=true" @mouseout="meun.title=false"><i
-                    class="icon icon-title"></i>
+            <li class="vue-editor-nav-item" @mouseover="meun.title=true" @mouseout="meun.title=false">
+                <i class="icon icon-title"></i>
                 <ul class="vue-word-title" v-show="meun.title">
                     <li class="normal-word" @click="_execCommand('formatBlock', '<p>')">正文</li>
                     <li class="h1" @click="_execCommand('formatBlock', '<h1>')">H1</li>
@@ -414,7 +414,14 @@
                 <span class="editor-title-img" :class="{active:tabimg==2}" @click="openPic()">图片库</span>
                 <span class="editor-title-img" :class="{active:tabimg==3}" @click="tabimg=3">网络图片</span>
             </div>
-            <div class="tab1-img" v-show="tabimg==1">1</div>
+            <div class="tab1-img upload-tab" v-show="tabimg==1">
+                <img  width="100" height="100" />
+                <i class="icon-pic"></i>
+                <p>将图片拖拽到此处可以上传</p>
+                <label><input type="file"  multiple="true"   />上传图片</label>
+                <span></span>
+
+            </div>
             <div class="tab1-img" v-show="tabimg==2">
                 <ul class="list-pic">
                     <li class="pic-item" v-for="(item,index) in pic.data">
@@ -432,14 +439,11 @@
                 </ul>
                 <div class="editor-oper-bar">
                     <button class="editor-btn-sure" @click="insertPic()">确定</button>
-
                 </div>
 
             </div>
             <div class="tab1-img" v-show="tabimg==3">3</div>
         </section>
-
-
     </div>
 </template>
 <script>
