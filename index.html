@@ -3,52 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>
-<body>
-<script>
-    var as = {
-        data: "add",
-        show: 'id'
-    }
-
-    let lstr = "";
-
-    function argUrl(obj) {
-        var result = "";
-
-        function argFormat(obj, name) {
-            if (typeof obj === "object") {
-                for (i in obj) {
-                    if (typeof obj[i] === "object") {
-                        name ? argFormat(obj[i], name + '[' + i + ']') : argFormat(obj[i], i);
-                    } else {
-
-
-                        if (name) {
-                            result += name + "[" + i + "]" + '=' + encodeURIComponent(obj[i]) + '&';
-                        } else {
-                            result += i + '=' + encodeURIComponent(obj[i]);
-
-
-                        }
-                    }
-                }
-            } else {
-                result += obj;
-
-            }
-            ;
-
+    <style>
+         .outer{
+             stroke-dasharray: 360px, 360px; stroke-dashoffset: 360px; transition: stroke-dashoffset 10s;
+             -webkit-transition:-webkit-stroke-dashoffset 10s;
+         }
+        .outer:hover{
+            stroke-dashoffset: 0px;
         }
 
-        argFormat(obj);
-        return result;
-    }
+    </style>
+</head>
+<body>
 
 
+<script>
+    var s=[1,2,3,50,6,9];
+    var u=s.indexOf(50);//返回5所在的下标3
+    var d=s.indexOf(8);//返回-1
+    console.log(u);
+    console.log(d);
 
 
 </script>
+
+</div>
 </body>
 </html>
 

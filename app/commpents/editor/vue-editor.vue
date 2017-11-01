@@ -347,10 +347,8 @@
                     </button>
                 </div>
             </li>
-            <li class="vue-editor-nav-item" @click="_execCommand('insertOrderedList')"><i
-                    class="icon icon-has-list"></i></li>
-            <li class="vue-editor-nav-item" @click="_execCommand('insertUnorderedList')"><i
-                    class="icon icon-none-list"></i></li>
+            <li class="vue-editor-nav-item" @click="_execCommand('insertOrderedList')"><i class="icon icon-has-list"></i></li>
+            <li class="vue-editor-nav-item" @click="_execCommand('insertUnorderedList')"><i class="icon icon-none-list"></i></li>
             <li class="vue-editor-nav-item"><i class="icon icon-link" @click="getFocus"></i>
                 <div class="link-editor" v-show="meun.linkopen">
                     <div class="white-block"></div>
@@ -374,16 +372,74 @@
                     <!-- <i class="icon icon-jusity-align" @click="_execCommand('justifyRight')"></i> -->
                 </div>
             </li>
-            <li class="vue-editor-nav-item" @click="_execCommand('subscript')"><i class="icon icon-face"></i></li>
-            <li class="vue-editor-nav-item" @click="_execCommand('subscript')"><i class="icon icon-pic-editor"></i></li>
+            <li class="vue-editor-nav-item" @click="_execCommand('subscript')" title="表情"><i class="icon icon-face"></i></li>
+            <li class="vue-editor-nav-item"  @click="picshow=!picshow" :class="{active:picshow}" title="图片选择">
+                <i class="icon icon-pic-editor"></i>
+            </li>
+            <li class="vue-editor-nav-item"  title="图片格式">
+                <i class="icon icon-piclin"></i>
+                <div class="editor-align-pc">
+                    <div class="editor-align-way">
+                        <span><i title="左对齐" class="icon icon-pic-left"></i></span>
+                        <span><i title="右对齐" class="icon icon-pic-right"></i></span>
+                        <span><i title="居中对齐" class="icon icon-pic-middle"></i></span>
+                        <span><i title="上对齐" class="icon icon-pic-top"></i></span>
+                        <span><i title="下对齐" class="icon icon-pic-bottom"></i></span>
+                    </div>
+                    <div class="editor-size-pic">
+                        <div class="editor-size-item">
+                            <span>宽：</span>
+                            <span><input type="text" v-model="pic.size.width"/></span>
+                        </div>
+                        <div class="editor-size-item" >
+                            <span>高：</span>
+                            <span><input type="text" v-model="pic.size.height"/></span>
+                        </div>
+                        <div class="editor-size-item">
+                           <button class="editor-pic-size-btn" @click="setPic()">提交</button>
+                        </div>
+                    </div>
+
+                </div>
+            </li>
 
         </ul>
         <div ref="content" class="content" @click="colseBox()" v-html="content" @keydown="key($event)"
              @input="sendContent()" contenteditable="true" @mouseup="updatePosition" @keyup="updatePosition"
              :style="{height:editHeight}">
-
         </div>
-        <pic ref="uploapPic"></pic>
+        <section class="editor-img" v-show="picshow">
+            <div class="editor-tab-img">
+                <span class="editor-title-img" :class="{active:tabimg==1}" @click="tabimg=1"> 上传图片</span>
+                <span class="editor-title-img" :class="{active:tabimg==2}" @click="openPic()">图片库</span>
+                <span class="editor-title-img" :class="{active:tabimg==3}" @click="tabimg=3">网络图片</span>
+            </div>
+            <div class="tab1-img" v-show="tabimg==1">1</div>
+            <div class="tab1-img" v-show="tabimg==2">
+                <ul class="list-pic">
+                    <li class="pic-item" v-for="(item,index) in pic.data">
+                        <label :class="{checked:pic.selecter.indexOf(item.path)>=0}">
+                            <div class="show-img"><img :src="Api.imgurl+item.path"></div>
+                            <div class="pic-check">
+                                <i class="icon-check" :class="{active:pic.selecter.indexOf(item.path)>=0}"></i>
+                                <p>200*300</p>
+                            </div>
+                            <input type="checkbox" :checked="pic.selecter.indexOf(item.path)>=0" :value="item.path"
+                                   v-model="pic.selecter">
+                        </label>
+                    </li>
+
+                </ul>
+                <div class="editor-oper-bar">
+                    <button class="editor-btn-sure" @click="insertPic()">确定</button>
+
+                </div>
+
+            </div>
+            <div class="tab1-img" v-show="tabimg==3">3</div>
+        </section>
+
+
     </div>
 </template>
 <script>
@@ -425,17 +481,84 @@
                 link: '',
                 range: null,
                 nodes: '',
+                tabimg: 1,
+                picshow: false,
+                pic: {
+                    selecter: [],
+                    data: [],
+                    page: 1,
+                    count: 0,
+                    size:{
+                        width:'',
+                        height:''
+                    }
+                },
+                imgp:{
+
+                }
 
 
             }
         },
         created() {
             window.vues = this;
-
             jscolor();
+
+            document.addEventListener('click', function (e) {
+                var node = e.target;
+                if (node.nodeType == 3) node = node.parentNode;
+            })
+
         },
         watch: {},
         methods: {
+            setPic(){
+                const selection = window.getSelection().anchorNode;
+
+                if(selection.nodeType==1&& selection.getAttribute('value')=="pics"){
+                    selection.querySelector('img').setAttribute('width',this.pic.size.width)
+                    selection.querySelector('img').setAttribute('height',this.pic.size.height);
+
+                }
+
+            },
+            insertPic(){
+                let pic='';
+                let list=this.pic.selecter;
+                for(var i=0,len=list.length;i<len;i++){
+                    pic+=`<span value="pics"><img src="${this.Api.imgurl}${list[i]}" imgurl="${list[i]}" ></span>`;
+                }
+                console.log(pic);
+                this._execCommand('insertHTML', pic);
+                this.pic.selecter=[];
+                this.picshow=false;
+
+            },
+            //获取图片列表
+            async getPics() {
+                let result = await this.$ajax.post(this.Api.file, {
+                    data: {page: 1, num: 12},
+                    token: this.$store.state.token
+                });
+                if (result.err_code == 200) {
+                    let list = result.data.result;
+                    for (var i = 0, len = list.length; i < len; i++) {
+                        this.pic.data.push(list[i]);
+                    }
+                    this.pic.count = result.data.count;
+                    this.pic.page++;
+                    console.log(page);
+                }
+            },
+
+            openPic() {
+                this.tabimg = 2;
+                this.pic.selecter = [];
+                if (this.picshow && this.pic.data.length <= 0) {
+                    this.getPics();
+
+                }
+            },
             update: function (value) {
                 this.color('#' + value);
             },
@@ -528,6 +651,19 @@
                             break;
                     }
                 }
+                let section = window.getSelection().anchorNode;
+
+                if(section.nodeType==1){
+                    if(section.nodeName.toLowerCase()=="span" || section.imgurl){
+                        this.imgp={
+                            top:section.offsetTop+'px',
+                            left:section.offsetLeft+'px'
+
+                        }
+
+                    }
+                }
+
                 this.saveRange(ev);
             },
             queryCommandValue: function (name) {
@@ -589,18 +725,6 @@
                                 ev.preventDefault();
 
                             }
-
-
-//                        let section=window.getSelection();
-//                        let node  =  section.anchorNode;
-                            // console.log(node);
-
-
-//                        this._execCommand('insertHTML', '<p id="newption"><br></p>');
-//                        var body = document.getElementById("newption");
-//                        window.getSelection().collapse(body,0);
-//                        this.saveRange();
-
 
 
                             break;
@@ -707,7 +831,7 @@
                 }
 
             },
-            //添加链接
+
             //添加链接
             getSelectionText() {
                 const range = this.range;
@@ -719,7 +843,6 @@
             },
             getNodeName: function () {
                 const elem = this.range;
-                console.log(this.anchorNode);
                 return elem.anchorNode
             },
             getFocus: function () {

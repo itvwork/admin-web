@@ -9,8 +9,11 @@
             <input-text toggleTitle=1   title="作者：" tips="请输入作者名称：" :value.sync="data.source" :schema="schema"
                         rule="source"
                         tw="1rem"></input-text>
+            <vue-select toggleTitle=1  :sort="sort"  title="作者：" tips="请选择分类"  :value.sync="data.sort" :schema="schema"
+                        rule="sort"
+                        tw="1rem"></vue-select>
 
-            <code-box width=450    :value.sync="data.cover" toggleTitle=1    tw="1rem" title="封面:" :schema="schema"
+            <code-box width=450   :value.sync="data.cover" toggleTitle=1    tw="1rem" title="封面:" :schema="schema"
                       rule="cover"></code-box>
 
             <vue-editor :detail.sync="data.content" ></vue-editor>
@@ -19,6 +22,7 @@
             </div>
         </form-edit>
         <vue-tips :tips.sync="tips" v-if="tips"></vue-tips>
+
     </indoor>
 </template>
 <script>

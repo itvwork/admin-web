@@ -85,7 +85,7 @@ export default {
     },
     data() {
         return {
-            show: false,
+            show: true,
             status: 1,
             img:'',
             tips:'',

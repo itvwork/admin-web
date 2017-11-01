@@ -5,7 +5,7 @@
         <div class="vue-select" @click="option=!option">
             <input type="text" :placeholder="tips"  readonly="readonly" v-model="showtitle">
             <div class="vue-option" v-show="option" :class="{up:seat,down:!seat}">
-                <p class="vue-option-item" v-for="(item,index) in sort " :value="item._id" @click="updateValue(index)">{{item.title}}</p>
+                <p class="vue-option-item" v-for="(item,index) in sort" :value="item._id" @click="updateValue(index)">{{item.title}}</p>
             </div>
         </div>
 
