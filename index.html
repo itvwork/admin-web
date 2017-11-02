@@ -18,11 +18,12 @@
 
 
 <script>
-    var s=[1,2,3,50,6,9];
-    var u=s.indexOf(50);//返回5所在的下标3
-    var d=s.indexOf(8);//返回-1
-    console.log(u);
-    console.log(d);
+    var formData = new FormData();
+
+
+    if(formData.append("username", "Groucho")){
+        console.log(formData);
+    }
 
 
 </script>

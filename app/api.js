@@ -11,5 +11,6 @@ export default {
      caseSortDetail:url+'caseSort/detail',
      caseSortUpdate:url+'caseSort/update',
      caseSortDel:url+'caseSort/del',
-     file:url+'file'
+     file:url+'file',
+     uploads:url+'file/uploads'
 }

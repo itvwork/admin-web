@@ -444,7 +444,7 @@
             </div>
             <div class="tab1-img" v-show="tabimg==3">3</div>
         </section>
-        <pic></pic>
+
     </div>
 </template>
 <script>
@@ -524,12 +524,14 @@
                 event.preventDefault();
                 var self=this;
                 var file = event.dataTransfer.files; //获取文件
-                if(file.length>this.$props.num){
-                    this.tips="只能上传"+this.$props.num+'张图片';
-                    return false;
-                }
+
                 var img=await this.$tool.base64(1024,file);
-                console.log(img);
+                let result=await this.$ajax.postXhr2(this.Api.uploads,{
+
+                    //data:{id:1},
+                    token: this.$store.state.token,
+                    data: file
+                });
 
                 //this.upload(img);
 

@@ -27,7 +27,6 @@
         <page ref="page" :sub="row" v-if="rows>10" :rows.sync="rows"></page>
     </indoor>
 </template>
-
 <script>
     import addbtn from '../../commpents/meun/addbtn'
 
@@ -51,7 +50,7 @@
                 self.loading = "删除中";
                 self.$store.commit('uiclose', {type: 'confirm'});
                 let data = await this.$ajax.post(self.Api.caseSortDel, {
-                    data: {_id: id},
+//                    data: {_id: id},
                     token: self.$store.state.token
                 });
                 if (data.err_code == 200) {
