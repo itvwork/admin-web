@@ -28,12 +28,19 @@ export default function(Vue, opt) {
                     let index2 = imgname.length;
                     imgname = imgname.substring(index1 + 1, index2); //后缀名
                     let type = "";
-                    if (imgname == "jpg" || imgname == "jpeg" || imgname == "bmp") {
-                        type = 'image/jpeg';
-                    } else if (imgname = 'gif') {
-                        type = 'image/gif';
-                    } else {
-                        type = 'image/png';
+
+                    switch (imgname){
+                        case 'gif':
+                            type = 'image/gif'
+                            break;
+                        case 'png':
+                            type = 'image/png';
+                            break;
+                        case 'jps':
+                            type = 'image/jps';
+                            break;
+                        default:
+                            type = 'image/jpeg';
                     }
 
                     lrz(file[a], {

@@ -132,7 +132,7 @@ export default function (Vue, opt) {
                 if (typeof FormData !== 'undefined') {//判断是否支持xhr2
                     var urldata = xhr2(context);
                     //这里具体查看你上面ajax内容
-                    xmlhttp.timeout = context.timeout ? context.timeout : 10000;
+                    xmlhttp.timeout = context.timeout ? context.timeout : 100000;
                     xmlhttp.addEventListener('progress', function (e) {
 
                         context.progress ? context.progress(e) : '';

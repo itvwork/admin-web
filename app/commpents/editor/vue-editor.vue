@@ -409,7 +409,7 @@
         </ul>
         <div ref="content" class="content" @click="colseBox()" v-html="content" @keydown="key($event)"
              @input="sendContent()" contenteditable="true" @mouseup="updatePosition" @keyup="updatePosition"
-             :style="{height:editHeight}">
+             :style="{height:editHeight}" @dragover="allowDrop($event)" @drop="drap($event)">
         </div>
         <section class="editor-img" v-show="picshow">
             <div class="editor-tab-img">
@@ -525,10 +525,19 @@
                 event.preventDefault();
                 var self = this;
                 var file = event.dataTransfer.files; //获取文件
-                var img = await this.$tool.base64(1024, file);
+                var img = await this.$tool.base64(1920, file);
 
 
                 let result = await this.$ajax.postXhr2(this.Api.uploads,{token: this.$store.state.token,data:img,type:'content'} );
+                if(result.err_code==200){
+                    let list=result.data;
+                    let str='';
+                    for(let i =0 ,len=list.length;i<len;i++){
+                         str+=`<span value="pics"><img src="${Api.imgurl}${list[i].path}"</span>`;
+                    }
+                    this._execCommand("insertHTML",str);
+
+                }
 
                 //this.upload(img);
 
