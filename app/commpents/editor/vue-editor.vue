@@ -347,8 +347,10 @@
                     </button>
                 </div>
             </li>
-            <li class="vue-editor-nav-item" @click="_execCommand('insertOrderedList')"><i class="icon icon-has-list"></i></li>
-            <li class="vue-editor-nav-item" @click="_execCommand('insertUnorderedList')"><i class="icon icon-none-list"></i></li>
+            <li class="vue-editor-nav-item" @click="_execCommand('insertOrderedList')"><i
+                    class="icon icon-has-list"></i></li>
+            <li class="vue-editor-nav-item" @click="_execCommand('insertUnorderedList')"><i
+                    class="icon icon-none-list"></i></li>
             <li class="vue-editor-nav-item"><i class="icon icon-link" @click="getFocus"></i>
                 <div class="link-editor" v-show="meun.linkopen">
                     <div class="white-block"></div>
@@ -372,11 +374,12 @@
                     <!-- <i class="icon icon-jusity-align" @click="_execCommand('justifyRight')"></i> -->
                 </div>
             </li>
-            <li class="vue-editor-nav-item" @click="_execCommand('subscript')" title="表情"><i class="icon icon-face"></i></li>
-            <li class="vue-editor-nav-item"  @click="picshow=!picshow" :class="{active:picshow}" title="图片选择">
+            <li class="vue-editor-nav-item" @click="_execCommand('subscript')" title="表情"><i class="icon icon-face"></i>
+            </li>
+            <li class="vue-editor-nav-item" @click="picshow=!picshow" :class="{active:picshow}" title="图片选择">
                 <i class="icon icon-pic-editor"></i>
             </li>
-            <li class="vue-editor-nav-item"  title="图片格式">
+            <li class="vue-editor-nav-item" title="图片格式">
                 <i class="icon icon-piclin"></i>
                 <div class="editor-align-pc">
                     <div class="editor-align-way">
@@ -391,12 +394,12 @@
                             <span>宽：</span>
                             <span><input type="text" v-model="pic.size.width"/></span>
                         </div>
-                        <div class="editor-size-item" >
+                        <div class="editor-size-item">
                             <span>高：</span>
                             <span><input type="text" v-model="pic.size.height"/></span>
                         </div>
                         <div class="editor-size-item">
-                           <button class="editor-pic-size-btn" @click="setPic()">提交</button>
+                            <button class="editor-pic-size-btn" @click="setPic()">提交</button>
                         </div>
                     </div>
 
@@ -418,7 +421,7 @@
 
                 <i class="icon icon-pic-editor"></i>
                 <p class="editor-tips-upload">将图片拖拽到此处可以上传</p>
-                <label class="editor-btn-upload"><input type="file"  multiple="true"   />上传图片</label>
+                <label class="editor-btn-upload"><input type="file" multiple="true"/>上传图片</label>
                 <span></span>
 
             </div>
@@ -493,14 +496,12 @@
                     data: [],
                     page: 1,
                     count: 0,
-                    size:{
-                        width:'',
-                        height:''
+                    size: {
+                        width: '',
+                        height: ''
                     }
                 },
-                imgp:{
-
-                }
+                imgp: {}
 
 
             }
@@ -522,40 +523,36 @@
             },
             async drap(event) {
                 event.preventDefault();
-                var self=this;
+                var self = this;
                 var file = event.dataTransfer.files; //获取文件
+                var img = await this.$tool.base64(1024, file);
 
-                var img=await this.$tool.base64(1024,file);
-                let result=await this.$ajax.postXhr2(this.Api.uploads,{
 
-                    //data:{id:1},
-                    token: this.$store.state.token,
-                    data: file
-                });
+                let result = await this.$ajax.postXhr2(this.Api.uploads,{token: this.$store.state.token,data:img,type:'content'} );
 
                 //this.upload(img);
 
             },
-            setPic(){
+            setPic() {
                 const selection = window.getSelection().anchorNode;
 
-                if(selection.nodeType==1&& selection.getAttribute('value')=="pics"){
-                    selection.querySelector('img').setAttribute('width',this.pic.size.width)
-                    selection.querySelector('img').setAttribute('height',this.pic.size.height);
+                if (selection.nodeType == 1 && selection.getAttribute('value') == "pics") {
+                    selection.querySelector('img').setAttribute('width', this.pic.size.width)
+                    selection.querySelector('img').setAttribute('height', this.pic.size.height);
 
                 }
 
             },
-            insertPic(){
-                let pic='';
-                let list=this.pic.selecter;
-                for(var i=0,len=list.length;i<len;i++){
-                    pic+=`<span value="pics"><img src="${this.Api.imgurl}${list[i]}" imgurl="${list[i]}" ></span>`;
+            insertPic() {
+                let pic = '';
+                let list = this.pic.selecter;
+                for (var i = 0, len = list.length; i < len; i++) {
+                    pic += `<span value="pics"><img src="${this.Api.imgurl}${list[i]}" imgurl="${list[i]}" ></span>`;
                 }
                 console.log(pic);
                 this._execCommand('insertHTML', pic);
-                this.pic.selecter=[];
-                this.picshow=false;
+                this.pic.selecter = [];
+                this.picshow = false;
 
             },
             //获取图片列表
@@ -677,11 +674,11 @@
                 }
                 let section = window.getSelection().anchorNode;
 
-                if(section.nodeType==1){
-                    if(section.nodeName.toLowerCase()=="span" || section.imgurl){
-                        this.imgp={
-                            top:section.offsetTop+'px',
-                            left:section.offsetLeft+'px'
+                if (section.nodeType == 1) {
+                    if (section.nodeName.toLowerCase() == "span" || section.imgurl) {
+                        this.imgp = {
+                            top: section.offsetTop + 'px',
+                            left: section.offsetLeft + 'px'
 
                         }
 
