@@ -10,6 +10,7 @@
     </div>
   </form-edit>
   <vue-tips :tips.sync="tips" v-if="tips"></vue-tips>
+
 </indoor>
 </template>
 <script>
@@ -42,6 +43,7 @@ export default {
         sort: '',
         cover: '',
         content: ''
+
       },
       sort: [],
       model: [],
@@ -54,9 +56,10 @@ export default {
   created() {
     let self = this;
     this.getSort();
-    delete this.$root.uievent._events['caseadd'];
+    this.getData();
+    delete this.$root.uievent._events['caseEdit'];
     delete this.$root.uievent._events['close'];
-    this.$root.uievent.$on('caseadd', function() {
+    this.$root.uievent.$on('caseEdit', function() {
       self.$store.commit('uiclose', {
         type: 'confirm'
       });
@@ -71,7 +74,6 @@ export default {
       self.data = {
         sort: '',
         cover: '',
-        author: '',
         content: ''
       };
       self.subword = '提交'
@@ -94,31 +96,42 @@ export default {
         token: this.$store.state.token
       });
       this.sort = data.data;
+    },
+    async getData(){
+      let data = await this.$ajax.post(this.Api.caseDetail, {
+        data: {_id:this.$route.params.id},
+        token: this.$store.state.token
+      });
+      this.data=data.data;
 
     },
     async send() {
+      let arr = this.$tool.getImgulr(this.data.content);
       if (this.subword == "数据提交中…") {
-          return false;
+        return false;
       }
       if (!this.schema.allvalt()) {
-          return false;
+        return false;
       }
       this.subword = "数据提交中…"
-      let data = await this.$ajax.post(this.Api.caseAdd, {data: this.data, token: this.$store.state.token});
+      let data = await this.$ajax.post(this.Api.caseAdd, {
+        data: this.data,
+        token: this.$store.state.token
+      });
       if (data.err_code == 200) {
-          this.$store.commit('uishow', {
-              wrap: 'success',
-              title: '添加成功,返回列表,或继续添加',
-              btnsure: '返回列表',
-              btnclose: '继续添加',
-              type: 'confirm',
-              even: 'addmodel'
-          });
+        this.$store.commit('uishow', {
+          wrap: 'success',
+          title: '添加成功,返回列表,或继续添加',
+          btnsure: '返回列表',
+          btnclose: '继续添加',
+          type: 'confirm',
+          even: 'caseEdit'
+        });
       } else {
-          this.tips = data.err_msg;
-          this.subword="提交";
+        this.tips = data.err_msg;
+        this.subword = '提交'
       }
-     }
+    }
 
   },
   events: {}

@@ -7,6 +7,7 @@
                       :schema="schema"
                       rule="cover"></code-box>
             <div class="sub-bar" style="padding-left: 1.3rem">
+              <router-link :to="{ name:'caseEdit',params:{id:item._id} }">修改</router-link>
                 <button class="btns btn-sub" @click="send()">{{subword}}</button>
             </div>
         </form-edit>
@@ -45,6 +46,8 @@
         created() {
             let self = this;
             this.getdata();
+            delete this.$root.uievent._events['aseSortModel'];
+            delete this.$root.uievent._events['close'];
             this.$root.uievent.$on('caseSortModel', function () {
                 self.$store.commit('uiclose', {type: 'confirm'});
                 self.$router.push({
@@ -76,8 +79,8 @@
                     token: this.$store.state.token
                 });
                 if (data.err_code == 200) {
-                    this.data.title = data.data[0]['title'];
-                    this.data.cover = Api.imgurl + data.data[0]['cover']['url'];
+                    this.data = data.data[0];
+                 ;
                 }
                 this.loading = "";
             },
@@ -104,7 +107,8 @@
                         even: 'caseSortModel'
                     });
                 } else {
-                    this.tips = data.msg;
+                    this.tips = data.err_msg;
+                    this.subword = '提交';
                 }
             }
         },

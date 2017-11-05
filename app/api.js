@@ -5,7 +5,9 @@ let url='http://localhost:8099/api/';
 export default {
      imgurl:'http://localhost:8099/images/',
      login:url+'login',//登录 admin_name admin_password
+     caseList:url+'case/index',
      caseAdd:url+'case/add',
+     caseDetail:url+'case/detail',
      caseSortAdd:url+'caseSort/add',
      caseSort:url+'caseSort/index',
      caseSortDetail:url+'caseSort/detail',

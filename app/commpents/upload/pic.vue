@@ -77,6 +77,10 @@ export default {
         multiple:{
           type:String,
           default:'false'
+        },
+        sort:{
+            type:String,
+            default:'content'
         }
 
     },
@@ -110,24 +114,20 @@ export default {
               return false;
             }
             var img=await this.fun.base64(this.width,file);
-
             this.upload(img);
 
         },
         async upload(img){
             let len=img.length;
             let data=[];
-
             let token = await this.fun.getFileToken();
-
              for(let i = 0;i<len;i++){
                   let as=await this.fun.putData64(token.token,img[i].data);
                   data.push({_id:as.key,time:this.fun.time()});
-                  console.log(as);
+                  
              }
-
             let dataToken=await this.fun.getDataToken();
-                console.log(dataToken);
+         
 
             let subdata={
                subdata:data,
@@ -137,10 +137,7 @@ export default {
             if(content.code==0){
               this.updateValue(JSON.stringify(data));
               this.show=false;
-            }else{
-              alert(content.msg);
             }
-
 
 
         },

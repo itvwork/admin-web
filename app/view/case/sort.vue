@@ -12,11 +12,11 @@
             </thead>
             <tbody>
             <tr v-for="(item,index) in list">
-                <td><img width="50" height="50" :src="Api.imgurl+item.cover.url"/></td>
+                <td><img width="50" height="50" :src="Api.imgurl+item.cover"/></td>
                 <td>{{item.title}}</td>
                 <td>{{$tool.formatDate(item.add_time)}}</td>
                 <td>  <router-link :to="{ name:'editCaseSort',params:{id:item._id} }">修改</router-link>
-                    <button @click="del(item._id)">删除</button>
+                    <button @click="del(item._id,item.cover)">删除</button>
                 </td>
             </tr>
 
@@ -47,7 +47,6 @@
                 }
                 ],
                 list:[],
-                delid:'',
                 loading:'',
                 tips:'',
                 num:0
@@ -55,13 +54,14 @@
         },
         created() {
                 let self=this;
-                this.getdata();
-                if(this.$root.uievent._events['delCaseSort']) return false ;
-                this.$root.uievent.$on('delCaseSort',async function (id) {
+                this.getData();
+
+                delete this.$root.uievent._events['delCaseSort'];
+                this.$root.uievent.$on('delCaseSort',async function (deldata) {
                     self.num++;
                     self.loading="删除中";
                     self.$store.commit('uiclose',{type:'confirm'});
-                    let data=await this.$ajax.post(self.Api.caseSortDel,{data:{_id:id},token:self.$store.state.token});
+                    let data=await this.$ajax.post(self.Api.caseSortDel,{data:deldata,token:self.$store.state.token});
                     if(data.err_code==200){
                         self.loading="";
                         self.tips="删除成功";
@@ -71,21 +71,15 @@
                         self.tips="删除失败，已经删除，或不存在";
                     }
                 })
+
         },
-        watch: {
-            username: function (val, oldval) {
-                console.log(this.login);
-            }
-        },
+
         methods: {
-            sub() {
-                console.log(this.$data);
-            },
-            async getdata() {
+            async getData() {
                  let data = await this.$ajax.post(this.Api.caseSort, {data: '', token: this.$store.state.token});
                  this.list=data.data;
             },
-            async del(id){
+            async del(id,cover){
                 this.$store.commit('uishow',{
                     wrap:'warn',
                     title:'警告',
@@ -93,7 +87,10 @@
                     type:'confirm',
                     even:'delCaseSort',
                     isclose:true,
-                    data:id
+                    data:{
+                        _id:id,
+                        cover:cover
+                    }
                 });
 //            let data=await this.$ajax.post(this.Api.storelist,{id:id,token:this.$store.state.token});
 //            console.log(data);

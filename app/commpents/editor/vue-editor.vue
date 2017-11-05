@@ -407,7 +407,7 @@
             </li>
 
         </ul>
-        <div ref="content" class="content" @click="colseBox()" v-html="content" @keydown="key($event)"
+        <div ref="content" class="content" @click="colseBox()" v-html="detail" @keydown="key($event)"
              @input="sendContent()" contenteditable="true" @mouseup="updatePosition" @keyup="updatePosition"
              :style="{height:editHeight}" @dragover="allowDrop($event)" @drop="drap($event)">
         </div>
@@ -432,7 +432,7 @@
                             <div class="show-img"><img :src="Api.imgurl+item.path"></div>
                             <div class="pic-check">
                                 <i class="icon-check" :class="{active:pic.selecter.indexOf(item.path)>=0}"></i>
-                                <p>200*300</p>
+                                <p>{{item.width}}*{{item.height}}</p>
                             </div>
                             <input type="checkbox" :checked="pic.selecter.indexOf(item.path)>=0" :value="item.path"
                                    v-model="pic.selecter">
@@ -452,7 +452,6 @@
 </template>
 <script>
     import jscolor from './jscolor.min.js';
-
     export default {
         props: {
             width: {
@@ -502,14 +501,11 @@
                     }
                 },
                 imgp: {}
-
-
             }
         },
         created() {
             window.vues = this;
             jscolor();
-
             document.addEventListener('click', function (e) {
                 var node = e.target;
                 if (node.nodeType == 3) node = node.parentNode;
@@ -526,8 +522,6 @@
                 var self = this;
                 var file = event.dataTransfer.files; //获取文件
                 var img = await this.$tool.base64(1920, file);
-
-
                 let result = await this.$ajax.postXhr2(this.Api.uploads,{token: this.$store.state.token,data:img,type:'content'} );
                 if(result.err_code==200){
                     let list=result.data;
@@ -542,13 +536,13 @@
                 //this.upload(img);
 
             },
+            //设置图片尺寸
             setPic() {
+                this.restoreSelection();
                 const selection = window.getSelection().anchorNode;
-
                 if (selection.nodeType == 1 && selection.getAttribute('value') == "pics") {
                     selection.querySelector('img').setAttribute('width', this.pic.size.width)
                     selection.querySelector('img').setAttribute('height', this.pic.size.height);
-
                 }
 
             },
@@ -558,7 +552,7 @@
                 for (var i = 0, len = list.length; i < len; i++) {
                     pic += `<span value="pics"><img src="${this.Api.imgurl}${list[i]}" imgurl="${list[i]}" ></span>`;
                 }
-                console.log(pic);
+
                 this._execCommand('insertHTML', pic);
                 this.pic.selecter = [];
                 this.picshow = false;
@@ -601,6 +595,7 @@
                 document.execCommand(name, false, value);
                 this.saveRange();
             },
+            //恢复焦点
             restoreSelection: function () {
                 const selection = window.getSelection();
                 selection.removeAllRanges();
@@ -611,6 +606,7 @@
 
                 this._execCommand('foreColor', color)
             },
+            //
             backColor: function (color) {
                 this.restoreSelection();
                 let section = window.getSelection().anchorNode;
