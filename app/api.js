@@ -8,6 +8,7 @@ export default {
      caseList:url+'case/index',
      caseAdd:url+'case/add',
      caseDetail:url+'case/detail',
+     caseEdit:url+'case/updata',
      caseSortAdd:url+'caseSort/add',
      caseSort:url+'caseSort/index',
      caseSortDetail:url+'caseSort/detail',

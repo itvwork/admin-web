@@ -1,34 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-         .outer{
-             stroke-dasharray: 360px, 360px; stroke-dashoffset: 360px; transition: stroke-dashoffset 10s;
-             -webkit-transition:-webkit-stroke-dashoffset 10s;
-         }
-        .outer:hover{
-            stroke-dashoffset: 0px;
-        }
 
-    </style>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .outer {
+      stroke-dasharray: 360px, 360px;
+      stroke-dashoffset: 360px;
+      transition: stroke-dashoffset 10s;
+      -webkit-transition: -webkit-stroke-dashoffset 10s;
+    }
+
+    .outer:hover {
+      stroke-dashoffset: 0px;
+    }
+  </style>
 </head>
+
 <body>
 
 
-<script>
-    var formData = new FormData();
+  <script>
+    as = {
+      array_remove_repeat: function(a) { // 去重
+        var r = [];
+        for (var i = 0; i < a.length; i++) {
+          var flag = true;
+          var temp = a[i];
+          for (var j = 0; j < r.length; j++) {
+            if (temp === r[j]) {
+              flag = false;
+              break;
+            }
+          }
+          if (flag) {
+            r.push(temp);
+          }
+        }
+        return r;
+      },
+      array_intersection: function(a, b) { // 交集
+        var result = [];
+        for (var i = 0; i < b.length; i++) {
+          var temp = b[i];
+          for (var j = 0; j < a.length; j++) {
+            if (temp === a[j]) {
+              result.push(temp);
+              break;
+            }
+          }
+        }
+        return this.array_remove_repeat(result);
+      },
 
+      array_union: function(a, b) { // 并集
+        return this.array_remove_repeat(a.concat(b));
+      },
 
-    if(formData.append("username", "Groucho")){
-        console.log(formData);
+      array_difference: function(arr1, arr2) {
+        var diff = [];
+        var tmp = arr2;
+
+        arr1.forEach(function(val1, i) {
+          if (arr2.indexOf(val1) < 0) {
+            diff.push(val1);
+          } else {
+            tmp.splice(tmp.indexOf(val1), 1);
+          }
+        });
+        return this.array_remove_repeat(diff.concat(tmp));
+
+      }
     }
 
+    var a = [1, 2, 3, 4, 5];
+    var b = [1, 4, 6, 7];
+    var old = as.array_intersection(a, b);
+    var del = as.array_difference(old, a);
+    var add = as.array_difference(old,b);
 
-</script>
+    console.log(old);
+    console.log(del);
+    console.log(add);
+  </script>
 
-</div>
+  </div>
 </body>
-</html>
 
+</html>

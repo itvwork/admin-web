@@ -64,18 +64,14 @@ export default {
         type: 'confirm'
       });
       self.$router.push({
-        name: 'modeladd'
+        name: 'case'
       })
     });
     this.$root.uievent.$on('close', function() {
       self.$store.commit('uiclose', {
         type: 'confirm'
       });
-      self.data = {
-        sort: '',
-        cover: '',
-        content: ''
-      };
+
       self.subword = '提交'
     });
 
@@ -106,7 +102,7 @@ export default {
 
     },
     async send() {
-      let arr = this.$tool.getImgulr(this.data.content);
+
       if (this.subword == "数据提交中…") {
         return false;
       }
@@ -114,7 +110,7 @@ export default {
         return false;
       }
       this.subword = "数据提交中…"
-      let data = await this.$ajax.post(this.Api.caseAdd, {
+      let data = await this.$ajax.post(this.Api.caseEdit, {
         data: this.data,
         token: this.$store.state.token
       });
@@ -123,7 +119,7 @@ export default {
           wrap: 'success',
           title: '添加成功,返回列表,或继续添加',
           btnsure: '返回列表',
-          btnclose: '继续添加',
+          btnclose: '留在本页',
           type: 'confirm',
           even: 'caseEdit'
         });
@@ -131,7 +127,7 @@ export default {
         this.tips = data.err_msg;
         this.subword = '提交'
       }
-    }
+     }
 
   },
   events: {}
