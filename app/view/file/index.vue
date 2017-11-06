@@ -6,7 +6,7 @@
             <tr>
                 <th>封面</th>
                 <th>所属分类</th>
-                <th>作者</th>
+                <th>使用次数</th>
                 <th>添加时间</th>
                 <th>操作</th>
             </tr>
@@ -15,7 +15,7 @@
             <tr v-for="(item,index) in list">
                 <td><img width="100" :src="Api.imgurl+item.path"/></td>
                 <td>{{item.sort}}</td>
-                <td>{{item.author}}</td>
+                <td>{{item.use}}</td>
                 <td>{{$tool.formatDate(item.add_time)}}</td>
                 <td>操作</td>
             </tr>

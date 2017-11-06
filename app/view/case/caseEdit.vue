@@ -99,7 +99,6 @@ export default {
         token: this.$store.state.token
       });
       this.data=data.data;
-
     },
     async send() {
 
@@ -125,7 +124,7 @@ export default {
         });
       } else {
         this.tips = data.err_msg;
-        this.subword = '提交'
+        this.subword = '提交';
       }
      }
 

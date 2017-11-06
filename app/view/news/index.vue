@@ -41,9 +41,9 @@ export default {
       btn: [{
         type: 'link',
         url: {
-          name: 'caseadd'
+          name: 'newsadd'
         },
-        name: '添加案例',
+        name: '添加资讯',
         class: 'btn-add-model'
       }],
       list:[],
@@ -62,8 +62,8 @@ export default {
     this.getData();
     this.getSort();
     let self=this;
-    delete this.$root.uievent._events['delCase'];
-    this.$root.uievent.$on('delCase', async function(deldata) {
+    delete this.$root.uievent._events['delNews'];
+    this.$root.uievent.$on('delNews', async function(deldata) {
         self.loading = "删除中";
         self.$store.commit('uiclose', {
             type: 'confirm'
@@ -86,7 +86,7 @@ export default {
   methods: {
     async getData(page) {
       this.loading = "加载中…";
-      let data = await this.$ajax.post(this.Api.caseList, {
+      let data = await this.$ajax.post(this.Api.newsList, {
         data: {
           page: this.$route.query.page ? this.$route.query.page : 1,
           num: 10
@@ -99,7 +99,7 @@ export default {
       this.rows = list.count;
     },
     async getSort() {
-      let data = await this.$ajax.post(this.Api.caseSort, {
+      let data = await this.$ajax.post(this.Api.newsSort, {
         data: '',
         token: this.$store.state.token
       });
@@ -120,7 +120,7 @@ export default {
             title: '警告',
             word: '是否删除该案例',
             type: 'confirm',
-            even: 'delCase',
+            even: 'delNews',
             isclose: true,
             data: {
                 _id: id

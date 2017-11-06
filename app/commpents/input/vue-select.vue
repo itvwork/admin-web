@@ -99,6 +99,7 @@ export default {
         self.option = false;
       }
     });
+
   },
   methods: {
     updateValue(index) {
@@ -108,6 +109,7 @@ export default {
       this.valtVal();
     },
     findName() {
+
       for (let i = 0, len = this.sort.length; i < len; i++) {
         if (this.sort[i]['_id'] == this.value) {
           this.showtitle = this.sort[i]['title'];
@@ -115,6 +117,7 @@ export default {
           break;
         }
       }
+      return '';
     },
     valtVal() {
       this.err = this.schema.single(this.rule, this.showtitle);

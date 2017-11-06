@@ -379,9 +379,9 @@
             <li class="vue-editor-nav-item" @click="picshow=!picshow" :class="{active:picshow}" title="图片选择">
                 <i class="icon icon-pic-editor"></i>
             </li>
-            <li class="vue-editor-nav-item" title="图片格式">
-                <i class="icon icon-piclin"></i>
-                <div class="editor-align-pc">
+            <li class="vue-editor-nav-item" title="图片格式" >
+                <i class="icon icon-piclin" @click="operImg=!operImg"></i>
+                <div class="editor-align-pc" v-show="operImg">
                     <div class="editor-align-way">
                         <span><i title="左对齐" class="icon icon-pic-left"></i></span>
                         <span><i title="右对齐" class="icon icon-pic-right"></i></span>
@@ -407,9 +407,10 @@
             </li>
 
         </ul>
-        <div ref="content" class="content" @click="colseBox()" v-html="detail" @keydown="key($event)"
+        <div ref="content" class="content" @click="insertP()" v-html="content" @keydown="key($event)"
              @input="sendContent()" contenteditable="true" @mouseup="updatePosition" @keyup="updatePosition"
              :style="{height:editHeight}" @dragover="allowDrop($event)" @drop="drap($event)">
+
         </div>
         <section class="editor-img" v-show="picshow">
             <div class="editor-tab-img">
@@ -418,7 +419,6 @@
                 <span class="editor-title-img" :class="{active:tabimg==3}" @click="tabimg=3">网络图片</span>
             </div>
             <div class="tab1-img upload-tab" v-show="tabimg==1" @dragover="allowDrop($event)" @drop="drap($event)">
-
                 <i class="icon icon-pic-editor"></i>
                 <p class="editor-tips-upload">将图片拖拽到此处可以上传</p>
                 <label class="editor-btn-upload"><input type="file" multiple="true"/>上传图片</label>
@@ -500,7 +500,8 @@
                         height: ''
                     }
                 },
-                imgp: {}
+                imgp: {},
+                operImg:false
             }
         },
         created() {
@@ -508,11 +509,24 @@
             jscolor();
             document.addEventListener('click', function (e) {
                 var node = e.target;
-                if (node.nodeType == 3) node = node.parentNode;
+                var imgnode=node;
+                if (imgnode.nodeType == 3) imgnode = imgnode.parentNode;
             })
 
         },
-        watch: {},
+        watch: {
+          'detail': function(to, from) {
+            if(!from&&!this.getContent()){
+              this.content=to;
+            }
+            if(!to){
+                console.log(to,'---------------none');
+               this.content="";
+               this.$el.querySelector('.content').innerHTML="";
+
+            }
+          }
+        },
         methods: {
             allowDrop(event) {
                 event.preventDefault();
@@ -538,8 +552,10 @@
             },
             //设置图片尺寸
             setPic() {
+
                 this.restoreSelection();
                 const selection = window.getSelection().anchorNode;
+                console.log(selection);
                 if (selection.nodeType == 1 && selection.getAttribute('value') == "pics") {
                     selection.querySelector('img').setAttribute('width', this.pic.size.width)
                     selection.querySelector('img').setAttribute('height', this.pic.size.height);
@@ -639,10 +655,9 @@
             },
             getContent() {
                 if (this.nodes) {
-
                     return this.nodes.innerHTML;
                 } else {
-                    debugger;
+
                     return this.content;
                 }
 
@@ -691,6 +706,7 @@
                 }
 
                 this.saveRange(ev);
+
             },
             queryCommandValue: function (name) {
                 return document.queryCommandValue(name)
@@ -731,7 +747,7 @@
                 let ctrl = ev.ctrlKey;
                 let shift = ev.shiftKey;
                 let meta = ev.metaKey;
-                console.log(ev.keyCode);
+
                 if ((!alt) && (!ctrl) && (!shift)) {
                     switch (ev.keyCode) {
                         case 13:
@@ -847,12 +863,11 @@
 
                 //console.log(this.queryCommandValue('formatBlock'));
             },
-            colseBox: function () {
+            insertP: function () {
                 for (let i in this.meun) {
                     this.meun[i] = false;
                 }
                 if (this.$refs.content.innerHTML == "") {
-
                     this.$refs.content.innerHTML = "<p><br/></p>"
                 }
 

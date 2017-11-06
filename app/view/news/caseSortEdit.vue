@@ -46,12 +46,12 @@
         created() {
             let self = this;
             this.getdata();
-            delete this.$root.uievent._events['aseSortModel'];
+            delete this.$root.uievent._events['newsSortModel'];
             delete this.$root.uievent._events['close'];
-            this.$root.uievent.$on('caseSortModel', function () {
+            this.$root.uievent.$on('newsSortModel', function () {
                 self.$store.commit('uiclose', {type: 'confirm'});
                 self.$router.push({
-                    name: 'caseSort'
+                    name: 'newsSort'
                 })
             });
             this.$root.uievent.$on('close', function () {
@@ -74,7 +74,7 @@
             async getdata() {
                 this.loading = "加载中…";
                 let id = this.$route.params.id;
-                let data = await this.$ajax.post(this.Api.caseSortDetail, {
+                let data = await this.$ajax.post(this.Api.newsSortDetail, {
                     data: {_id: id},
                     token: this.$store.state.token
                 });
@@ -92,7 +92,7 @@
                     return false;
                 }
                 this.subword = "数据提交中…"
-                let data = await this.$ajax.post(this.Api.caseSortUpdate, {
+                let data = await this.$ajax.post(this.Api.newsSortUpdate, {
                     data: this.data,
                     token: this.$store.state.token
                 });
@@ -104,7 +104,7 @@
                         btnsure: '返回列表',
                         btnclose: '继续添加',
                         type: 'confirm',
-                        even: 'caseSortModel'
+                        even: 'newsSortModel'
                     });
                 } else {
                     this.tips = data.err_msg;

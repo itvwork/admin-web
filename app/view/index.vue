@@ -17,6 +17,13 @@
                     </div>
                 </div>
                 <div class="item-menu">
+                    <router-link :to="{ name:'news' }"><i class="icon-brand"></i>资讯</router-link>
+                    <div class="meun-sub">
+                        <router-link :to="{ name:'newslist' }">资讯列表</router-link>
+                        <router-link :to="{ name: 'newsSort' }">资讯分类</router-link>
+                    </div>
+                </div>
+                <div class="item-menu">
                     <router-link :to="{name:'file'}"><i class="icon-home"></i>附件管理</router-link>
                 </div>
                 <!--<div class="item-menu">-->

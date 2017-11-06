@@ -9,11 +9,24 @@ export default {
      caseAdd:url+'case/add',
      caseDetail:url+'case/detail',
      caseEdit:url+'case/updata',
+     caseDel:url+'case/del',
      caseSortAdd:url+'caseSort/add',
      caseSort:url+'caseSort/index',
      caseSortDetail:url+'caseSort/detail',
      caseSortUpdate:url+'caseSort/update',
      caseSortDel:url+'caseSort/del',
      file:url+'file',
-     uploads:url+'file/uploads'
+     uploads:url+'file/uploads',
+
+     newsList:url+'news/index',
+     newsAdd:url+'news/add',
+     newsDetail:url+'news/detail',
+     newsEdit:url+'news/updata',
+     newsDel:url+'news/del',
+     newsSortAdd:url+'newsSort/add',
+     newsSort:url+'newsSort/index',
+     newsSortDetail:url+'newsSort/detail',
+     newsSortUpdate:url+'newsSort/update',
+     newsSortDel:url+'newsSort/del'
+
 }
