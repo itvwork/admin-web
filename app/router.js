@@ -116,6 +116,8 @@ export default [{
             ]
 
         },
+
+        //新闻
         {
             name: 'news',
             path: 'news',
@@ -175,12 +177,83 @@ export default [{
                     }
                 }, {
                     name: 'editNewsSort',
-                    path: 'sort/sortSort/:id',
+                    path: 'sort/edit/:id',
                     meta: {
                         title: '修改资讯分类'
                     },
                     component: function(resolve) {
                         require(['./view/news/caseSortEdit.vue'], resolve)
+                    }
+                }
+            ]
+
+        },
+        //教程
+        {
+            name: 'teach',
+            path: 'teach',
+            meta: {
+                title: '资讯'
+            },
+            component: function(resolve) {
+                require(['./commpents/router/index-box.vue'], resolve)
+            },
+            redirect: {
+                name: 'teachlist'
+            },
+            children: [{
+                    name: 'teachlist',
+                    path: 'index',
+                    meta: {
+                        title: '教程列表'
+                    },
+                    component: function(resolve) {
+                        require(['./view/teach/index.vue'], resolve)
+                    }
+                }, {
+                    name: 'teachadd',
+                    path: 'add',
+                    meta: {
+                        title: '添加教程'
+                    },
+                    component: function(resolve) {
+                        require(['./view/teach/add.vue'], resolve)
+                    }
+                }, {
+                    name: 'teachEdit',
+                    path: 'edit/:id',
+                    meta: {
+                        title: '编辑教程'
+                    },
+                    component: function(resolve) {
+                        require(['./view/teach/caseEdit.vue'], resolve)
+                    }
+                }, {
+                    name: 'teachSort',
+                    path: 'sort',
+                    meta: {
+                        title: '教程分类'
+                    },
+                    component: function(resolve) {
+                        require(['./view/teach/sort.vue'], resolve)
+                    }
+                }, {
+                    name: 'addTeachSort',
+                    path: 'sort/add',
+                    meta: {
+                        title: '添加教程分类'
+                    },
+                    component: function(resolve) {
+                        require(['./view/teach/sortadd.vue'], resolve)
+                    }
+                }, {
+                    name: 'editTeachSort',
+                    path: 'sort/edit/:id',
+                    meta: {
+                        title: '修改资讯分类'
+                    },
+                    component: function(resolve) {
+                        require(['./view/teach/caseSortEdit.vue'], resolve)
                     }
                 }
             ]

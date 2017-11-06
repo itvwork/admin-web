@@ -48,6 +48,10 @@ export default {
     width: {
       type: String,
       default: 100
+    },
+    imgtype:{
+      type:String,
+      default:'caseSort'
     }
   },
   computed: {},
@@ -75,17 +79,17 @@ export default {
     }
   },
   methods: {
-    async upload(e) {      
+    async upload(e) {
       let img = await this.$tool.base64(1920, e.target.files);
       let result = await this.$ajax.postXhr2(this.Api.uploads, {
         token: this.$store.state.token,
         data: img,
-        type: "caseSort"
+        type: this.imgtype
       });
       if (result.err_code == 200) {
             this.cover=result.data[0]['path'];
             this.$emit("update:value", this.cover)
-            
+
       }
 
       // this.showurl = img[0]["url"];

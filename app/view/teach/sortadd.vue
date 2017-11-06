@@ -3,7 +3,7 @@
         <form-edit ref='form'>
             <input-text toggleTitle=1  title="分类名称：" tips="请输入分类名称" :value.sync="data.title" :schema="schema"
                         rule="title" tw="1rem"></input-text>
-            <code-box :value.sync="data.cover" width=200 toggleTitle=1  imgtype="icon" tw="1rem" title="分类图标<br/>(100*100)" :schema="schema"
+            <code-box :value.sync="data.cover" imgtype=200  imgurl="teachSort" width=200 toggleTitle=1   tw="1rem" title="分类图标<br/>(100*100)" :schema="schema"
                       rule="cover"></code-box>
             <div class="sub-bar" style="padding-left: 1.3rem">
                 <button class="btns btn-sub" @click="send()">{{subword}}</button>
@@ -44,11 +44,11 @@
         },
         created() {
             let self = this;
-            delete this.$root.uievent._events['newsSortModel'];
+            delete this.$root.uievent._events['teachSortModel'];
             this.$root.uievent.$on('newsSortModel', function () {
                 self.$store.commit('uiclose', {type: 'confirm'});
                 self.$router.push({
-                    name: 'newsSort'
+                    name: 'teachSort'
                 })
             });
             this.$root.uievent.$on('close', function () {
@@ -82,7 +82,7 @@
                 }
 
                 this.subword = "数据提交中…";
-                let data = await this.$ajax.post(this.Api.newsSortAdd, {data: this.data, token: this.$store.state.token});
+                let data = await this.$ajax.post(this.Api.teachSortAdd, {data: this.data, token: this.$store.state.token});
                 if (data.err_code == 200) {
                     this.$store.commit('uishow', {
                         wrap: 'success',
@@ -90,7 +90,7 @@
                         btnsure: '返回列表',
                         btnclose: '继续添加',
                         type: 'confirm',
-                        even: 'newsSortModel'
+                        even: 'teachSortModel'
                     });
                 } else {
                     this.tips = data.err_msg;

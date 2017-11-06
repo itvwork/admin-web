@@ -24,6 +24,13 @@
                     </div>
                 </div>
                 <div class="item-menu">
+                    <router-link :to="{ name:'teach' }"><i class="icon-brand"></i>网络学堂</router-link>
+                    <div class="meun-sub">
+                        <router-link :to="{ name:'teachlist' }">教程列表</router-link>
+                        <router-link :to="{ name: 'teachSort' }">教程分类</router-link>
+                    </div>
+                </div>
+                <div class="item-menu">
                     <router-link :to="{name:'file'}"><i class="icon-home"></i>附件管理</router-link>
                 </div>
                 <!--<div class="item-menu">-->

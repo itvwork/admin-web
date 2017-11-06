@@ -27,6 +27,18 @@ export default {
      newsSort:url+'newsSort/index',
      newsSortDetail:url+'newsSort/detail',
      newsSortUpdate:url+'newsSort/update',
-     newsSortDel:url+'newsSort/del'
+     newsSortDel:url+'newsSort/del',
+
+
+     teachList:url+'teach/index',
+     teachAdd:url+'teach/add',
+     teachDetail:url+'teach/detail',
+     teachEdit:url+'teach/updata',
+     teachDel:url+'teach/del',
+     teachSortAdd:url+'teachSort/add',
+     teachSort:url+'teachSort/index',
+     teachSortDetail:url+'teachSort/detail',
+     teachSortUpdate:url+'teachSort/update',
+     teachSortDel:url+'teachSort/del'
 
 }

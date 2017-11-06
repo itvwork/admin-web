@@ -54,14 +54,14 @@ export default {
   created() {
     let self = this;
     this.getSort();
-    delete this.$root.uievent._events['newsAdd'];
+    delete this.$root.uievent._events['teachAdd'];
     delete this.$root.uievent._events['close'];
-    this.$root.uievent.$on('newsAdd', function() {
+    this.$root.uievent.$on('teachAdd', function() {
       self.$store.commit('uiclose', {
         type: 'confirm'
       });
       self.$router.push({
-        name: 'news'
+        name: 'teach'
       })
     });
     this.$root.uievent.$on('close', function() {
@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     async getSort() {
-      let data = await this.$ajax.post(this.Api.newsSort, {
+      let data = await this.$ajax.post(this.Api.teachSort, {
         data: '',
         token: this.$store.state.token
       });
@@ -104,7 +104,7 @@ export default {
           return false;
       }
       this.subword = "数据提交中…"
-      let data = await this.$ajax.post(this.Api.newsAdd, {data: this.data, token: this.$store.state.token});
+      let data = await this.$ajax.post(this.Api.teachAdd, {data: this.data, token: this.$store.state.token});
       if (data.err_code == 200) {
           this.$store.commit('uishow', {
               wrap: 'success',
@@ -112,7 +112,7 @@ export default {
               btnsure: '返回列表',
               btnclose: '继续添加',
               type: 'confirm',
-              even: 'newsAdd'
+              even: 'teachAdd'
           });
       } else {
           this.tips = data.err_msg;
