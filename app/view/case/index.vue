@@ -60,7 +60,6 @@ export default {
   },
   created(){
     this.getData();
-    this.getSort();
     let self=this;
     delete this.$root.uievent._events['delCase'];
     this.$root.uievent.$on('delCase', async function(deldata) {
@@ -98,22 +97,7 @@ export default {
       this.list = list.result;
       this.rows = list.count;
     },
-    async getSort() {
-      let data = await this.$ajax.post(this.Api.caseSort, {
-        data: '',
-        token: this.$store.state.token
-      });
-      this.sort = data.data;
-
-    },
-    sortName(id){
-      for(let i = 0,len=this.sort.length;i<len;i++){
-           if(this.sort[i]['_id']==id){
-             return this.sort[i]['title'];
-             break;
-           }
-      }
-    },
+  
     async del(id) {
         this.$store.commit('uishow', {
             wrap: 'warn',
