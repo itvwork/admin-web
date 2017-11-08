@@ -46,8 +46,8 @@ export default {
       default: false
     },
     width: {
-      type: String,
-      default: 100
+      type: Number,
+      default: 1920
     },
     imgtype:{
       type:String,
@@ -69,7 +69,9 @@ export default {
       let url = JSON.parse(val)[0]["_id"];
       this.cover = "http://orvg4jqcj.bkt.clouddn.com/" + url;
       this.updateValue(url);
-    }
+    },
+
+
   },
   created() {
     if (this.showurl) {
@@ -80,7 +82,9 @@ export default {
   },
   methods: {
     async upload(e) {
-      let img = await this.$tool.base64(1920, e.target.files);
+      alert(this.width);
+
+      let img = await this.$tool.base64(this.width, e.target.files);
       let result = await this.$ajax.postXhr2(this.Api.uploads, {
         token: this.$store.state.token,
         data: img,

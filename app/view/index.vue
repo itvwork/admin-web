@@ -10,6 +10,9 @@
                     <router-link to="/admin/index"><i class="icon-home"></i>首页</router-link>
                 </div>
                 <div class="item-menu">
+                    <router-link :to="{name:'ad'}"><i class="icon-home"></i>广告管理</router-link>
+                </div>
+                <div class="item-menu">
                     <router-link :to="{ name:'case' }"><i class="icon-brand"></i>品牌案例</router-link>
                     <div class="meun-sub">
                         <router-link :to="{ name:'caselist' }">案例列表</router-link>

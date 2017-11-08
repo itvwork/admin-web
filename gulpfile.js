@@ -85,7 +85,7 @@ function connectServer(done) {
         root: dist.root,
         port:  9101,
         livereload:{
-            port:27454
+            port:28417
         },
         middleware: function(connect, opt) {
             return [rest.rester({

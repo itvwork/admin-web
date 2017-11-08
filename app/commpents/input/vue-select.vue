@@ -9,8 +9,7 @@
             </div>
         </div>
         <span v-show="false">{{findName(value)}}</span>
-
-            <em class="err-msg" v-if="err!==true">{{err}}</em>
+        <em class="err-msg" v-if="err!==true">{{err}}</em>
   </span>
     </label>
 </template>
@@ -56,6 +55,9 @@ export default {
     },
     rule: {
       default: false
+    },
+    reback:{
+      default:''
     },
     valtEvent: {
 

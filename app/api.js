@@ -39,6 +39,15 @@ export default {
      teachSort:url+'teachSort/index',
      teachSortDetail:url+'teachSort/detail',
      teachSortUpdate:url+'teachSort/update',
-     teachSortDel:url+'teachSort/del'
+     teachSortDel:url+'teachSort/del',
+
+
+
+     adList:url+'ad/index',
+     adAdd:url+'ad/add',
+     adDetail:url+'ad/detail',
+     adEdit:url+'ad/updata',
+     adDel:url+'ad/del',
+
 
 }
