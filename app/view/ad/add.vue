@@ -4,7 +4,7 @@
     <input-text toggleTitle=1 title="标题：" tips="请输入标题" :value.sync="data.title" :schema="schema" rule="title" tw="1rem"></input-text>
     <input-text toggleTitle=1 title="标题：" tips="请输入链接" :value.sync="data.link" :schema="schema" rule="link" tw="1rem"></input-text>
     <vue-select toggleTitle=1 :sort="sort" title="分类：" tips="请选择分类" :value.sync="data.classify" :schema="schema" rule="classify" tw="1rem"></vue-select>
-    <code-box :width="width" imgtype="ad" :value.sync="data.cover" toggleTitle=1 tw="1rem" title="封面:" :schema="schema" rule="cover"></code-box>
+    <code-box v-show="data.classify"  :width="width" imgtype="ad" :value.sync="data.cover" toggleTitle=1 tw="1rem" title="封面:" :schema="schema" rule="cover"></code-box>
     <div class="sub-bar" style="padding-left: 1.3rem">
       <button class="btns btn-sub" @click="send()">{{subword}}</button>
     </div>
