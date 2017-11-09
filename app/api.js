@@ -48,6 +48,11 @@ export default {
      adDetail:url+'ad/detail',
      adEdit:url+'ad/updata',
      adDel:url+'ad/del',
+     adSortAdd:url+'adSort/add',
+     adSort:url+'adSort/index',
+     adSortDetail:url+'adSort/detail',
+     adSortUpdate:url+'adSort/update',
+     adSortDel:url+'adSort/del',
 
 
 }

@@ -11,6 +11,10 @@
                 </div>
                 <div class="item-menu">
                     <router-link :to="{name:'ad'}"><i class="icon-home"></i>广告管理</router-link>
+                    <div class="meun-sub">
+                        <router-link :to="{ name:'adlist' }">广告列表</router-link>
+                        <router-link :to="{ name: 'adSort' }">广告分类</router-link>
+                    </div>
                 </div>
                 <div class="item-menu">
                     <router-link :to="{ name:'case' }"><i class="icon-brand"></i>品牌案例</router-link>

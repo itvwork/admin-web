@@ -4,19 +4,21 @@
     <table class="list-table" cellpadding="1" cellspacing="1" border="0">
         <thead>
             <tr>
-                <th>分类图标</th>
+
                 <th>分类名称</th>
+                <th>压缩宽度</th>
                 <th>添加时间</th>
                 <th>操作</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(item,index) in list">
-                <td><img width="50" height="50" :src="Api.imgurl+item.cover" /></td>
+
                 <td>{{item.title}}</td>
+                <td>{{item.width}}</td>
                 <td>{{$tool.formatDate(item.add_time)}}</td>
                 <td>
-                    <router-link :to="{ name:'editTeachSort',params:{id:item._id} }">修改</router-link>
+                    <router-link :to="{ name:'editAdSort',params:{id:item._id} }">修改</router-link>
                     <button @click="del(item._id,item.cover)">删除</button>
                 </td>
             </tr>
@@ -43,9 +45,9 @@ export default {
             btn: [{
                 type: 'link',
                 url: {
-                    name: 'addTeachSort'
+                    name: 'addAdSort'
                 },
-                name: '添加教程分类',
+                name: '添加广告分类',
                 class: 'btn-add-model'
             }],
             list: [],
@@ -57,14 +59,14 @@ export default {
     created() {
         let self = this;
         this.getData();
-        delete this.$root.uievent._events['delTeachSort'];
-        this.$root.uievent.$on('delTeachSort', async function(deldata) {
+        delete this.$root.uievent._events['delAdSort'];
+        this.$root.uievent.$on('delAdSort', async function(deldata) {
             self.num++;
             self.loading = "删除中";
             self.$store.commit('uiclose', {
                 type: 'confirm'
             });
-            let data = await this.$ajax.post(self.Api.teachSortDel, {
+            let data = await this.$ajax.post(self.Api.adSortDel, {
                 data: deldata,
                 token: self.$store.state.token
             });
@@ -81,7 +83,7 @@ export default {
 
     methods: {
         async getData() {
-            let data = await this.$ajax.post(this.Api.teachSort, {
+            let data = await this.$ajax.post(this.Api.adSort, {
                 data: '',
                 token: this.$store.state.token
             });

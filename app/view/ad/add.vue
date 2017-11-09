@@ -65,7 +65,7 @@ export default {
   },
   created() {
     let self = this;
-
+    this.getSort();
     delete this.$root.uievent._events['adAdd'];
     delete this.$root.uievent._events['close'];
     this.$root.uievent.$on('adAdd', function() {
@@ -112,6 +112,14 @@ export default {
            }
         }
      },
+     async getSort() {
+       let data = await this.$ajax.post(this.Api.adSort, {
+         data: '',
+         token: this.$store.state.token
+       });
+       this.sort = data.data;
+
+     },
     async send() {
       if (this.subword == "数据提交中…") {
           return false;
@@ -128,7 +136,7 @@ export default {
               btnsure: '返回列表',
               btnclose: '继续添加',
               type: 'confirm',
-              even: 'addAdd'
+              even: 'adAdd'
           });
       } else {
           this.tips = data.err_msg;

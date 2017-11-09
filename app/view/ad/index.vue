@@ -15,7 +15,7 @@
       <tr v-for="(item,index) in list">
         <td>{{index+1}}</td>
         <td><img width="100" :src="Api.imgurl+item.cover" /></td>
-        <td>{{sortName(item.classify)}}</td>
+        <td>{{item.docs[0].title}}</td>
         <td>{{$tool.formatDate(item.add_time)}}</td>
         <td>
         <router-link :to="{ name:'addEdit',params:{id:item._id} }">修改</router-link>

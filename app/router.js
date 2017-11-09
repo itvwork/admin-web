@@ -79,10 +79,37 @@ export default [{
                     name: 'adEdit',
                     path: 'edit/:id',
                     meta: {
-                        title: '编辑案例'
+                        title: '编辑广告'
                     },
                     component: function(resolve) {
                         require(['./view/ad/caseEdit.vue'], resolve)
+                    }
+                }, {
+                    name: 'adSort',
+                    path: 'sort',
+                    meta: {
+                        title: '广告分类'
+                    },
+                    component: function(resolve) {
+                        require(['./view/ad/sort.vue'], resolve)
+                    }
+                }, {
+                    name: 'addAdSort',
+                    path: 'sort/add',
+                    meta: {
+                        title: '添加广告分类'
+                    },
+                    component: function(resolve) {
+                        require(['./view/ad/sortadd.vue'], resolve)
+                    }
+                }, {
+                    name: 'editAdSort',
+                    path: 'sort/sortSort/:id',
+                    meta: {
+                        title: '修改广告分类'
+                    },
+                    component: function(resolve) {
+                        require(['./view/case/caseSortEdit.vue'], resolve)
                     }
                 }
             ]
