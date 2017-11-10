@@ -2,8 +2,11 @@
 <indoor>
   <form-edit ref='form'>
     <input-text toggleTitle=1 title="标题：" tips="请输入标题" :value.sync="data.title" :schema="schema" rule="title" tw="1rem"></input-text>
+    <input-text toggleTitle=1 title="作者：" tips="请输入标题" :value.sync="data.author" tw="1rem"></input-text>
+    <input-text toggleTitle=1 title="来源(链接)：" tips="请输入标题" :value.sync="data.source"  tw="1rem"></input-text>
     <vue-select toggleTitle=1 :sort="sort" title="分类：" tips="请选择分类" :value.sync="data.sort" :schema="schema" rule="sort" tw="1rem"></vue-select>
-    <code-box width=450 imgtype="cover" :value.sync="data.cover" toggleTitle=1 tw="1rem" title="封面:" :schema="schema" rule="cover"></code-box>
+
+    <textarea-edit  title="简介：" tw="1rem" toggleTitle=1 tips="请输入出简介" ></textarea-edit>
     <vue-editor :detail.sync="data.content"></vue-editor>
     <div class="sub-bar" style="padding-left: 1.3rem">
       <button class="btns btn-sub" @click="send()">{{subword}}</button>
@@ -24,10 +27,6 @@ let schema = {
   sort: {
     rule: ['require'],
     msg: ['请选择分类']
-  },
-  cover: {
-    rule: ['require'],
-    msg: ['请上传或选择图片']
   }
 };
 
@@ -40,8 +39,10 @@ export default {
     return {
       data: {
         sort: '',
-        cover: '',
-        content: ''
+        content: '',
+        author:'',
+        source:'',
+        title:''
       },
       sort: [],
       model: [],
@@ -70,9 +71,10 @@ export default {
       });
       self.data = {
         sort: '',
-        cover: '',
-        author: '',
-        content: ''
+        content: '',
+        author:'',
+        source:'',
+        title:''
       };
       self.subword = '提交'
     });

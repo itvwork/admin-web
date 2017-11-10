@@ -5,8 +5,9 @@
     <thead>
       <tr>
         <th>序号</th>
-        <th>封面</th>
+        <th>标题</th>
         <th>所属分类</th>
+        <th>来源</th>
         <th>添加时间</th>
         <th>操作</th>
       </tr>
@@ -14,8 +15,9 @@
     <tbody>
       <tr v-for="(item,index) in list">
         <td>{{index+1}}</td>
-        <td><img width="100" :src="Api.imgurl+item.cover" /></td>
-        <td>{{sortName(item.sort)}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.docs[0].title}}</td>
+        <td>{{item.author}}</td>
         <td>{{$tool.formatDate(item.add_time)}}</td>
         <td>
         <router-link :to="{ name:'caseEdit',params:{id:item._id} }">修改</router-link>
@@ -60,7 +62,7 @@ export default {
   },
   created(){
     this.getData();
-    this.getSort();
+
     let self=this;
     delete this.$root.uievent._events['delNews'];
     this.$root.uievent.$on('delNews', async function(deldata) {
@@ -98,14 +100,7 @@ export default {
       this.list = list.result;
       this.rows = list.count;
     },
-    async getSort() {
-      let data = await this.$ajax.post(this.Api.newsSort, {
-        data: '',
-        token: this.$store.state.token
-      });
-      this.sort = data.data;
-
-    },
+  
     sortName(id){
       for(let i = 0,len=this.sort.length;i<len;i++){
            if(this.sort[i]['_id']==id){

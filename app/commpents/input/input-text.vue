@@ -37,7 +37,6 @@ export default {
       default: '0'
     },
     isDisabled:{
-
       default:false
     },
     schema:{
@@ -86,7 +85,7 @@ export default {
     },
     focus(){
         this.$el.querySelector(".input-text").focus();
-        
+
     }
   }
 };
