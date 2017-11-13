@@ -24,8 +24,8 @@ module.exports = function() {
         },
         output: {
             filename: '[name].js',
-            publicPath: '/wgc/js/',
-            path: path.resolve(__dirname, 'dist/wgc/js/'),
+            publicPath: '/style/admin/js/',
+            path: path.resolve(__dirname, 'dist/style/admin/js/'),
         },
         module: {
             rules: [{
@@ -75,16 +75,16 @@ module.exports = function() {
         },
         plugins: [
             //new ExtractTextPlugin('../style/styles.css'),
-            // new webpack.optimize.UglifyJsPlugin({
-            //   compress: {
-            //     warnings: false
-            //   }
-            // }),
-            // new webpack.DefinePlugin({
-            //     'process.env': {
-            //         NODE_ENV: '"production"'
-            //     }
-            // })
+            new webpack.optimize.UglifyJsPlugin({
+              compress: {
+                warnings: false
+              }
+            }),
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: '"production"'
+                }
+            })
             //  new webpack.optimize.DedupePlugin(),//去重
             // new webpack.optimize.CommonsChunkPlugin({
             //     name: 'vendor' // 指定公共 bundle 的名字。
