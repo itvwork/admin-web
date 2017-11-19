@@ -28,7 +28,8 @@ export default [{
     component: function(resolve) {
         require(['./view/index.vue'], resolve)
     },
-    children: [{
+    children: [
+      {
             path: 'index',
             name: 'home',
             meta: {

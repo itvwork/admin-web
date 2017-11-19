@@ -33,7 +33,7 @@ import Tool from  './common/tool';
 import api from './api';
 import loading from './commpents/ui/loading.vue';
 import vueTips from './commpents/ui/vue-tips.vue';
-import VueMarkdown from 'vue-markdown';
+import VueMarkdown from './commpents/editor/vue-markdown';
 import stateManage from './modules/index';
 
 
@@ -91,7 +91,6 @@ const router = new VueRouter({
 
 var store = new Vuex.Store(stateManage);
 router.beforeEach((to,from,next)=>{
-
     if(to.fullPath.indexOf('admin')>=1){
         if (sessionStorage.getItem("itvadmintoken")) {
             next();
@@ -102,11 +101,7 @@ router.beforeEach((to,from,next)=>{
 
         }
     }
-
 });
-
-
-
 
 
 new Vue({

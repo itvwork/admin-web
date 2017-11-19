@@ -1,7 +1,8 @@
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack=require('webpack');
-module.exports =  {
+module.exports = function() {
+    return {
         "resolve": {
             "extensions": [
                 ".ts",
@@ -10,7 +11,6 @@ module.exports =  {
             ],
             "modules": [
                 "./node_modules"
-
             ],
             "symlinks": true
         },
@@ -88,3 +88,4 @@ module.exports =  {
         ]
 
     }
+}

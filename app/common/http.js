@@ -54,7 +54,7 @@ export default function (Vue, opt) {
 
                 var urldata = argUrl(data);
 
-                xmlhttp.open("POST", url.indexOf('http') >= 0 ? url : opt.url + url, true);
+                xmlhttp.open("POST", url, true);
                 //xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
                 xmlhttp.setRequestHeader("Accept", "*/*");
                 // xmlhttp.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8");
@@ -196,6 +196,3 @@ export default function (Vue, opt) {
 
 
 }
-
-
-

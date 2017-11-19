@@ -10,7 +10,7 @@
                     <router-link to="/admin/index"><i class="icon-home"></i>首页</router-link>
                 </div>
                 <div class="item-menu">
-                    <router-link :to="{name:'ad'}"><i class="icon-home"></i>广告管理</router-link>
+                    <router-link :to="{name:'ad'}"><i class="icon-ad"></i>广告管理</router-link>
                     <div class="meun-sub">
                         <router-link :to="{ name:'adlist' }">广告列表</router-link>
                         <router-link :to="{ name: 'adSort' }">广告分类</router-link>
@@ -24,14 +24,14 @@
                     </div>
                 </div>
                 <div class="item-menu">
-                    <router-link :to="{ name:'news' }"><i class="icon-brand"></i>资讯</router-link>
+                    <router-link :to="{ name:'news' }"><i class="icon-news"></i>资讯</router-link>
                     <div class="meun-sub">
                         <router-link :to="{ name:'newslist' }">资讯列表</router-link>
                         <router-link :to="{ name: 'newsSort' }">资讯分类</router-link>
                     </div>
                 </div>
                 <div class="item-menu">
-                    <router-link :to="{ name:'teach' }"><i class="icon-brand"></i>网络学堂</router-link>
+                    <router-link :to="{ name:'teach' }"><i class="icon-news"></i>网络学堂</router-link>
                     <div class="meun-sub">
                         <router-link :to="{ name:'teachlist' }">教程列表</router-link>
                         <router-link :to="{ name: 'teachSort' }">教程分类</router-link>
@@ -59,6 +59,7 @@
                 </div>
             </div>
             <i class="icon-nav" @click="navshow=!navshow"></i>
+             <i class="icon-setting" @click="navshow=!navshow"></i>
         </div>
         <section class="right-box" @click="userMess=false" ref="scroll" @scroll="scroll">
             <crumbs></crumbs>
@@ -73,25 +74,11 @@
     export default {
         data() {
             return {
-                login: {
-                    username: 'admmin',
-                    pwd: '123'
-                },
-                username: 'adminstreis',
-                navshow: true,
-                userMess: false,
-                bg: false
+
             }
         },
         created() {
-            var width = document.body.offsetWidth;
-
-            if (width <= 780) {
-                this.navshow = false;
-            } else {
-                this.navshow = true;
-            }
-
+          
         },
         mounted() {
             let self = this;

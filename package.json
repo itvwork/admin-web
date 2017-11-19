@@ -64,6 +64,7 @@
     "markdown-it-sup": "^1.0.0",
     "postcss-loader": "^2.0.8",
     "qiniu": "^6.1.13",
+    "showdown": "^1.8.2",
     "style-loader": "^0.18.1",
     "to-markdown": "^3.0.4",
     "vue": "^2.3.3",
