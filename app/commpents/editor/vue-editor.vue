@@ -418,7 +418,6 @@
                 <span class="editor-title-img" :class="{active:tabimg==2}" @click="openPic()">图片库</span>
                 <span class="editor-title-img" :class="{active:tabimg==3}" @click="tabimg=3">网络图片</span>
             </div>
-
             <div class="tab1-img upload-tab" v-show="tabimg==1" @dragover="allowDrop($event)" @drop="drap($event)">
                 <i class="icon icon-pic-editor"></i>
                 <p class="editor-tips-upload">将图片拖拽到此处可以上传</p>
@@ -431,28 +430,18 @@
                     <li class="pic-item" v-for="(item,index) in pic.data">
                         <label :class="{checked:pic.selecter.indexOf(item.path)>=0}">
                             <div class="show-img"><img :src="Api.imgurl+item.path"></div>
-                            <div class="pic-checks">
-                                <i class="icon icon-checks" :class="{active:pic.selecter.indexOf(item.path)>=0}"></i>
-                                <p>{{item.width}}*{{item.height}} </p>
+                            <div class="pic-check">
+                                <i class="icon-check" :class="{active:pic.selecter.indexOf(item.path)>=0}"></i>
+                                <p>{{item.width}}*{{item.height}}</p>
                             </div>
                             <input type="checkbox" :checked="pic.selecter.indexOf(item.path)>=0" :value="item.path"
                                    v-model="pic.selecter">
                         </label>
                     </li>
-                        <span class="vuk-deitor-loading" @click="getPics()"><i v-show="pic.more=='加载中...'"><img width="20" src="/style/admin/style/file/loading.svg" /></i>{{pic.more}}</span>
+
                 </ul>
-
                 <div class="editor-oper-bar">
-                    <button class="editor-btn-sure" @click="insertPic()">插入</button>
-
-                    <select class="type" @change="searchPic()" v-model="pic.search">
-                      <option value="0">全部</option>
-                      <option value="200-400">200-400</option>
-                      <option value="600-800">600-800</option>
-                      <option value="800-1200">800-1200</option>
-                      <option value="1200-1600">1200-1600;</option>
-                      <option value="1600">1600以上</option>
-                   </select>
+                    <button class="editor-btn-sure" @click="insertPic()">确定</button>
                 </div>
 
             </div>
@@ -476,8 +465,7 @@
             detail: {
                 type: String,
                 default: ''
-            },
-
+            }
         },
         data() {
             return {
@@ -510,9 +498,7 @@
                     size: {
                         width: '',
                         height: ''
-                    },
-                    search:'0',
-                    more:'加载更多'
+                    }
                 },
                 imgp: {},
                 operImg:false
@@ -534,7 +520,7 @@
               this.content=to;
             }
             if(!to){
-
+                console.log(to,'---------------none');
                this.content="";
                this.$el.querySelector('.content').innerHTML="";
 
@@ -542,18 +528,6 @@
           }
         },
         methods: {
-            searchPic(){
-                this.pic.page=1;
-                this.getPics();
-
-            },
-            picSize(data){
-                if(data>100&&data>100000){
-                    return (data/1024).toFixed(2)+'kb';
-                }else{
-                  return (data/(1024*1024)).toFixed(2)+'Mb';
-                }
-            },
             allowDrop(event) {
                 event.preventDefault();
             },
@@ -602,35 +576,19 @@
             },
             //获取图片列表
             async getPics() {
-                let arr=this.pic.search.split('-');
-                var search="";
-                if(arr.length>=2){
-                    search={$gt:arr[0],$lt:arr[1]}
-                }else{
-                    search={$gt:arr[0]}
-                }
-                this.pic.more="加载中...";
                 let result = await this.$ajax.post(this.Api.file, {
-                    data: {page: this.pic.page, query:{width:search}, num: 12},
+                    data: {page: 1, num: 12},
                     token: this.$store.state.token
                 });
-
-
                 if (result.err_code == 200) {
                     let list = result.data.result;
-                    if(this.pic.page>1){
-                      for (var i = 0, len = list.length; i < len; i++) {
-                          this.pic.data.push(list[i]);
-                      }
-                    }else{
-                         this.pic.data=list;
+                    for (var i = 0, len = list.length; i < len; i++) {
+                        this.pic.data.push(list[i]);
                     }
-
                     this.pic.count = result.data.count;
                     this.pic.page++;
-
+                    console.log(page);
                 }
-                  this.pic.more='加载更多';
             },
 
             openPic() {

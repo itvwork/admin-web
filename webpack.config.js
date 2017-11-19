@@ -17,7 +17,6 @@ module.exports = function() {
         },
         entry: {
             index: './app/index.js',
-
             //api:'./app/index1.js'
             // polyfill: './app/other/polyfill.js',
             // jquery:'./app/other/jquery.js'
@@ -25,7 +24,6 @@ module.exports = function() {
         },
         output: {
             filename: '[name].js',
-            //filename: '[chunkhash].js',
             publicPath: '/style/admin/js/',
             path: path.resolve(__dirname, 'dist/style/admin/js/'),
         },

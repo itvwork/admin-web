@@ -33,7 +33,7 @@ import Tool from  './common/tool';
 import api from './api';
 import loading from './commpents/ui/loading.vue';
 import vueTips from './commpents/ui/vue-tips.vue';
-import VueMarkdown from './commpents/editor/vue-markdown';
+import VueMarkdown from 'vue-markdown';
 import stateManage from './modules/index';
 
 

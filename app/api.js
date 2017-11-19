@@ -1,7 +1,7 @@
 
-let url='http://localhost:8100/api/';
+let url='http://120.78.219.106/api/';
 export default {
-     imgurl:'http://localhost:8100/images/',
+     imgurl:'/images/',
      login:url+'login',//登录 admin_name admin_password
      caseList:url+'case/index',
      caseAdd:url+'case/add',

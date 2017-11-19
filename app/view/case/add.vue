@@ -5,7 +5,6 @@
     <vue-select toggleTitle=1 :sort="sort" title="分类：" tips="请选择分类" :value.sync="data.sort" :schema="schema" rule="sort" tw="1rem"></vue-select>
     <code-box width=450 :value.sync="data.cover" toggleTitle=1 tw="1rem" title="封面:" :schema="schema" rule="cover"></code-box>
     <vue-editor :detail.sync="data.content"></vue-editor>
-    <vue-markdown source="### index"></vue-markdown>
     <div class="sub-bar" style="padding-left: 1.3rem">
       <button class="btns btn-sub" @click="send()">{{subword}}</button>
     </div>

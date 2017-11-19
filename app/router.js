@@ -29,15 +29,6 @@ export default [{
         require(['./view/index.vue'], resolve)
     },
     children: [{
-      path:'key',
-      name:'setKey',
-      meta:{
-        title:'设置网站关健字'
-      },
-      component: function(resolve) {
-          require(['./view/setting/setkey.vue'], resolve)
-      }
-    },{
             path: 'index',
             name: 'home',
             meta: {
