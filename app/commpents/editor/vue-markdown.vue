@@ -66,7 +66,7 @@
    data() {
    return {
       content: this.source,
-      picshow: true,
+      picshow: false,
       tabimg: 2,
       pic: {
         selecter: [],
