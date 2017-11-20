@@ -23,8 +23,8 @@ module.exports =  {
         },
         output: {
             filename: '[name].js',
-            publicPath: '/style/admin/js/',
-            path: path.resolve(__dirname, 'dist/style/admin/js/'),
+            publicPath: '/wgc/js/',
+            path: path.resolve(__dirname, 'dist/wgc/js/'),
         },
         module: {
             rules: [{
@@ -74,6 +74,7 @@ module.exports =  {
         },
         plugins: [
             //new ExtractTextPlugin('../style/styles.css'),
+<<<<<<< HEAD
             new webpack.optimize.UglifyJsPlugin({
               compress: {
                 warnings: false
@@ -85,6 +86,31 @@ module.exports =  {
                 }
             })
 
+=======
+            // new webpack.optimize.UglifyJsPlugin({
+            //   compress: {
+            //     warnings: false
+            //   }
+            // }),
+            // new webpack.DefinePlugin({
+            //     'process.env': {
+            //         NODE_ENV: '"production"'
+            //     }
+            // })
+            //  new webpack.optimize.DedupePlugin(),//去重
+            // new webpack.optimize.CommonsChunkPlugin({
+            //     name: 'vendor' // 指定公共 bundle 的名字。
+            // }),
+            // new webpack.optimize.UglifyJsPlugin(), //压缩js,
+            // new webpack.DefinePlugin({
+            //     'process.env.NODE_ENV': JSON.stringify('production')
+            // })
+            // new webpack.DefinePlugin({
+            //     'process.env': {
+            //         NODE_ENV: '"production"'
+            //     }
+            // }),
+>>>>>>> parent of a8c4b00... 0.2.8beta
         ]
 
     }

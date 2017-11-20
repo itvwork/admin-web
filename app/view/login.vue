@@ -1,7 +1,7 @@
 <template>
 <section class="login-bg">
     <div class="login-box">
-      dsadsadas
+      
         <!-- <h2 class="login-logo">微改车
         </h2>
         <ul class="ul-login">

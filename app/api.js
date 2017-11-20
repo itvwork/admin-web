@@ -1,7 +1,15 @@
+//let url='http://192.168.26.86/3dplay/public/'
+//let url='http://192.168.26.86/laravel/public/'
+let url='http://localhost:8099/api/';
 
+<<<<<<< HEAD
 let url='http://localhost:8100/api/';
 export default {
      imgurl:'http://localhost:8100/images/',
+=======
+export default {
+     imgurl:'http://localhost:8099/images/',
+>>>>>>> parent of a8c4b00... 0.2.8beta
      login:url+'login',//登录 admin_name admin_password
      caseList:url+'case/index',
      caseAdd:url+'case/add',
