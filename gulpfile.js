@@ -106,7 +106,7 @@ function connectServer(done) {
 }
 
 
-function watch() {
+function watch(done) {
     var wHtml = gulp.watch(src.html, gulp.series(html, reload));
     wHtml.on('change', function(event) {        // console.log(event);
         if (event.type === 'deleted') {
@@ -126,13 +126,13 @@ function watch() {
         './app/*.vue',
         './app/*.js'
     ], gulp.series(devWebpack, reload));
-      gulp.watch(src.css, gulp.parallel('css'));
-      gulp.watch(src.file, gulp.parallel('file'));
-      gulp.watch(src.other, gulp.parallel('other'));
+      gulp.watch(src.css, gulp.series(css));
+      gulp.watch(src.file, gulp.series(file));
+      gulp.watch(src.other,  gulp.series(other));
+      done();
 }
 
-
-gulp.task('css', function(done) {
+ function css(done) {
     gulp.src(src.less) //该任务针对的文件
         .pipe(less())
         //.pipe(autoprefixer())
@@ -140,33 +140,29 @@ gulp.task('css', function(done) {
         .pipe(gulp.dest(dist.css))
         .pipe(connect.reload());
     done();
-});
+};
 
-gulp.task('file', function(done) {
+ function file(done) {
     gulp.src(src.file) //该任务针对的文件
         .pipe(gulp.dest(dist.file))
         .pipe(connect.reload());
     done();
-});
-gulp.task('other', function(done) {
+};
+function other(done) {
     gulp.src(src.other) //该任务针对的文件
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest('./dist/style/admin/js/'))
         .pipe(connect.reload());
         done();
-});
+};
 
 /**
  * 刷新
  */
 
- function cssreload(){
-   return gulp.src('dist/style/')
-      .pipe(connect.reload()); //自动刷新
- }
 function reload() {
      return gulp.src('dist/')
         .pipe(connect.reload()); //自动刷新
 }
 
-gulp.task("default", gulp.series(clean,devWebpack,html,editor,'css','file','other',connectServer,watch));
+gulp.task("default", gulp.series(clean,devWebpack,html,editor,css,file,other,connectServer,watch));

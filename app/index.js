@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import routes from './router';
 import App from './app.vue';
 import Vuex from 'vuex';
-import fun from './common/fun.js';
+
 import Schema from './validator/index.js';
 import http from './common/http';
 
@@ -11,7 +11,6 @@ import http from './common/http';
 //components
 import form_edit from './commpents/form/form-edit.vue';
 import text_edit from './commpents/input/text-edit.vue';
-import editor from './commpents/editor/editor.vue';
 import textarea_edit from './commpents/input/textarea-edit.vue';
 import pic from './commpents/upload/pic.vue';
 import top from './commpents/top/top.vue';
@@ -41,7 +40,6 @@ export let Components = {
     VueSelect,
     form_edit,
     text_edit,
-    editor,
     textarea_edit,
     pic,
     top,
@@ -73,7 +71,7 @@ Vue.use(VueRouter);
 
 Vue.use(Vuex);
 
-Vue.use(http,{url:'http://192.168.26.86/3dplay/public/'});
+Vue.use(http);
 Vue.use(Tool);
 
 window.Vue = Vue || {};
@@ -82,7 +80,7 @@ window.Schema=Schema||{};
 window.Api=api;
 
 Vue.config.devtools = true;
-Vue.prototype.fun=fun;
+
 Vue.prototype.Api=api;
 
 const router = new VueRouter({
@@ -97,10 +95,7 @@ router.beforeEach((to,from,next)=>{
         if (sessionStorage.getItem("itvadmintoken")) {
             next();
         }else{
-
-           setTimeout(function(){
                next({ path: '/login' });
-           },1);
 
         }
     }
