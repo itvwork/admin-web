@@ -39,13 +39,22 @@ function clean(done) {
     done();
 }
 
+var devCompiler = devCompiler = webpack(config);
 
-function devWebpack(done){
-  webpack(config(), function(err, stats) {
-    //  compileLogger(err, stats);
+function devWebpack(done) {
+    devCompiler.run(function (err, stats) {
+        if (err) {
+            throw new gutil.PluginError("webpack:build-dev", err);
+            return;
+        }
+        gutil.log("[webpack:build-dev]", stats.toString({
+            children: false, // 关闭抽离css 插件信息
+            chunks: false, //关闭输出打包js文件名
+            colors: true //颜色
+        }));
+        done();
+    });
 
-       done();
-  });
 }
 
 
@@ -160,4 +169,4 @@ function reload() {
         .pipe(connect.reload()); //自动刷新
 }
 
-gulp.task("default", gulp.series(clean,devWebpack,html,html1,editor,'css','file','other',connectServer,watch));
+gulp.task("default", gulp.series(clean,devWebpack,html,editor,'css','file','other',connectServer,watch));

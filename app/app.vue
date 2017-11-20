@@ -1,5 +1,10 @@
 <template lang="html">
-      <router-view></router-view>
+
+  <div>dsadsad
+
+  <router-view></router-view>
+  </div>
+
 </template>
 <script>
 
