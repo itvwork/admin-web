@@ -62,6 +62,7 @@ export default {
   },
   created(){
     this.getData();
+
     let self=this;
     delete this.$root.uievent._events['delNews'];
     this.$root.uievent.$on('delNews', async function(deldata) {
@@ -99,7 +100,7 @@ export default {
       this.list = list.result;
       this.rows = list.count;
     },
-
+  
     sortName(id){
       for(let i = 0,len=this.sort.length;i<len;i++){
            if(this.sort[i]['_id']==id){
@@ -121,6 +122,7 @@ export default {
             }
         });
     }
-  }
+  },
+  events: {}
 };
 </script>

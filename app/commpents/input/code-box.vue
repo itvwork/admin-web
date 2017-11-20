@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     async upload(e) {
-      alert(this.width);
+    
 
       let img = await this.$tool.base64(this.width, e.target.files);
       let result = await this.$ajax.postXhr2(this.Api.uploads, {

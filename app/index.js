@@ -3,7 +3,6 @@ import VueRouter from 'vue-router';
 import routes from './router';
 import App from './app.vue';
 import Vuex from 'vuex';
-
 import fun from './common/fun.js';
 import Schema from './validator/index.js';
 import http from './common/http';
@@ -71,7 +70,9 @@ for(let i in Components){
 };
 
 Vue.use(VueRouter);
+
 Vue.use(Vuex);
+
 Vue.use(http,{url:'http://192.168.26.86/3dplay/public/'});
 Vue.use(Tool);
 
@@ -91,17 +92,25 @@ const router = new VueRouter({
 
 var store = new Vuex.Store(stateManage);
 router.beforeEach((to,from,next)=>{
+
     if(to.fullPath.indexOf('admin')>=1){
         if (sessionStorage.getItem("itvadmintoken")) {
             next();
         }else{
+
            setTimeout(function(){
                next({ path: '/login' });
            },1);
 
         }
     }
+    next();
+
+
 });
+
+
+
 
 
 new Vue({

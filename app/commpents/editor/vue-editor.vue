@@ -431,7 +431,7 @@
                         <label :class="{checked:pic.selecter.indexOf(item.path)>=0}">
                             <div class="show-img"><img :src="Api.imgurl+item.path"></div>
                             <div class="pic-checks">
-                                <i class="icon-checks" :class="{active:pic.selecter.indexOf(item.path)>=0}"></i>
+                                <i class="icon icon-checks" :class="{active:pic.selecter.indexOf(item.path)>=0}"></i>
                                 <p>{{item.width}}*{{item.height}}</p>
                             </div>
                             <input type="checkbox" :checked="pic.selecter.indexOf(item.path)>=0" :value="item.path"
