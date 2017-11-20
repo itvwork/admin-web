@@ -46,7 +46,7 @@ export default {
       default: false
     },
     width: {
-      type: Number,
+    
       default: 1920
     },
     imgtype:{
@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     async upload(e) {
-    
+
 
       let img = await this.$tool.base64(this.width, e.target.files);
       let result = await this.$ajax.postXhr2(this.Api.uploads, {

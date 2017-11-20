@@ -49,11 +49,7 @@ export default {
         link:''
       },
       sort: [
-        {
-          title:'首页广告',
-          _id:'HomeBanner',
-          width:1920
-        }
+        
       ],
       model: [],
       forbid: true,

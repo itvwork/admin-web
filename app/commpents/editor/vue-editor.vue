@@ -463,7 +463,7 @@
     </div>
 </template>
 <script>
-    import jscolor from './jscolor.min.js';
+    // import jscolor from './jscolor.min.js';
     export default {
         props: {
             width: {

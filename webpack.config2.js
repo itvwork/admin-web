@@ -15,6 +15,7 @@ module.exports ={
     },
     entry: {
         index: './app/index.js',
+        vendor:['./app/other/lrz.bundle.js','./app/other/polyfill.js','./app/commponents/editor/jscolor.min.js']
         //api:'./app/index1.js'
         // polyfill: './app/other/polyfill.js',
         // jquery:'./app/other/jquery.js'
