@@ -75,6 +75,7 @@ module.exports =  {
         plugins: [
             //new ExtractTextPlugin('../style/styles.css'),
 
+
             new webpack.optimize.UglifyJsPlugin({
               compress: {
                 warnings: false
@@ -110,7 +111,7 @@ module.exports =  {
             //         NODE_ENV: '"production"'
             //     }
             // }),
->>>>>>> parent of a8c4b00... 0.2.8beta
+
         ]
 
     }
