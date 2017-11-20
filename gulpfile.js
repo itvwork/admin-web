@@ -27,10 +27,10 @@ var src={
 
 var dist = {
     root: "./dist",
-    js:'./dist/wgc/js',
-    css:'./dist/wgc/style',
-    file:'./dist/wgc/style/file',
-    other:'/dist/wgc/js'
+    js:'./dist/style/admin/js',
+    css:'./dist/style/admin/style',
+    file:'./dist/style/admin/style/file',
+    other:'./dist/style/admin/js'
 
 };
 
@@ -86,7 +86,7 @@ function html1(){
 
 function editor(done){
     return gulp.src(src.editor)
-    .pipe(gulp.dest('./dist/wgc/fonts'));
+    .pipe(gulp.dest('./dist/style/admin/style/fonts'));
     done();
 }
 function connectServer(done) {
@@ -151,7 +151,7 @@ gulp.task('file', function(done) {
 gulp.task('other', function(done) {
     gulp.src(src.other) //该任务针对的文件
         .pipe(uglify())
-        .pipe(gulp.dest('./dist/wgc/js/'))
+        .pipe(gulp.dest('./dist/style/admin/js/'))
         .pipe(connect.reload());
         done();
 });
