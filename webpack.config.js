@@ -75,6 +75,7 @@ module.exports =  {
         plugins: [
             //new ExtractTextPlugin('../style/styles.css'),
 <<<<<<< HEAD
+<<<<<<< HEAD
             new webpack.optimize.UglifyJsPlugin({
               compress: {
                 warnings: false
@@ -87,6 +88,8 @@ module.exports =  {
             })
 
 =======
+=======
+>>>>>>> parent of a8c4b00... 0.2.8beta
             // new webpack.optimize.UglifyJsPlugin({
             //   compress: {
             //     warnings: false

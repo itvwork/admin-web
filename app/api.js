@@ -3,9 +3,14 @@
 let url='http://localhost:8099/api/';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 let url='http://localhost:8100/api/';
 export default {
      imgurl:'http://localhost:8100/images/',
+=======
+export default {
+     imgurl:'http://localhost:8099/images/',
+>>>>>>> parent of a8c4b00... 0.2.8beta
 =======
 export default {
      imgurl:'http://localhost:8099/images/',
