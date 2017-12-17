@@ -1,6 +1,10 @@
 <template>
     <section @resize="size($event)" class="wrap-box" @dragleave="dragleave($event)" @drop="drop($event)"
              @dragenter="dragenter($event)" @dragover="dragover($event)">
+              <alert></alert>
+        <confirm></confirm>
+        <vue-tips></vue-tips>
+        <loading></loading>
         <div class="left-box-meun" v-show="navshow">
             <div class="logo-admin">
                 微改车
@@ -64,8 +68,7 @@
             <crumbs></crumbs>
             <router-view></router-view>
         </section>
-        <alert></alert>
-        <confirm></confirm>
+       
     </section>
 </template>
 

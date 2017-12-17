@@ -1,53 +1,68 @@
+
 <template>
-    <section class="ui" v-if="ui.show">
-        <div class="ui-wrap" :class="ui.wrap" draggable="true">
+    <section class="ui" v-show="toggole">
+        <div class="ui-wrap" :class="{warn:warn=='warn',success:warn=='success'}"  draggable="true">
             <div class="ui-outdoor">
                 <em class="ui-icon ui-icon-close" @click="close()"></em>
                 <div class="ui-top">
                     <p class="ui-icon ui-icon-title"></p>
-                    <h2 v-if="ui.title">{{ui.title}}</h2>
-                    <p class="ui-words">{{ui.word}}</p>
+                    <h2 v-if="title">{{title}}</h2>
+                    <p class="ui-words">{{info}}</p>
                 </div>
                 <div class="ui-btn-group">
-                    <button class="btn-sure" @click="sure()">{{ui.btnsure}}</button>
-                    <button class="btn-cancel" @click="closebox()">{{ui.btnclose}}</button>
+                    <button class="btn-sure" @click="sure()">{{btnsure}}</button>
+                    <button class="btn-cancel" @click="close()">{{btnclose}}</button>
                 </div>
             </div>
         </div>
-        <div class="bg" v-show="ui.bg" @click="close()"></div>
+        <div class="bg" v-show="bg" @click="close()"></div>
     </section>
 </template>
+
 <script>
-    import {mapState} from 'vuex';
-
     export default {
-        computed: {
-            ...mapState({
-                ui: state => state.ui.confirm
-            })
-        },
+       
         data() {
-
-            return {}
+            return {
+                title: '',
+                info: '',
+                bg: false,
+                btnsure: '确定',
+                btnclose: '关闭',
+                toggole: false,
+                sureFun:'',
+                part:'',
+                warn:'warn',
+                cancel:'',
+                            
+            }
         },
         created() {
-
+             ui['confirm'] = this;
         },
         methods: {
-            closebox: function () {
-
-                if (this.ui.isclose) {
-                    this.ui.show = false;
-                    this.ui.bg = false;
+            show(data) {
+                this.title = data['title'] ? data['title'] : "";
+                this.info = data['info'] ? data['info'] : "";
+                this.bg = data['bg'] ? data['bg'] : true;
+                this.btnsure = data['btnsure'] ? data['btnsure'] : '确定';
+                this.btnclose = data['btnclose'] ? data['btnclose'] : '关闭';
+                this.warn = data['warn'] ? data['warn'] : 'warn';
+                this.toggole=true;
+                this.sureFun=data['fun'];
+                this.part=data['part'];
+                this.cancel=data['cancel']?data['cancel']:'';
+            },
+            sure() {
+                
+                this.sureFun(this.part);    
+            },
+            close() {
+                this.bg=false;
+                this.toggole=false;
+                if(typeof this.cancel==='function'){
+                    this.cancel();
                 }
-                this.$root.uievent.$emit(this.ui.evenclose, 1);
-            },
-            close: function () {
-                this.ui.show = false;
-                this.ui.bg = false;
-            },
-            sure: function () {
-                this.$root.uievent.$emit(this.ui.even, this.ui.data);
             }
 
         }

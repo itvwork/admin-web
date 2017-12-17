@@ -1,40 +1,37 @@
 
 <template>
-<section class="ui" v-if="ui.show">
-<div class="ui-wrap" :class="ui.wrap" draggable="true">
+<section class="ui" v-if="toggle">
+<div class="ui-wrap" :class="wrap" draggable="true">
     <div class="ui-outdoor">
         <em class="ui-icon ui-icon-close" @click="closebox()"></em>
         <div class="ui-top">
             <p class="ui-icon ui-icon-title"></p>
-            <h2>{{ui.title}}</h2>
-            <p class="ui-words">{{ui.word}}</p>
+            <h2>{{title}}</h2>
+            <p class="ui-words">{{info}}</p>
         </div>
         <div class="ui-btn-group">
             <button class="btn-alert" @click="sure()">确定</button>
         </div>
     </div>
   </div>
-  <div class="bg" v-if="ui.bg" @click="closebox()"></div>
+  <div class="bg" v-if="bg" @click="closebox()"></div>
   </section>
 </template>
 <script>
-    import { mapState } from 'vuex';
+
 
 export default {
-    computed: {
-        ...mapState({
-            ui: state=> state.ui.alert
-        })
-    },
-
     data() {
-
         return {
-
+            toggle:false,
+            wrap:'warn',
+            title:'确定要删除',
+            info:'删除后将不可恢复',
+            bg:false
         }
     },
-    created() {
-
+    created(){
+         ui['alert']=this;
     },
     methods: {
         closebox: function() {
@@ -44,6 +41,9 @@ export default {
             this.$root.uievent.$emit(this.ui.even);
 
         },
+        show(data){
+
+        }
     }
 };
 </script>

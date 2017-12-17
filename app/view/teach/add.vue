@@ -4,12 +4,13 @@
     <input-text toggleTitle=1 title="标题：" tips="请输入标题" :value.sync="data.title" :schema="schema" rule="title" tw="1rem"></input-text>
     <vue-select toggleTitle=1 :sort="sort" title="分类：" tips="请选择分类" :value.sync="data.sort" :schema="schema" rule="sort" tw="1rem"></vue-select>
     <code-box width=450 imgtype="cover" :value.sync="data.cover" toggleTitle=1 tw="1rem" title="封面:" :schema="schema" rule="cover"></code-box>
-    <vue-editor :detail.sync="data.content"></vue-editor>
+    <textarea-edit tw="1rem"  title="标签：" tips="请输入课程简介" :value.sync="data.info" ></textarea-edit>
+    <vuk-node toggleTitle=1 title="标签：" tw="1rem"  :value.sync="data.tags" ></vuk-node>
     <div class="sub-bar" style="padding-left: 1.3rem">
       <button class="btns btn-sub" @click="send()">{{subword}}</button>
     </div>
   </form-edit>
-  <vue-tips :tips.sync="tips" v-if="tips"></vue-tips>
+
 </indoor>
 </template>
 <script>
@@ -41,7 +42,8 @@ export default {
       data: {
         sort: '',
         cover: '',
-        content: ''
+        info: '',
+        tags:['none.js','javascript','vue','react']
       },
       sort: [],
       model: [],

@@ -114,6 +114,7 @@ export default {
         token: this.$store.state.token
       });
       if (data.err_code == 200) {
+
         this.$store.commit('uishow', {
           wrap: 'success',
           title: '添加成功,返回列表,或继续添加',

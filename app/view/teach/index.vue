@@ -18,14 +18,13 @@
         <td>{{sortName(item.sort)}}</td>
         <td>{{$tool.formatDate(item.add_time)}}</td>
         <td>
-        <router-link :to="{ name:'teachEdit',params:{id:item._id} }">修改</router-link>
+          <router-link :to="{ name:'teachEdit',params:{id:item._id} }">修改</router-link>
           <button @click="del(item._id)">删除</button>
-          </td>
+        </td>
       </tr>
     </tbody>
   </table>
-  <loading v-show="loading" :loading="loading"></loading>
-  <vue-tips v-if="tips" :tips.sync="tips"></vue-tips>
+
   <page ref="page" sub=10 v-if="rows>10" :rows.sync="rows"></page>
 </indoor>
 </template>
@@ -46,46 +45,46 @@ export default {
         name: '添加教程',
         class: 'btn-add-model'
       }],
-      list:[],
+      list: [],
       tips: '',
       rows: 0,
-      loading:'',
-      sort:''
+      loading: '',
+      sort: ''
     }
   },
-  watch:{
+  watch: {
     '$route': function(to, from) {
-        this.getData();
+      this.getData();
     }
   },
-  created(){
+  created() {
     this.getData();
     this.getSort();
-    let self=this;
+    let self = this;
     delete this.$root.uievent._events['delTeach'];
     this.$root.uievent.$on('delTeach', async function(deldata) {
-        self.loading = "删除中";
-        self.$store.commit('uiclose', {
-            type: 'confirm'
-        });
-        let data = await this.$ajax.post(self.Api.teachDel, {
-            data: deldata,
-            token: self.$store.state.token
-        });
-        if (data.err_code == 200) {
-            self.loading = "";
-            self.tips = "删除成功";
-            self.getData();
-        } else {
-            self.loading = "";
-            self.tips = "删除失败，已经删除，或不存在";
-        }
+      self.loading = "删除中";
+      self.$store.commit('uiclose', {
+        type: 'confirm'
+      });
+      let data = await this.$ajax.post(self.Api.teachDel, {
+        data: deldata,
+        token: self.$store.state.token
+      });
+      if (data.err_code == 200) {
+        self.loading = "";
+        self.tips = "删除成功";
+        self.getData();
+      } else {
+        self.loading = "";
+        self.tips = "删除失败，已经删除，或不存在";
+      }
     })
 
   },
   methods: {
     async getData(page) {
-      this.loading = "加载中…";
+      ui.loading.show("加载中…");
       let data = await this.$ajax.post(this.Api.teachList, {
         data: {
           page: this.$route.query.page ? this.$route.query.page : 1,
@@ -93,7 +92,7 @@ export default {
         },
         token: this.$store.state.token
       });
-      this.loading = false;
+      ui.loading.close();
       let list = data.data;
       this.list = list.result;
       this.rows = list.count;
@@ -106,28 +105,41 @@ export default {
       this.sort = data.data;
 
     },
-    sortName(id){
-      for(let i = 0,len=this.sort.length;i<len;i++){
-           if(this.sort[i]['_id']==id){
-             return this.sort[i]['title'];
-             break;
-           }
+    sortName(id) {
+      for (let i = 0, len = this.sort.length; i < len; i++) {
+        if (this.sort[i]['_id'] == id) {
+          return this.sort[i]['title'];
+          break;
+        }
       }
     },
     async del(id) {
-        this.$store.commit('uishow', {
-            wrap: 'warn',
-            title: '警告',
-            word: '是否删除该案例',
-            type: 'confirm',
-            even: 'delTeach',
-            isclose: true,
-            data: {
-                _id: id
-            }
-        });
+      ui.confirm.show({
+        info: "警告",
+        title: "你确定删除",
+        bg: true,
+        fun: this.deldata,
+        part: id,
+        warn: "warn"
+      });
+    },
+    async deldata(id) {
+      let self = this;
+      ui.confirm.close();
+      ui.loading.show("删除中…");
+      let data = await this.$ajax.post(self.Api.teachDel, {
+        data: deldata,
+        token: self.$store.state.token
+      });
+      if (data.err_code == 200) {
+
+        ui.tips.show("删除成功");
+        self.getData();
+      } else {
+        ui.tips.show("删除失败，已经删除，或不存在");
+      }
+      ui.loading.close();
     }
-  },
-  events: {}
+  }
 };
 </script>

@@ -1,12 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './router';
+
+
 import App from './app.vue';
 import Vuex from 'vuex';
 
 import Schema from './validator/index.js';
 import http from './common/http';
-
+window.ui = {};
 
 //components
 import form_edit from './commpents/form/form-edit.vue';
@@ -33,6 +35,7 @@ import loading from './commpents/ui/loading.vue';
 import vueTips from './commpents/ui/vue-tips.vue';
 import VueMarkdown from './commpents/editor/vue-markdown';
 import stateManage from './modules/index';
+import VukNode from './commpents/input/vuk-node';
 
 
 
@@ -58,7 +61,8 @@ export let Components = {
     loading,
     vueTips,
     VueMarkdown,
-    VueSelect
+    VueSelect,
+    VukNode
 
 };
 
