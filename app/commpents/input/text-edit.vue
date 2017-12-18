@@ -1,12 +1,12 @@
 <template>
 <label class="row-label">
-  <span class="row-title" v-if="toggleTitle==1" :style="{width:tw}">{{title}}</span>
-  <span class="text-outdoor">
+  <div class="row-title" v-if="toggleTitle==1" :style="{width:tw}">{{title}}</div>
+  <div class="text-outdoor">
       <input :type="inputType"  class="input-text" :placeholder="tips" ref="input"  :value="value"  @input="updateValue($event.target.value)"  />
       <i class="clear-word"  @click="clear()" v-if="value&&(type!='password')"></i>
       <i :class="{'icon-view-pwd':(inputType=='password'),'icon-hide-pwd':(inputType!='password')}"  v-if="value&&(type=='password')"   @click="inputType!='password'?inputType='password':inputType='text' "></i>
       <em class="err-msg">帐号错误</em>
-  </span>
+  </div>
 
 </label>
 </template>

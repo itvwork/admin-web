@@ -1,16 +1,14 @@
 <template>
-  <label class="row-label">
-    <span class="row-title" v-if="toggleTitle==1" :style="{width:tw}">{{title}}</span>
-    <span class="text-outdoor">
-        <!-- <em v-for="(item,index) in showtitle" class="vuk-node-item" >
-          <i class="icon btn-del"></i>
-          <input type="text" v-model="showtitle[index]" />
-        </em> -->
-        <div v-for="(item,index) in showtitle" v-model="showtitle[index]">
-
+  <div class="row-label">
+    <div class="row-title" v-if="toggleTitle==1" :style="{width:tw}">{{title}}</div>
+    <div class="text-outdoor">
+        <div   class="vuk-node-tips" v-for="(item,index) in showtitle" v-model="showtitle[index]">
+            <span contenteditable="true" @keydown="changeVal($event,index)">{{item}}</span>
+            <i class="icon icon-closex" @dblclick="del(index)"></i>
         </div>
-    </span>
-  </label>
+        <button @click="add" class="picon icon-plus btn-vuk-node-tips"></button>
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -104,6 +102,25 @@ export default {
     showErr(err) {
       this.err = err;
     },
+    changeVal(e,i){
+
+        if(e.keyCode==13){
+            e.preventDefault();
+        }
+        console.log(e.keyCode=="");
+      console.log(e.target.innerHTML.replace(/<\/?.+?>/ig,""));
+      this.showtitle[i]=e.target.innerHTML.replace(/<\/?.+?>/ig,"");
+
+    },
+    add(){
+      this.showtitle.push('标签名')
+    },
+    del(index){
+
+      this.showtitle.splice(index,1);
+      console.log(this.showtitle);
+
+    }
   }
 
 };

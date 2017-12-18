@@ -1,7 +1,7 @@
 <template>
 <label class="row-label">
-        <span class="row-title" v-if="toggleTitle==1" :style="{width:tw}">{{title}}</span>
-        <span class="text-outdoor">
+        <div class="row-title" v-if="toggleTitle==1" :style="{width:tw}">{{title}}</div>
+        <div class="text-outdoor">
         <div class="vue-select" @click="option=!option">
             <input type="text" :placeholder="tips"  readonly="readonly" @input="valtVal()"  v-model="showtitle">
             <div class="vue-option" v-show="option" :class="{up:seat,down:!seat}">
@@ -10,7 +10,7 @@
         </div>
         <span v-show="false">{{findName(value)}}</span>
         <em class="err-msg" v-if="err!==true">{{err}}</em>
-  </span>
+  </div>
     </label>
 </template>
 

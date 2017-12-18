@@ -1,11 +1,10 @@
 <template>
 <label class="row-label">
-  <span class="row-title" :style="{width:tw}">{{title}}</span>
-  <span class="text-outdoor" >
+  <div class="row-title" :style="{width:tw}">{{title}}</div>
+  <div class="text-outdoor" >
       <textarea  class="vue-textarea" :placeholder="tips"  :id="id" ref="textarea"   :value="value"  @input="updateValue($event.target.value)"></textarea>
             <em class="err-msg"  v-if="err!==true">{{err}}</em>
-  </span>
-
+  </div>
 </label>
 </template>
 <script>
