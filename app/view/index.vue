@@ -1,7 +1,7 @@
 <template>
     <section @resize="size($event)" class="wrap-box" @dragleave="dragleave($event)" @drop="drop($event)"
              @dragenter="dragenter($event)" @dragover="dragover($event)">
-              <alert></alert>
+        <alert></alert>
         <confirm></confirm>
         <vue-tips></vue-tips>
         <loading></loading>
@@ -68,7 +68,7 @@
             <crumbs></crumbs>
             <router-view></router-view>
         </section>
-       
+
     </section>
 </template>
 

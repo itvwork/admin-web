@@ -1,5 +1,9 @@
 <template>
 <section class="login-bg">
+  <alert></alert>
+  <confirm></confirm>
+  <vue-tips></vue-tips>
+  <loading></loading>
     <div class="login-box">
         <h2 class="login-logo">微改车
         </h2>

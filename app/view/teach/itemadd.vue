@@ -42,9 +42,8 @@ export default {
     }
   },
   created() {
-    let self = this;
-    this.getSort();
-    
+
+
 
   },
   watch: {
@@ -66,15 +65,19 @@ export default {
 
     },
     async send() {
-      // if (this.subword == "数据提交中…") {
-      //     return false;
-      // }
+      if (this.subword == "数据提交中…") {
+          return false;
+      }
       if (!this.schema.allvalt()) {
           return false;
       }
-      // this.subword = "数据提交中…"
-      let data = await this.$ajax.post(this.Api.teachAdd, {data: this.data, token: this.$store.state.token});
-        
+
+      this.subword = "数据提交中…"
+      let data = await this.$ajax.post(this.Api.lessionAdd, {data: this.data, token: this.$store.state.token});
+      this.subword = "提交";
+
+
+
       }
 
   },

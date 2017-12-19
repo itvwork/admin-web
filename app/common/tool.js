@@ -36,17 +36,17 @@ export default function(Vue, opt) {
           let index1 = imgname.lastIndexOf(".");
           let index2 = imgname.length;
           imgname = imgname.substring(index1 + 1, index2); //后缀名
-          let type = "";
+          let type = "image/png";
 
           switch (imgname) {
             case 'gif':
-              type = 'image/gif'
+              type = 'images/gif'
               break;
             case 'png':
               type = 'image/png';
               break;
             case 'jps':
-              type = 'image/jps';
+              type = 'image/jpeg';
               break;
             default:
               type = 'image/jpeg';

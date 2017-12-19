@@ -6,7 +6,7 @@
       <tr>
         <th>序号</th>
         <th>封面</th>
-        <th>所属分类</th>
+        <th>查看次数</th>
         <th>添加时间</th>
         <th>操作</th>
       </tr>
@@ -14,8 +14,8 @@
     <tbody>
       <tr v-for="(item,index) in list">
         <td>{{index+1}}</td>
-        <td><img width="100" :src="Api.imgurl+item.cover" /></td>
-        <td>{{sortName(item.sort)}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.view}}</td>
         <td>{{$tool.formatDate(item.add_time)}}</td>
         <td>
           <router-link :to="{ name:'teachEdit',params:{id:item._id} }">修改</router-link>
@@ -44,8 +44,8 @@ export default {
           name: 'addchapter',
            params:this.$route.params.id
         },
-        name: '添加教程',
-       
+        name: '添加章节',
+
         class: 'btn-add-model'
       }],
       list: [],
@@ -61,24 +61,25 @@ export default {
     }
   },
   created() {
-
+    this.getData();
   },
   methods: {
-    async getData(page) {
-        
+    async getData() {
+        let data = await this.$ajax.post(this.Api.lessionList,{data:{pid:this.$route.params.id}, token: this.$store.state.token});
+        this.list=data.data;
     },
     async getSort() {
-   
+
 
     },
     sortName(id) {
-      
+
     },
     async del(id) {
-      
+
     },
     async deldata(id) {
-     
+
     }
   }
 };

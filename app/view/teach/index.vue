@@ -61,26 +61,7 @@ export default {
   created() {
     this.getData();
     this.getSort();
-    let self = this;
-    delete this.$root.uievent._events['delTeach'];
-    this.$root.uievent.$on('delTeach', async function(deldata) {
-      self.loading = "删除中";
-      self.$store.commit('uiclose', {
-        type: 'confirm'
-      });
-      let data = await this.$ajax.post(self.Api.teachDel, {
-        data: deldata,
-        token: self.$store.state.token
-      });
-      if (data.err_code == 200) {
-        self.loading = "";
-        self.tips = "删除成功";
-        self.getData();
-      } else {
-        self.loading = "";
-        self.tips = "删除失败，已经删除，或不存在";
-      }
-    })
+
 
   },
   methods: {
@@ -124,12 +105,12 @@ export default {
         warn: "warn"
       });
     },
-    async deldata(id) {
+    async deldata(deldata) {
       let self = this;
       ui.confirm.close();
       ui.loading.show("删除中…");
       let data = await this.$ajax.post(self.Api.teachDel, {
-        data: deldata,
+        data: {_id:deldata},
         token: self.$store.state.token
       });
       if (data.err_code == 200) {

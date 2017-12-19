@@ -492,7 +492,7 @@
             }
             function g(e, t, r) {
                 var i = "";
-                for (n = t; n < t + r; n++) i += String.fromCharCode(e.getUint8(n));
+                for (let n = t; n < t + r; n++) i += String.fromCharCode(e.getUint8(n));
                 return i
             }
             function p(e, t) {

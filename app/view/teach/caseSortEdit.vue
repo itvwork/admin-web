@@ -5,12 +5,11 @@
             <code-box :value.sync="data.cover" toggleTitle=1 width=200  imgtype="icon" tw="1rem" title="分类图标<br/>(100*100)":schema="schema"
                       rule="cover"></code-box>
             <div class="sub-bar" style="padding-left: 1.3rem">
-              <router-link :to="{ name:'caseEdit',params:{id:item._id} }">修改</router-link>
+
                 <button class="btns btn-sub" @click="send()">{{subword}}</button>
             </div>
         </form-edit>
-        <loading v-show="loading" :loading="loading"></loading>
-        <vue-tips v-if="tips" :tips.sync="tips"></vue-tips>
+
     </indoor>
 </template>
 <script>
@@ -30,8 +29,7 @@
             return {
                 data: {
                     title: '',
-                    cover: '',
-                    _id: this.$route.params.id
+                    cover: ''
                 },
                 loading: "",
                 tips: "",
@@ -44,22 +42,22 @@
         created() {
             let self = this;
             this.getdata();
-            delete this.$root.uievent._events['teachSortModel'];
-            delete this.$root.uievent._events['close'];
-            this.$root.uievent.$on('teachSortModel', function () {
-                self.$store.commit('uiclose', {type: 'confirm'});
-                self.$router.push({
-                    name: 'teachSort'
-                })
-            });
-            this.$root.uievent.$on('close', function () {
-                self.$store.commit('uiclose', {type: 'confirm'});
-                self.data = {
-                    title: "",
-                    cover: '',
-                };
-                self.subword = '提交'
-            });
+            // delete this.$root.uievent._events['teachSortModel'];
+            // delete this.$root.uievent._events['close'];
+            // this.$root.uievent.$on('teachSortModel', function () {
+            //     self.$store.commit('uiclose', {type: 'confirm'});
+            //     self.$router.push({
+            //         name: 'teachSort'
+            //     })
+            // });
+            // this.$root.uievent.$on('close', function () {
+            //     self.$store.commit('uiclose', {type: 'confirm'});
+            //     self.data = {
+            //         title: "",
+            //         cover: '',
+            //     };
+            //     self.subword = '提交'
+            // });
         },
         watch: {
             '$route': function (to, from) {
@@ -70,7 +68,7 @@
         },
         methods: {
             async getdata() {
-                this.loading = "加载中…";
+                ui.loading.show("加载中…");
                 let id = this.$route.params.id;
                 let data = await this.$ajax.post(this.Api.teachSortDetail, {
                     data: {_id: id},
@@ -80,7 +78,7 @@
                     this.data = data.data[0];
                  ;
                 }
-                this.loading = "";
+                ui.loading.close();
             },
             async send() {
                 if (this.subword == "数据提交中…") {
@@ -94,21 +92,21 @@
                     data: this.data,
                     token: this.$store.state.token
                 });
-
-                if (data.err_code == 200) {
-                    this.$store.commit('uishow', {
-                        wrap: 'success',
-                        title: '添加成功,返回列表,或继续添加',
-                        btnsure: '返回列表',
-                        btnclose: '继续添加',
-                        type: 'confirm',
-                        even: 'teachSortModel'
-                    });
-                } else {
-                    this.tips = data.err_msg;
-                    this.subword = '提交';
-                }
-            }
+                  
+            //     if (data.err_code == 200) {
+            //         this.$store.commit('uishow', {
+            //             wrap: 'success',
+            //             title: '添加成功,返回列表,或继续添加',
+            //             btnsure: '返回列表',
+            //             btnclose: '继续添加',
+            //             type: 'confirm',
+            //             even: 'teachSortModel'
+            //         });
+            //     } else {
+            //         this.tips = data.err_msg;
+            //         this.subword = '提交';
+            //     }
+          }
         }
     };
 </script>

@@ -88,20 +88,32 @@ export default {
             this.list = data.data;
         },
         async del(id, cover) {
-            this.$store.commit('uishow', {
-                wrap: 'warn',
-                title: '警告',
-                word: '是否删除该分类',
-                type: 'confirm',
-                even: 'delTeachSort',
-                isclose: true,
-                data: {
-                    _id: id,
-                    cover: cover
-                }
-            });
-            //            let data=await this.$ajax.post(this.Api.storelist,{id:id,token:this.$store.state.token});
-            //            console.log(data);
+          ui.confirm.show({
+            info: "警告",
+            title: "你确定删除",
+            bg: true,
+            fun: this.deldata,
+            part:  {
+                _id: id,
+                cover: cover
+            },
+            warn: "warn"
+          });
+        },
+        async deldata(deldata){
+            ui.loading.show("删除中");
+          let data = await this.$ajax.post(self.Api.teachSortDel, {
+              data: deldata,
+              token: this.$store.state.token
+          });
+          if (data.err_code == 200) {
+              ui.loading.close();
+              ui.tips.show("删除成功");
+              this.getData();
+          } else {
+              ui.loading.close();
+              ui.tips.show("删除失败，已经删除，或不存在");
+          }
         }
     },
     events: {}
