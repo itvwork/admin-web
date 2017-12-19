@@ -5,6 +5,7 @@
     <vue-select toggleTitle=1 :sort="sort" title="分类：" tips="请选择分类" :value.sync="data.sort" :schema="schema" rule="sort" tw="1rem"></vue-select>
     <code-box width=450 imgtype="cover" :value.sync="data.cover" toggleTitle=1 tw="1rem" title="封面:" :schema="schema" rule="cover"></code-box>
     <textarea-edit tw="1rem"  title="标签：" tips="请输入课程简介" :value.sync="data.info" ></textarea-edit>
+    <textarea-edit tw="1rem"  title="知识点：" tips="请输入讲到知识点" :value.sync="data.knowledge" ></textarea-edit>
     <vuk-node toggleTitle=1 title="标签：" tw="1rem"  :value.sync="data.tags" ></vuk-node>
     <div class="sub-bar" style="padding-left: 1.3rem">
       <button class="btns btn-sub" @click="send()">{{subword}}</button>
@@ -40,10 +41,12 @@ export default {
   data() {
     return {
       data: {
+        title:'ui设计课程',
         sort: '',
         cover: '',
-        info: '',
-        tags:['none.js','javascript','vue','react']
+        info: 'ui设计课程ui设计课程ui设计课程ui设计课程',
+        tags:['none.js','javascript','vue','react'],
+        knowledge:'vue,angular,js,app'
       },
       sort: [],
       model: [],
@@ -56,28 +59,28 @@ export default {
   created() {
     let self = this;
     this.getSort();
-    delete this.$root.uievent._events['teachAdd'];
-    delete this.$root.uievent._events['close'];
-    this.$root.uievent.$on('teachAdd', function() {
-      self.$store.commit('uiclose', {
-        type: 'confirm'
-      });
-      self.$router.push({
-        name: 'teach'
-      })
-    });
-    this.$root.uievent.$on('close', function() {
-      self.$store.commit('uiclose', {
-        type: 'confirm'
-      });
-      self.data = {
-        sort: '',
-        cover: '',
-        author: '',
-        content: ''
-      };
-      self.subword = '提交'
-    });
+    // delete this.$root.uievent._events['teachAdd'];
+    // delete this.$root.uievent._events['close'];
+    // this.$root.uievent.$on('teachAdd', function() {
+    //   self.$store.commit('uiclose', {
+    //     type: 'confirm'
+    //   });
+    //   self.$router.push({
+    //     name: 'teach'
+    //   })
+    // });
+    // this.$root.uievent.$on('close', function() {
+    //   self.$store.commit('uiclose', {
+    //     type: 'confirm'
+    //   });
+    //   self.data = {
+    //     sort: '',
+    //     cover: '',
+    //     author: '',
+    //     content: ''
+    //   };
+    //   self.subword = '提交'
+    // });
 
   },
   watch: {
@@ -99,30 +102,30 @@ export default {
 
     },
     async send() {
-      if (this.subword == "数据提交中…") {
-          return false;
-      }
+      // if (this.subword == "数据提交中…") {
+      //     return false;
+      // }
       if (!this.schema.allvalt()) {
           return false;
       }
-      this.subword = "数据提交中…"
+      // this.subword = "数据提交中…"
       let data = await this.$ajax.post(this.Api.teachAdd, {data: this.data, token: this.$store.state.token});
-      if (data.err_code == 200) {
-          this.$store.commit('uishow', {
-              wrap: 'success',
-              title: '添加成功,返回列表,或继续添加',
-              btnsure: '返回列表',
-              btnclose: '继续添加',
-              type: 'confirm',
-              even: 'teachAdd'
-          });
-      } else {
-          this.tips = data.err_msg;
-          this.subword="提交";
+    //   if (data.err_code == 200) {
+    //       this.$store.commit('uishow', {
+    //           wrap: 'success',
+    //           title: '添加成功,返回列表,或继续添加',
+    //           btnsure: '返回列表',
+    //           btnclose: '继续添加',
+    //           type: 'confirm',
+    //           even: 'teachAdd'
+    //       });
+    //   } else {
+    //       this.tips = data.err_msg;
+    //       this.subword="提交";
+    //   }
       }
-     }
 
   },
-  events: {}
+
 };
 </script>

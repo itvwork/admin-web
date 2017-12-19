@@ -66,9 +66,14 @@ export default {
     }
   },
   watch: {
-    'vaule': function(val, old) {
-      this.valtVal();
-      this.findName();
+    'value': function(val, old) {
+        if(val.length<=0){
+          this.showtitle=val;
+        }
+        if(old.length<=0){
+            this.showtitle=val;
+        }
+
     }
   },
   created() {
@@ -79,21 +84,8 @@ export default {
   },
   methods: {
     updateValue(index) {
-      this.$emit('update:value', this.sort[index]._id);
-      this.showtitle = this.sort[index].title;
-      this.option = false;
+      this.$emit('update:value', this.showtitle);
       this.valtVal();
-    },
-    findName() {
-
-      for (let i = 0, len = this.sort.length; i < len; i++) {
-        if (this.sort[i]['_id'] == this.value) {
-          this.showtitle = this.sort[i]['title'];
-          return this.sort[i]['title'];
-          break;
-        }
-      }
-      return '';
     },
     valtVal() {
       this.err = this.schema.single(this.rule, this.showtitle);
@@ -103,23 +95,16 @@ export default {
       this.err = err;
     },
     changeVal(e,i){
-
         if(e.keyCode==13){
             e.preventDefault();
         }
-        console.log(e.keyCode=="");
-      console.log(e.target.innerHTML.replace(/<\/?.+?>/ig,""));
       this.showtitle[i]=e.target.innerHTML.replace(/<\/?.+?>/ig,"");
-
     },
     add(){
       this.showtitle.push('标签名')
     },
     del(index){
-
       this.showtitle.splice(index,1);
-      console.log(this.showtitle);
-
     }
   }
 

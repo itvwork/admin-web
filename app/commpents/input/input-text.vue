@@ -10,6 +10,7 @@
 </label>
 </template>
 <script>
+
 export default {
   props: {
     value: {

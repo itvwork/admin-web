@@ -27,7 +27,6 @@ export default {
      newsSortUpdate:url+'newsSort/update',
      newsSortDel:url+'newsSort/del',
 
-
      teachList:url+'teach/index',
      teachAdd:url+'teach/add',
      teachDetail:url+'teach/detail',
@@ -38,8 +37,6 @@ export default {
      teachSortDetail:url+'teachSort/detail',
      teachSortUpdate:url+'teachSort/update',
      teachSortDel:url+'teachSort/del',
-
-
 
      adList:url+'ad/index',
      adAdd:url+'ad/add',
