@@ -28,12 +28,14 @@
         this.now = this.$route.meta.title;
         let urllist = this.$route.matched;
         let len = urllist.length;
+        console.log(urllist);
+        console.log(this.$route.params);
         if (len > 1) {
           for (let i = 0; i < len - 1; i++) {
             if (urllist[i]['meta']['title'] != this.now) {
               this.crumb.push({
                 path: urllist[i]['path'],
-                title: urllist[i]['meta']['title']
+                title: urllist[i]['meta']['title'],
               })
             }
           }
