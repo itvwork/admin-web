@@ -24,10 +24,6 @@
         </tbody>
     </table>
 
-
-    <loading v-show="loading" :loading="loading"></loading>
-    <vue-tips v-if="tips" :tips.sync="tips"></vue-tips>
-
 </indoor>
 </template>
 
@@ -55,28 +51,9 @@ export default {
         }
     },
     created() {
-        let self = this;
+      
         this.getData();
-        delete this.$root.uievent._events['delTeachSort'];
-        this.$root.uievent.$on('delTeachSort', async function(deldata) {
-            self.num++;
-            self.loading = "删除中";
-            self.$store.commit('uiclose', {
-                type: 'confirm'
-            });
-            let data = await this.$ajax.post(self.Api.teachSortDel, {
-                data: deldata,
-                token: self.$store.state.token
-            });
-            if (data.err_code == 200) {
-                self.loading = "";
-                self.tips = "删除成功";
-                self.getData();
-            } else {
-                self.loading = "";
-                self.tips = "删除失败，已经删除，或不存在";
-            }
-        })
+
     },
 
     methods: {

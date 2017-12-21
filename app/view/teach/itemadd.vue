@@ -7,7 +7,6 @@
       <button class="btns btn-sub" @click="send()">{{subword}}</button>
     </div>
   </form-edit>
-
 </indoor>
 </template>
 <script>
@@ -42,7 +41,7 @@ export default {
     }
   },
   created() {
-
+      
 
 
   },
