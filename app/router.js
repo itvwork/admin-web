@@ -59,7 +59,7 @@ export default [{
             },
             children: [{
                 name: 'adlist',
-                path: 'index',
+                path: '',
                 meta: {
                     title: '广告列表'
                 },
@@ -130,7 +130,7 @@ export default [{
             },
             children: [{
                     name: 'caselist',
-                    path: 'index',
+                    path: '',
                     meta: {
                         title: '案例列表'
                     },
@@ -203,7 +203,7 @@ export default [{
             },
             children: [{
                 name: 'newslist',
-                path: 'index',
+                path: '',
                 meta: {
                     title: '资讯列表'
                 },
@@ -273,7 +273,7 @@ export default [{
             },
             children: [{
                     name: 'teachlist',
-                    path: 'index',
+                    path: '',
                     meta: {
                         title: '教程列表'
                     },

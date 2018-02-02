@@ -94,10 +94,11 @@ export default {
       });
       this.loading = false;
       let list = data.data;
+    
       this.list = list.result;
       this.rows = list.count;
     },
-  
+
     async del(id) {
         this.$store.commit('uishow', {
             wrap: 'warn',

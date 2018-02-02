@@ -2,12 +2,10 @@
 <indoor>
     <form-edit ref='form'>
       <input-text toggleTitle=1 title="店铺名称："  tips="请输入店铺名称"  :value.sync="shop.store_name"  :schema="schema" rule="store_name"  tw="1rem"></input-text>
-        <input-text toggleTitle=1 title="联系人(可不填)："  tips="请输入联系人姓名"  :value.sync="shop.store_contact" tw="1rem"></input-text>
-
+      <input-text toggleTitle=1 title="联系人(可不填)："  tips="请输入联系人姓名"  :value.sync="shop.store_contact" tw="1rem"></input-text>
       <input-text toggleTitle=1 title="电话号码："  tips="请输入联系电话"  :value.sync="shop.store_phone" :schema="schema" rule="store_phone" tw="1rem"></input-text>
       <input-text toggleTitle=1 title="店面地址：" ref='addr'  tips="请输入地址至少要到区"  :value.sync="shop.store_address" :schema="schema" rule="store_address"  tw="1rem"></input-text>
-      <code-box  :value.sync="shop.store_ewm"   toggleTitle=1  tw="1rem" title="上传二维码"   ></code-box>
-
+      <code-box  :value.sync="shop.store_ewm"   toggleTitle=1  tw="1rem" title="上传二维码"></code-box>
         <div class="sub-bar" style="padding-left: 1.3rem">
             <button  class="btns btn-sub" @click="send()">{{subword}}</button>
         </div>

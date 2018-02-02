@@ -1,3 +1,4 @@
+
 export default function(Vue, opt) {
   Vue.prototype.$tool = {
     formatDate: function(arg) {
@@ -139,4 +140,6 @@ export default function(Vue, opt) {
 
     }
   }
+
+
 }

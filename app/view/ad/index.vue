@@ -62,11 +62,12 @@
     },
     created() {
       this.getData();
-
+    
     },
     mounted() {},
     methods: {
       async getData(page) {
+
         ui.loading.show("加载中…");
         let data = await this.$ajax.post(this.Api.adList, {
           data: {
@@ -99,7 +100,7 @@
         });
       },
       async deldata(id) {
-      
+
         ui.loading.show("删除中…");
         ui.confirm.close();
         let data = await this.$ajax.post(self.Api.adDel, {

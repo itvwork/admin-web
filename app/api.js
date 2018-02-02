@@ -1,9 +1,9 @@
 
-let url='http://localhost:8099/api/';
+let url='http://localhost:8099/apiadmin/';
 export default {
     imgurl:'http://localhost:8099/images/',
      login:url+'login',//登录 admin_name admin_password
-     caseList:url+'case/index',
+     caseList:url+'case/list',
      caseAdd:url+'case/add',
      caseDetail:url+'case/detail',
      caseEdit:url+'case/updata',
@@ -13,10 +13,10 @@ export default {
      caseSortDetail:url+'caseSort/detail',
      caseSortUpdate:url+'caseSort/update',
      caseSortDel:url+'caseSort/del',
-     file:url+'file',
-     uploads:url+'file/uploads',
+     file:url+'images/list',
+     uploads:url+'images/uploads',
 
-     newsList:url+'news/index',
+     newsList:url+'news/list',
      newsAdd:url+'news/add',
      newsDetail:url+'news/detail',
      newsEdit:url+'news/updata',

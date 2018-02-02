@@ -122,13 +122,10 @@ Validator.prototype = {
         for(let i =0 ; i<child.length;i++){
             if(child[i].rule){
                 if(child[i].valtVal()!==true&&oneerr===true){
-                    console.log(child[i]);
+                    
                     child[i].focus();
-
                     oneerr=false;
                 }
-
-
             }
         }
         if(oneerr===true){

@@ -65,6 +65,7 @@ export default {
 
   },
   methods: {
+
     updateValue: function(value) {
        if(this.schema){
           this.err=this.schema.single(this.rule,value);
@@ -86,7 +87,6 @@ export default {
     },
     focus(){
         this.$el.querySelector(".input-text").focus();
-
     }
   }
 };

@@ -11,7 +11,7 @@
             </div>
             <menu>
                 <div class="item-menu">
-                    <router-link to="/admin/index"><i class="icon-home"></i>首页</router-link>
+                    <router-link :to="{name:'home'}"><i class="icon-home"></i>首页</router-link>
                 </div>
                 <div class="item-menu">
                     <router-link :to="{name:'ad'}"><i class="icon-ad"></i>广告管理</router-link>

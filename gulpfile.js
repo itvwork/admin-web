@@ -40,7 +40,6 @@ function clean(done) {
 }
 
 var devCompiler = devCompiler = webpack(config);
-
 function devWebpack(done) {
     devCompiler.run(function (err, stats) {
         if (err) {

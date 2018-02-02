@@ -1,6 +1,7 @@
 export default function (Vue, opt) {
     Vue.prototype.$ajax = {
         post: function (url, data) {
+
             function argUrl(obj) {
                 var result = [];
 
@@ -42,13 +43,12 @@ export default function (Vue, opt) {
                 ;
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        let as = JSON.parse(xmlhttp.responseText)
-                        if (as.state == 2) {
-                            sessionStorage.setItem("wgctokens", '');
-                            sessionStorage.setItem("wgc_admin_username", '');
-                            location.reload();
+                        try{
+                            resolve(JSON.parse(xmlhttp.responseText));
+                        }catch(e){
+                            resolve(xmlhttp.responseText);
                         }
-                        resolve(JSON.parse(xmlhttp.responseText));
+
                     }
                 };
 
