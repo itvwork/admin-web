@@ -62,19 +62,20 @@
     },
     created() {
       this.getData();
-    
+
     },
     mounted() {},
     methods: {
       async getData(page) {
 
         ui.loading.show("加载中…");
-        let data = await this.$ajax.post(this.Api.adList, {
+        let data= await this.$ajax.rsapost(this.Api.adList, {
           data: {
             page: this.$route.query.page ? this.$route.query.page : 1,
             num: 10
           },
           token: this.$store.state.token
+
         });
         ui.loading.close();
         let list = data.data;
@@ -100,20 +101,19 @@
         });
       },
       async deldata(id) {
-
         ui.loading.show("删除中…");
         ui.confirm.close();
-        let data = await this.$ajax.post(self.Api.adDel, {
+        let data = await this.$ajax.rsapost(self.Api.adDel, {
           data:{
             _id:id
           },
           token: this.$store.state.token
         });
         if (data.err_code == 200) {
-          self.tips = "删除成功";
-          self.getData();
+          this.tips = "删除成功";
+          this.getData();
         } else {
-          self.tips = "删除失败，已经删除，或不存在";
+          this.tips = "删除失败，已经删除，或不存在";
         }
         ui.loading.close();
       }
