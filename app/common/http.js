@@ -63,9 +63,24 @@ export default function(Vue, opt) {
         },
 
         postXhr2: function(url, context) {
+
+            context={
+              rsas:{
+                token:context.token,
+                timetemp:this.time(),
+                type:context.type
+              },
+              data:JSON.stringify(context.data)
+            };
+            var rsa = this.publicKey();
+            var jsencrypt = new JSEncrypt();
+            jsencrypt.setPublicKey(rsa);
+            context.rsas = jsencrypt.encrypt(JSON.stringify(context.rsas), 'base64');
+
+
+
             function argUrl(obj) {
                 var result = [];
-
                 function argFormat(obj, name) {
                     if (typeof obj === "object") {
                         for (let i in obj) {
@@ -114,7 +129,6 @@ export default function(Vue, opt) {
                         }
                         return past;
                     } else {
-
                         return obj;
                     };
                 }
@@ -187,7 +201,7 @@ export default function(Vue, opt) {
         rsapost: function(url, data) {
             var self=this;
             data = JSON.stringify(data);
-            var rsa = '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAydjYzX9HlsMBzN8ij73xY40tj7QPzGfsrSrT81Lruv90qn+o3J/ppK+prOuFVMMGV0vna8tu+BnBw8GsKbHLSU9dcSMyGcRL/IHo0aRZ7WCDKvTZeKSJtS3Qn8ltUflDe1DW3d9vlvHEV8trkQiY4YpZ/ZgTk0v7tREOqgbAiu0W4wEKLAavqUPtyUQFj0bAa46wrH86boZMr1leGD8cueoK1M9Idom6i213UpOpbMKOfpLz0QWT5y52qseTJ/IpivTvq+lDcNxNx1kNLrMWQsTKgbHC9Y9SQMF9ArcY661So/bAi5n+3h62+FpY+1ce4+qSHJo67S+VA7yGh33S2wIDAQAB-----END PUBLIC KEY-----'
+            var rsa = this.publicKey();
             var jsencrypt = new JSEncrypt();
             jsencrypt.setPublicKey(rsa);
             var rsas = jsencrypt.encrypt(data, 'base64');
@@ -275,6 +289,14 @@ export default function(Vue, opt) {
             }
 
             return argFormat(obj);
+        },
+        time:function() {
+          return parseInt(new Date().getTime() / 1000);
+        },
+        publicKey:function(){
+          var rsa = '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAydjYzX9HlsMBzN8ij73xY40tj7QPzGfsrSrT81Lruv90qn+o3J/ppK+prOuFVMMGV0vna8tu+BnBw8GsKbHLSU9dcSMyGcRL/IHo0aRZ7WCDKvTZeKSJtS3Qn8ltUflDe1DW3d9vlvHEV8trkQiY4YpZ/ZgTk0v7tREOqgbAiu0W4wEKLAavqUPtyUQFj0bAa46wrH86boZMr1leGD8cueoK1M9Idom6i213UpOpbMKOfpLz0QWT5y52qseTJ/IpivTvq+lDcNxNx1kNLrMWQsTKgbHC9Y9SQMF9ArcY661So/bAi5n+3h62+FpY+1ce4+qSHJo67S+VA7yGh33S2wIDAQAB-----END PUBLIC KEY-----'
+
+          return rsa;
         }
 
 

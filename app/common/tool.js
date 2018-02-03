@@ -138,6 +138,9 @@ export default function(Vue, opt) {
       });
       return this.array_remove_repeat(diff.concat(tmp));
 
+    },
+    time:function() {
+      return parseInt(new Date().getTime() / 1000);
     }
   }
 
