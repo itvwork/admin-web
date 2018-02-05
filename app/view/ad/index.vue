@@ -75,12 +75,20 @@
             num: 10
           },
           token: this.$store.state.token
-
         });
         ui.loading.close();
         let list = data.data;
         this.list = list.result;
         this.rows = list.count;
+         await this.$ajax.post('http://localhost:8099/plane/city/index', {
+             data: {
+                 flightType: 1,
+                 departCity: 'CAN',
+                 arriveCity: 'SHA',
+                 departDate: '2018-05-23',
+                 classType: 0
+             }
+         });
       },
       sortName(id) {
         for (let i = 0, len = this.sort.length; i < len; i++) {
