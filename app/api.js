@@ -1,7 +1,8 @@
 
 let url='http://localhost:8099/apiadmin/';
 export default {
-    imgurl:'http://localhost:8099/images/',
+     imgurl:'http://localhost:8099/images/',
+     reg:url+'reg/admin',
      login:url+'login/index',//登录 admin_name admin_password
      caseList:url+'case/list',
      caseAdd:url+'case/add',

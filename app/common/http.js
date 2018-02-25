@@ -1,10 +1,8 @@
 export default function(Vue, opt) {
     Vue.prototype.$ajax = {
         post: function(url, data) {
-
             function argUrl(obj) {
                 var result = [];
-
                 function argFormat(obj, name) {
                     if (typeof obj === "object") {
                         for (let i in obj) {
@@ -15,8 +13,6 @@ export default function(Vue, opt) {
                                     result.push(name + "[" + i + "]" + '=' + encodeURIComponent(obj[i]));
                                 } else {
                                     result.push(i + '=' + encodeURIComponent(obj[i]));
-
-
                                 }
                             }
                         }
@@ -25,12 +21,20 @@ export default function(Vue, opt) {
                         result += obj;
                         return result;
                     };
-
                 }
-
                 return argFormat(obj);
-
             };
+
+            try{
+              data.rsa=JSON.stringify(data.rsa);
+              var rsa='-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAydjYzX9HlsMBzN8ij73xY40tj7QPzGfsrSrT81Lruv90qn+o3J/ppK+prOuFVMMGV0vna8tu+BnBw8GsKbHLSU9dcSMyGcRL/IHo0aRZ7WCDKvTZeKSJtS3Qn8ltUflDe1DW3d9vlvHEV8trkQiY4YpZ/ZgTk0v7tREOqgbAiu0W4wEKLAavqUPtyUQFj0bAa46wrH86boZMr1leGD8cueoK1M9Idom6i213UpOpbMKOfpLz0QWT5y52qseTJ/IpivTvq+lDcNxNx1kNLrMWQsTKgbHC9Y9SQMF9ArcY661So/bAi5n+3h62+FpY+1ce4+qSHJo67S+VA7yGh33S2wIDAQAB-----END PUBLIC KEY-----'
+              var jsencrypt = new JSEncrypt();
+              jsencrypt.setPublicKey(rsa);
+              var rsas=jsencrypt.encrypt(data.rsa,'base64');
+              data.rsa=rsas;
+            }catch(e){
+              console.log(e);
+            }
 
             return new Promise(function(resolve, reject) {
                 var xmlhttp;
@@ -46,7 +50,6 @@ export default function(Vue, opt) {
                         } catch (e) {
                             resolve(xmlhttp.responseText);
                         }
-
                     }
                 };
 
@@ -76,9 +79,6 @@ export default function(Vue, opt) {
             var jsencrypt = new JSEncrypt();
             jsencrypt.setPublicKey(rsa);
             context.rsas = jsencrypt.encrypt(JSON.stringify(context.rsas), 'base64');
-
-
-
             function argUrl(obj) {
                 var result = [];
                 function argFormat(obj, name) {
