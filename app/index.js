@@ -29,7 +29,7 @@ import code_box from './commpents/input/code-box';
 import input_text from './commpents/input/input-text';
 import VueSelect from './commpents/input/vue-select';
 import search from './commpents/meun/search';
-import Tool from  './common/tool';
+import Tool from './common/tool';
 import api from './api';
 import loading from './commpents/ui/loading.vue';
 import vueTips from './commpents/ui/vue-tips.vue';
@@ -66,9 +66,9 @@ export let Components = {
 
 };
 
-for(let i in Components){
-  let name = i.replace('_', '-');
-  Vue.component(name,Components[i]);
+for (let i in Components) {
+    let name = i.replace('_', '-');
+    Vue.component(name, Components[i]);
 };
 
 Vue.use(VueRouter);
@@ -79,28 +79,29 @@ Vue.use(http);
 Vue.use(Tool);
 
 window.Vue = Vue || {};
-window.Vuex=Vuex || {};
-window.Schema=Schema||{};
-window.Api=api;
+window.Vuex = Vuex || {};
+window.Schema = Schema || {};
+window.Api = api;
 
 Vue.config.devtools = true;
 
-Vue.prototype.Api=api;
+Vue.prototype.Api = api;
 
 const router = new VueRouter({
-     //mode: 'history',
+    //mode: 'history',
     routes
 })
 
 var store = new Vuex.Store(stateManage);
-router.beforeEach((to,from,next)=>{
+router.beforeEach((to, from, next) => {
 
-    if(to.fullPath.indexOf('admin')>=1){
-        if (sessionStorage.getItem("itvadmintoken")) {
+    if (to.fullPath.indexOf('admin') >= 1) {
+        if (sessionStorage.getItem("itvusername")) {
             next();
-        }else{
-               next({ path: '/login' });
-
+        } else {
+            next({
+                path: '/login'
+            });
         }
     }
     next();
@@ -117,7 +118,7 @@ new Vue({
     store,
     router: router,
     render: h => h(App),
-    data:{
-        uievent:new Vue()
+    data: {
+        uievent: new Vue()
     }
 })

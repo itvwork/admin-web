@@ -18,7 +18,6 @@
                         return false;
                     }
                 } catch (e) {
-                  
                     return str;
                 }
             }

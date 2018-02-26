@@ -6,8 +6,7 @@ export default {
         meun:0,
         bg:false,
         loading:0,
-        token:VukTook.getSession("itvadmintoken"),
-        admin:sessionStorage.getItem("itvusername")
+        user:VukTook.getSession("itvusername")
     },
     modules: {
         ui,

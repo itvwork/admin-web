@@ -13,7 +13,7 @@
             <li class="item-login"><input v-model="sub.pwd" class="input-login" type="password" placeholder="请输入登录密码" /></li>
         </ul>
         <div class="btn-box">
-            <button class="btn btn-login" @click="reg()">{{stateWord}}</button>
+            <button class="btn btn-login" @click="submit()">{{stateWord}}</button>
         </div>
         <vue-tips :tips.sync="err_msg" v-if="err_msg"></vue-tips>
     </div>
@@ -37,7 +37,7 @@ export default {
         return {
             sub: {
                 username: 'admin',
-                pwd: '123456'
+                pwd: 'Admin147'
             },
             stateWord: '登录',
             err_msg: '',
@@ -71,23 +71,17 @@ export default {
             this.state = 0;
 
 
-            let ret = await this.$ajax.post(this.Api.login, this.sub);
+            let ret = await this.$ajax.post(this.Api.login, {rsa:this.sub});
             if (ret.err_code == 200) {
-                sessionStorage.setItem("itvadmintoken", ret.data.token);
-                sessionStorage.setItem("itvusername", ret.data.username);
-                this.$store.state.token = ret.data.token;
-                this.$store.state.admin = ret.data.username;
+                VukTook.setSession('itvusername',ret.data)
+                this.$store.state.user = ret.data;
                 this.$router.push({
                     name: 'home'
                 });
             } else {
                 this.err_msg = ret.err_msg;
             }
-        },
-        async reg() {
-            let ret = await this.$ajax.post(this.Api.reg, {rsa:{username:'admin',pwd:'Admin147'}});
         }
-
     },
     events: {
 

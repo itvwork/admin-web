@@ -83,9 +83,10 @@ export default {
 
     methods: {
         async getData() {
-            let data = await this.$ajax.post(this.Api.adSort, {
+            let data = await this.$ajax.post(this.Api.adSort, {rsa:{
                 data: '',
-                token: this.$store.state.token
+                token: this.$store.state.user.token
+              }
             });
             this.list = data.data;
         },
