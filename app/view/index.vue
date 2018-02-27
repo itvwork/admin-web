@@ -5,7 +5,7 @@
     <vue-tips></vue-tips>
     <loading></loading>
     <div class="left-box-meun" v-show="navshow">
-        <div class="logo-admin">
+        <div class="logo-admin" @click="message">
             微改车
         </div>
         <menu ref="meun">
@@ -116,7 +116,7 @@ export default {
         let self = this;
         window.onresize = function temp() {
             var width = document.body.offsetWidth;
-            console.log(width);
+
             if (width <= 780) {
                 self.navshow = false;
             } else {
@@ -124,6 +124,9 @@ export default {
             }
         };
         this.meun();
+        this.$on('close',function(value){
+            alert(value);
+        })
 
 
     },
@@ -184,6 +187,9 @@ export default {
         },
         scroll(e) {
             this.$root.uievent.$emit("scroll", e);
+        },
+        message(){
+          this.$vuk.message();
         }
 
     },

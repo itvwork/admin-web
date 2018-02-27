@@ -114,7 +114,7 @@ function watch(done) {
         }
     });
     gulp.watch([
-        './app/commpents/**/*.vue',
+        './app/commpents/**/*',
         './app/view/**/*.vue',
         './app/view1/**/*.vue',
         './app/**/*.js',

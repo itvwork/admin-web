@@ -8,6 +8,8 @@ import Vuex from 'vuex';
 
 import Schema from './validator/index.js';
 import http from './common/http';
+import Vuk from './commpents';
+import './style/styles.less'
 window.ui = {};
 
 //components
@@ -72,11 +74,10 @@ for (let i in Components) {
 };
 
 Vue.use(VueRouter);
-
 Vue.use(Vuex);
-
 Vue.use(http);
 Vue.use(Tool);
+Vue.use(Vuk.install);
 
 window.Vue = Vue || {};
 window.Vuex = Vuex || {};

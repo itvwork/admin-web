@@ -28,6 +28,7 @@
     "del": "^2.2.2",
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^1.1.10",
     "github-markdown-css": "^2.6.0",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-autoprefixer": "^3.1.0",
@@ -44,16 +45,18 @@
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.7",
     "gulp-webpack": "^1.5.0",
-    "highlight.js": "^9.11.0",
+    "highlight.js": "^9.12.0",
     "jquery": "^3.2.1",
     "karma": "^1.7.1",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "less-plugin-clean-css": "^1.5.1",
+    "moment": "^2.18.1",
     "postcss-loader": "^2.0.8",
     "showdown": "^1.8.2",
     "style-loader": "^0.18.1",
     "to-markdown": "^3.0.4",
+    "url-loader": "^0.6.2",
     "vue": "^2.3.3",
     "vue-cli": "^2.8.2",
     "vue-loader": "^12.1.1",
@@ -61,13 +64,7 @@
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "vuex": "^2.3.1",
-    "webpack": "^2.6.1",
-    "moment": "^2.18.1",
-    "highlight.js": "^9.12.0"
+    "webpack": "^2.6.1"
   },
-  "dependencies": {
-
-
-
-  }
+  "dependencies": {}
 }
