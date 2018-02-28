@@ -21,12 +21,23 @@ const Message = function(options) {
   instance.vm.visible = true;
   document.body.appendChild(instance.vm.$el);
   instance.vm.onClose=function(id){
-
+      Message.close(id)
   }
   instance.dom = instance.vm.$el;
   instances.push(instance);
   return instance.vm;
 };
+Message.close=function(id){
+      for(let i=0,l=instances.length;i<l;i++){
+          if(instances[i].index==id){
+              instances.splice(i,1);
+              break;
+          }
+      }
+}
 
+Message.closeAll=function(id){
+  
+}
 
 export default Message;

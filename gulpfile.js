@@ -114,16 +114,8 @@ function watch(done) {
         }
     });
     gulp.watch([
-        './app/commpents/**/*',
-        './app/view/**/*.vue',
-        './app/view1/**/*.vue',
-        './app/**/*.js',
-        './app/*.html',
-        './app/commpents/editor/**/*',
-        './app/common/**/*',
-        './app/validator/**/*',
-        './app/*.vue',
-        './app/*.js'
+        './app/**/*',
+
     ], gulp.series(devWebpack, reload));
       gulp.watch(src.css, gulp.series(css));
       gulp.watch(src.file, gulp.series(file));

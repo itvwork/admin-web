@@ -189,7 +189,9 @@ export default {
             this.$root.uievent.$emit("scroll", e);
         },
         message(){
-          this.$vuk.message();
+          this.$vuk.message({
+              word:'有消息'
+          });
         }
 
     },

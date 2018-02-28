@@ -1,8 +1,8 @@
 <template>
-  <transition  enter-active-class="animated tada"
-    leave-active-class="animated bounceOutRight" @after-leave="destroyElement()">
+  <transition  enter-active-class="atm messageIn"
+    leave-active-class="atm messageOut" @after-leave="destroyElement()">
     <div class="vuk-message-box" :style="{'z-index':index}"  @click="close" v-show="visible">
-          中华人民------------
+          {{word}}
     </div>
   </transition>
 </template>
@@ -14,9 +14,12 @@
     left: 50%;
     top: 20px;
     .tranxy(-50%,0);
-    transition: transform .3s;
+    background-color:lighten(@blue,32%);
+    padding: 10px;
+    .border-radius(0,6px);
+    border: solid 1px lighten(@gray,70%);
+    min-width: 100px;
   }
-
 
 </style>
 <script>
@@ -27,14 +30,16 @@
         visible:false,
         onClose:null,
         top:'0px',
-        index:2000
+        index:2000,
+        word:'',
+        speed:3000
       }
     },
     mounted(){
-      let self=this;
-      // setTimeout(()=>{
-      //   this.close()
-      // },3000);
+
+      setTimeout(()=>{
+        this.close()
+      },this.speed);
     },
     methods:{
       close(){
@@ -43,7 +48,7 @@
       destroyElement() {
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
-          this.onClose(this.index);
+        this.onClose(this.index);
       }
     }
   };
