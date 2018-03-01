@@ -38,6 +38,7 @@
 
 }
 
+
 .ui-btn-group{ text-align: center; padding-top: .12rem;
   button{ background:  @wranColor; border: none;  color: @white; padding: 0.06rem .31rem; .border-radius(0,.24rem)}
   .btn-sure{  margin-right: .36rem;}
@@ -69,7 +70,7 @@
 
 
 
-.bg { background-color: rgba(0,0,0,0.4); position: fixed; top: 0px; bottom: 0px; left: 0px; right: 0px;
+.ui-bg { background-color: rgba(0,0,0,0.4); position: fixed; top: 0px; bottom: 0px; left: 0px; right: 0px;
 z-index: 999;
 }
 
@@ -79,5 +80,7 @@ z-index: 999;
   .loading-img{ margin: auto; width: 40px; height: 40px; background: url(file/load.png); background-size: 100%;animation: loading 1s linear infinite;}
   p{ text-align: center;}
 }
-
-
+.vuk-tran{
+  position: fixed;   transform: translate(-50%,-50%);
+  left: 50%; top: 50%; z-index: 2001
+}

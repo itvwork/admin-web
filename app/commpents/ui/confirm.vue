@@ -21,7 +21,7 @@
 
 <script>
     export default {
-       
+
         data() {
             return {
                 title: '',
@@ -34,28 +34,16 @@
                 part:'',
                 warn:'warn',
                 cancel:'',
-                            
+
             }
         },
         created() {
-             ui['confirm'] = this;
+
         },
         methods: {
-            show(data) {
-                this.title = data['title'] ? data['title'] : "";
-                this.info = data['info'] ? data['info'] : "";
-                this.bg = data['bg'] ? data['bg'] : true;
-                this.btnsure = data['btnsure'] ? data['btnsure'] : '确定';
-                this.btnclose = data['btnclose'] ? data['btnclose'] : '关闭';
-                this.warn = data['warn'] ? data['warn'] : 'warn';
-                this.toggole=true;
-                this.sureFun=data['fun'];
-                this.part=data['part'];
-                this.cancel=data['cancel']?data['cancel']:'';
-            },
             sure() {
-                
-                this.sureFun(this.part);    
+
+                this.sureFun(this.part);
             },
             close() {
                 this.bg=false;

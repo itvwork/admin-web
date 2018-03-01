@@ -1,4 +1,6 @@
-import Message from './alert'
+import Message from './alert';
+import Confirm from './confirm';
+import Circle from './circle';
 const components = [
   Message
 ];
@@ -8,7 +10,9 @@ const install = function(Vue, opts = {}) {
     Vue.component(component.name, component);
   });
   Vue.prototype.$vuk ={
-    message:Message
+    message:Message,
+    confirm:Confirm,
+    circle:Circle
   };
 };
 

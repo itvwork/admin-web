@@ -189,9 +189,15 @@ export default {
             this.$root.uievent.$emit("scroll", e);
         },
         message(){
-          this.$vuk.message({
-              word:'有消息'
-          });
+          // this.$vuk.message({
+          //     word:'提交错误',
+          //     style:'danger',
+          //     autoClose:false
+          // });
+          // let confirm=this.$vuk.confirm({
+          //   style:'success'
+          // });
+          this.$vuk.circle();
         }
 
     },
