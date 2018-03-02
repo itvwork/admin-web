@@ -1,5 +1,13 @@
 
 export default function(Vue, opt) {
+    Vue.directive('touch',{
+      bind(el,binding,vnode){
+          console.log(vnode);
+      },
+      inserted(){
+
+      }
+    });
     Vue.prototype.$tool = {
         formatDate: function(arg) {
             var now = new Date(parseInt(arg) * 1000)

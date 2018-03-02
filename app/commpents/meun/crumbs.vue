@@ -1,6 +1,6 @@
 <template>
-  <div class="crumbs" v-if="isShow">
-    <router-link v-for="(item,index) in crumb" :to="{path:item.path}">{{item.title}}</router-link>
+  <div class="crumbs" v-show="isShow">
+    <router-link v-for="(item,index) in crumb" :to="{path:item.path}" >{{item.title}}</router-link>
     <span>{{now}}</span>
   </div>
 </template>

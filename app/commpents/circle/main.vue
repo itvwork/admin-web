@@ -12,8 +12,8 @@
     <div class="vuk-circle-percent" :style="{'font-szie':fontsize}">{{word}}</div>
 </div>
 </template>
-<style lang="less">@import "../const.less";
-
+<style lang="less">
+@import "../const.less";
 .vuk-circle-percent{
   position: absolute;
   .tranxy(-50%,-50%);
@@ -40,7 +40,7 @@ export default {
             w: '100px',
             h: '100px',
             type: '',
-            sent:20,
+            sent:80,
             word:'进度文字',
             fontsize:'16px'
         }

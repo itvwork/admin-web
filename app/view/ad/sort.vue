@@ -19,7 +19,8 @@
                 <td>{{$tool.formatDate(item.add_time)}}</td>
                 <td>
                     <router-link :to="{ name:'editAdSort',params:{id:item._id} }">修改</router-link>
-                    <button @click="del(item._id,item.cover)">删除</button>
+                    <!-- <button @click="del(item._id,item.cover)">删除</button> -->
+                    <button v-touch:tap="del(item._id,item.cover)">删除</button>
                 </td>
             </tr>
 
@@ -91,18 +92,19 @@ export default {
             this.list = data.data;
         },
         async del(id, cover) {
-            this.$store.commit('uishow', {
-                wrap: 'warn',
-                title: '警告',
-                word: '是否删除该分类',
-                type: 'confirm',
-                even: 'delTeachSort',
-                isclose: true,
-                data: {
-                    _id: id,
-                    cover: cover
-                }
-            });
+          alert(id);
+            // this.$store.commit('uishow', {
+            //     wrap: 'warn',
+            //     title: '警告',
+            //     word: '是否删除该分类',
+            //     type: 'confirm',
+            //     even: 'delTeachSort',
+            //     isclose: true,
+            //     data: {
+            //         _id: id,
+            //         cover: cover
+            //     }
+            // });
             //            let data=await this.$ajax.post(this.Api.storelist,{id:id,token:this.$store.state.token});
             //            console.log(data);
         }

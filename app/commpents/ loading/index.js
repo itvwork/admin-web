@@ -7,7 +7,7 @@ let instances = [];
 let seed = 1;
 
 const Circle = function(options) {
-   console.log(arguments);
+
   instance = new MessageConstructor({
     data: options
   });
@@ -20,7 +20,7 @@ const Circle = function(options) {
   }
 
   instance.vm = instance.$mount();
-    console.log(instance.vm);
+
   instance.vm.visible = true;
   instance.vm.type="vuk-tran"
   document.body.appendChild(instance.vm.$el);

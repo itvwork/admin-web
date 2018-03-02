@@ -99,31 +99,39 @@
         }
       },
       del(id) {
-        ui.confirm.show({
-          info: "警告",
-          title: "你确定删除",
-          bg: true,
-          fun: this.deldata,
-          part: id,
-          warn: "warn"
+      let del=  this.$vuk.confirm({
+            style:'warn',
+            title:'你确定要删除此数据',
+            sure:this.deldata,
+            surevalue:id
         });
+        console.log(del);
+        // ui.confirm.show({
+        //   info: "警告",
+        //   title: "你确定删除",
+        //   bg: true,
+        //   fun: this.deldata,
+        //   part: id,
+        //   warn: "warn"
+        // });
       },
       async deldata(id) {
-        ui.loading.show("删除中…");
-        ui.confirm.close();
-        let data = await this.$ajax.rsapost(self.Api.adDel, {
-          data:{
-            _id:id
-          },
-          token: this.$store.state.token
-        });
-        if (data.err_code == 200) {
-          this.tips = "删除成功";
-          this.getData();
-        } else {
-          this.tips = "删除失败，已经删除，或不存在";
-        }
-        ui.loading.close();
+        
+        // ui.loading.show("删除中…");
+        // ui.confirm.close();
+        // let data = await this.$ajax.rsapost(self.Api.adDel, {
+        //   data:{
+        //     _id:id
+        //   },
+        //   token: this.$store.state.token
+        // });
+        // if (data.err_code == 200) {
+        //   this.tips = "删除成功";
+        //   this.getData();
+        // } else {
+        //   this.tips = "删除失败，已经删除，或不存在";
+        // }
+        // ui.loading.close();
       }
     },
     events: {}

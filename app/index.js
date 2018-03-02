@@ -9,6 +9,7 @@ import Vuex from 'vuex';
 import Schema from './validator/index.js';
 import http from './common/http';
 import Vuk from './commpents';
+//import VueTouch from 'vue-touch';
 import './style/styles.less'
 window.ui = {};
 
@@ -77,6 +78,7 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(http);
 Vue.use(Tool);
+//Vue.use(VueTouch);
 Vue.use(Vuk.install);
 
 window.Vue = Vue || {};

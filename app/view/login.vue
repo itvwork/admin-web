@@ -14,6 +14,7 @@
         </ul>
         <div class="btn-box">
             <button class="btn btn-login" @click="submit()">{{stateWord}}</button>
+            <!-- <button class="btn btn-login" v-touch="subs">{{stateWord}}</button> -->
         </div>
         <vue-tips :tips.sync="err_msg" v-if="err_msg"></vue-tips>
     </div>
@@ -52,6 +53,9 @@ export default {
     },
 
     methods: {
+        async subs(){
+
+        },
         async submit() {
 
 

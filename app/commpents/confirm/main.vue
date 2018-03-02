@@ -39,6 +39,7 @@ export default {
             style: 'warn',
             cancel: '',
             sure: '',
+            surevalue:'',
             visible: false
 
         }
@@ -58,7 +59,7 @@ export default {
         },
         surebtn() {
             if (typeof this.sure ==='function') {
-                this.sure();
+                this.sure(this.surevalue);
             }
         },
         destroyElement() {

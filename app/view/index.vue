@@ -197,7 +197,11 @@ export default {
           // let confirm=this.$vuk.confirm({
           //   style:'success'
           // });
-          this.$vuk.circle();
+          this.$vuk.circle({
+            props:{
+              turnColor:"#000"
+            }
+          });
         }
 
     },
