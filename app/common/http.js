@@ -1,40 +1,75 @@
 export default function(Vue, opt) {
     Vue.prototype.$ajax = {
-        post: function(url, data) {
-            function argUrl(obj) {
-                var result = [];
-                function argFormat(obj, name) {
-                    if (typeof obj === "object") {
-                        for (let i in obj) {
-                            if (typeof obj[i] === "object") {
-                                name ? argFormat(obj[i], name + '[' + i + ']') : argFormat(obj[i], i);
+        argUrl: function() {
+            var result = [];
+
+            function argFormat(obj, name) {
+                if (typeof obj === "object") {
+                    for (let i in obj) {
+                        if (typeof obj[i] === "object") {
+                            name ? argFormat(obj[i], name + '[' + i + ']') : argFormat(obj[i], i);
+                        } else {
+                            if (name) {
+                                result.push(name + "[" + i + "]" + '=' + encodeURIComponent(obj[i]));
                             } else {
-                                if (name) {
-                                    result.push(name + "[" + i + "]" + '=' + encodeURIComponent(obj[i]));
-                                } else {
-                                    result.push(i + '=' + encodeURIComponent(obj[i]));
-                                }
+                                result.push(i + '=' + encodeURIComponent(obj[i]));
                             }
                         }
-                        return result.join('&');
-                    } else {
-                        result += obj;
-                        return result;
-                    };
-                }
-                return argFormat(obj);
-            };
-
-            try{
-              data.rsa=JSON.stringify(data.rsa);
-              var rsa='-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAydjYzX9HlsMBzN8ij73xY40tj7QPzGfsrSrT81Lruv90qn+o3J/ppK+prOuFVMMGV0vna8tu+BnBw8GsKbHLSU9dcSMyGcRL/IHo0aRZ7WCDKvTZeKSJtS3Qn8ltUflDe1DW3d9vlvHEV8trkQiY4YpZ/ZgTk0v7tREOqgbAiu0W4wEKLAavqUPtyUQFj0bAa46wrH86boZMr1leGD8cueoK1M9Idom6i213UpOpbMKOfpLz0QWT5y52qseTJ/IpivTvq+lDcNxNx1kNLrMWQsTKgbHC9Y9SQMF9ArcY661So/bAi5n+3h62+FpY+1ce4+qSHJo67S+VA7yGh33S2wIDAQAB-----END PUBLIC KEY-----'
-              var jsencrypt = new JSEncrypt();
-              jsencrypt.setPublicKey(rsa);
-              var rsas=jsencrypt.encrypt(data.rsa,'base64');
-              data.rsa=rsas;
-            }catch(e){
-              console.log(e);
+                    }
+                    return result.join('&');
+                } else {
+                    result += obj;
+                    return result;
+                };
             }
+            return argFormat(obj);
+        },
+        xhr2: function(obj) {
+            var past = new FormData();
+
+            function argFormat(obj, name) {
+                if (typeof obj === "object") {
+                    for (let i in obj) {
+                        if (typeof obj[i] === "object") {
+
+                            if (obj[i].lastModified) {
+                                past.append(name, obj[i]);
+                            } else {
+                                name ? argFormat(obj[i], name + '[' + i + ']') : argFormat(obj[i], i);
+                            }
+                        } else {
+                            if (name) {
+                                past.append(name + "[" + i + "]", obj[i]);
+
+                            } else {
+                                past.append(i, obj[i])
+
+                            }
+                        }
+                    }
+                    return past;
+                } else {
+                    return obj;
+                };
+            }
+
+            return argFormat(obj);
+        },
+        post: function(url, ps) {
+            var self = this;
+            var data={rsa:ps};
+            try {
+                data.rsa['timetemp']=this.time();
+                data.rsa = JSON.stringify(data.rsa);
+                var rsa = '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAydjYzX9HlsMBzN8ij73xY40tj7QPzGfsrSrT81Lruv90qn+o3J/ppK+prOuFVMMGV0vna8tu+BnBw8GsKbHLSU9dcSMyGcRL/IHo0aRZ7WCDKvTZeKSJtS3Qn8ltUflDe1DW3d9vlvHEV8trkQiY4YpZ/ZgTk0v7tREOqgbAiu0W4wEKLAavqUPtyUQFj0bAa46wrH86boZMr1leGD8cueoK1M9Idom6i213UpOpbMKOfpLz0QWT5y52qseTJ/IpivTvq+lDcNxNx1kNLrMWQsTKgbHC9Y9SQMF9ArcY661So/bAi5n+3h62+FpY+1ce4+qSHJo67S+VA7yGh33S2wIDAQAB-----END PUBLIC KEY-----'
+                var jsencrypt = new JSEncrypt();
+                jsencrypt.setPublicKey(rsa);
+                var rsas = jsencrypt.encrypt(data.rsa, 'base64');
+                data['rsa']=rsas;
+            } catch (e) {
+                console.log(e);
+            }
+
 
             return new Promise(function(resolve, reject) {
                 var xmlhttp;
@@ -53,7 +88,7 @@ export default function(Vue, opt) {
                     }
                 };
 
-                var urldata = argUrl(data);
+                var urldata = self.argUrl(data);
 
                 xmlhttp.open("POST", url, true);
                 //xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
@@ -66,81 +101,23 @@ export default function(Vue, opt) {
         },
 
         postXhr2: function(url, context) {
-
-            context={
-              rsas:{
-                token:context.token,
-                timetemp:this.time(),
-                type:context.type
-              },
-              data:JSON.stringify(context.data)
+            var self = this;
+            context = {
+                rsa: JSON.stringify({
+                    token: context.token,
+                    timetemp: this.time(),
+                    type: context.type
+                }),
+                data: JSON.stringify(context.data)
             };
             var rsa = this.publicKey();
             var jsencrypt = new JSEncrypt();
             jsencrypt.setPublicKey(rsa);
-            context.rsas = jsencrypt.encrypt(JSON.stringify(context.rsas), 'base64');
-            function argUrl(obj) {
-                var result = [];
-                function argFormat(obj, name) {
-                    if (typeof obj === "object") {
-                        for (let i in obj) {
-                            if (typeof obj[i] === "object") {
-                                name ? argFormat(obj[i], name + '[' + i + ']') : argFormat(obj[i], i);
-                            } else {
-                                if (name) {
-                                    result.push(name + "[" + i + "]" + '=' + encodeURIComponent(obj[i]));
-                                } else {
-                                    result.push(i + '=' + encodeURIComponent(obj[i]));
-                                }
-                            }
-                        }
-                        return result.join('&');
-                    } else {
-                        result += obj;
-                        return result;
-                    };
-                }
-
-                return argFormat(obj);
-            };
-
-            function xhr2(obj) {
-                var past = new FormData();
-
-                function argFormat(obj, name) {
-                    if (typeof obj === "object") {
-                        for (let i in obj) {
-                            if (typeof obj[i] === "object") {
-
-                                if (obj[i].lastModified) {
-                                    past.append(name, obj[i]);
-                                } else {
-                                    name ? argFormat(obj[i], name + '[' + i + ']') : argFormat(obj[i], i);
-                                }
-                            } else {
-                                if (name) {
-                                    past.append(name + "[" + i + "]", obj[i]);
-
-                                } else {
-                                    past.append(i, obj[i])
-
-                                }
-                            }
-                        }
-                        return past;
-                    } else {
-                        return obj;
-                    };
-                }
-
-                return argFormat(obj);
-            }
-
-
+            context.rsa = jsencrypt.encrypt(JSON.stringify(context.rsa), 'base64');
             return new Promise(function(resolve, reject) {
                 var xmlhttp = new XMLHttpRequest();
                 if (typeof FormData !== 'undefined') { //判断是否支持xhr2
-                    var urldata = xhr2(context);
+                    var urldata = self.xhr2(context);
                     //这里具体查看你上面ajax内容
                     xmlhttp.timeout = context.timeout ? context.timeout : 100000;
                     xmlhttp.addEventListener('progress', function(e) {
@@ -165,7 +142,7 @@ export default function(Vue, opt) {
                     })
 
                 } else {
-                    var urldata = argUrl(context);
+                    var urldata = self.argUrl(context);
                 }
                 xmlhttp.onreadystatechange = function() {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -199,7 +176,7 @@ export default function(Vue, opt) {
 
         },
         rsapost: function(url, data) {
-            var self=this;
+            var self = this;
             data = JSON.stringify(data);
             var rsa = this.publicKey();
             var jsencrypt = new JSEncrypt();
@@ -240,6 +217,7 @@ export default function(Vue, opt) {
         },
         argUrl(obj) {
             var result = [];
+
             function argFormat(obj, name) {
                 if (typeof obj === "object") {
                     for (let i in obj) {
@@ -261,8 +239,9 @@ export default function(Vue, opt) {
             }
             return argFormat(obj);
         },
-         xhr2:function(obj) {
+        xhr2: function(obj) {
             var past = new FormData();
+
             function argFormat(obj, name) {
                 if (typeof obj === "object") {
                     for (let i in obj) {
@@ -290,13 +269,13 @@ export default function(Vue, opt) {
 
             return argFormat(obj);
         },
-        time:function() {
-          return parseInt(new Date().getTime() / 1000);
+        time: function() {
+            return parseInt(new Date().getTime() / 1000);
         },
-        publicKey:function(){
-          var rsa = '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAydjYzX9HlsMBzN8ij73xY40tj7QPzGfsrSrT81Lruv90qn+o3J/ppK+prOuFVMMGV0vna8tu+BnBw8GsKbHLSU9dcSMyGcRL/IHo0aRZ7WCDKvTZeKSJtS3Qn8ltUflDe1DW3d9vlvHEV8trkQiY4YpZ/ZgTk0v7tREOqgbAiu0W4wEKLAavqUPtyUQFj0bAa46wrH86boZMr1leGD8cueoK1M9Idom6i213UpOpbMKOfpLz0QWT5y52qseTJ/IpivTvq+lDcNxNx1kNLrMWQsTKgbHC9Y9SQMF9ArcY661So/bAi5n+3h62+FpY+1ce4+qSHJo67S+VA7yGh33S2wIDAQAB-----END PUBLIC KEY-----'
+        publicKey: function() {
+            var rsa = '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAydjYzX9HlsMBzN8ij73xY40tj7QPzGfsrSrT81Lruv90qn+o3J/ppK+prOuFVMMGV0vna8tu+BnBw8GsKbHLSU9dcSMyGcRL/IHo0aRZ7WCDKvTZeKSJtS3Qn8ltUflDe1DW3d9vlvHEV8trkQiY4YpZ/ZgTk0v7tREOqgbAiu0W4wEKLAavqUPtyUQFj0bAa46wrH86boZMr1leGD8cueoK1M9Idom6i213UpOpbMKOfpLz0QWT5y52qseTJ/IpivTvq+lDcNxNx1kNLrMWQsTKgbHC9Y9SQMF9ArcY661So/bAi5n+3h62+FpY+1ce4+qSHJo67S+VA7yGh33S2wIDAQAB-----END PUBLIC KEY-----'
 
-          return rsa;
+            return rsa;
         }
 
 

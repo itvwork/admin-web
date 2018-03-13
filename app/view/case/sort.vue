@@ -65,8 +65,11 @@ export default {
                 type: 'confirm'
             });
             let data = await this.$ajax.post(self.Api.caseSortDel, {
-                data: deldata,
-                token: self.$store.state.token
+                rsa: {
+                    data: deldata,
+                    token: self.$store.state.token
+                }
+
             });
             if (data.err_code == 200) {
                 self.loading = "";
@@ -82,8 +85,10 @@ export default {
     methods: {
         async getData() {
             let data = await this.$ajax.post(this.Api.caseSort, {
-                data: '',
-                token: this.$store.state.token
+                rsa: {
+                    data: '',
+                    token: this.$store.state.user.token
+                }
             });
             this.list = data.data;
         },

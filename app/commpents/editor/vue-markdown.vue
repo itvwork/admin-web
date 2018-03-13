@@ -1,10 +1,11 @@
 <template lang="html">
    <div class="markdown">
        <div class="markdown-editor">
+         <button class="btn selectword" @click="insertAfterText('---fds-af-das-f')">选中文字</button>
          <ul class="vue-editor-nav">
          </ul>
-             <textarea class="markdown-code"  v-model="content"  @keydown="key($event)"
-                   @mouseup="updatePosition" @keyup="updatePosition"
+             <textarea ref="text" class="markdown-code"  v-model="content"  @keydown="key($event)"
+                   @mousedown="updatePosition"  @keyup="updatePosition"
                 @dragover="allowDrop($event)" @drop="drap($event)"
              ></textarea>
             <section class="editor-img" v-show="picshow">
@@ -31,7 +32,6 @@
 
                      <div class="editor-oper-bar">
                          <button class="editor-btn-sure" @click="insertPic()">插入</button>
-
                          <select class="type" @change="searchPic()" v-model="pic.search">
                            <option value="0">全部</option>
                            <option value="200-400">200-400</option>
@@ -45,6 +45,7 @@
                  </div>
                  <div class="tab1-img" v-show="tabimg==3">3</div>
              </section>
+
        </div>
 
        <div class="show-content" v-html="format()">
@@ -53,190 +54,234 @@
    </div>
  </template>
  <script>
- import showdown from 'showdown';
- let converter = new showdown.Converter();
- export default {
-   name: 'markdown',
-  props: {
-     source: {
-       type: String,
-       default: ''
-     }
-   },
-   data() {
-   return {
-      content: this.source,
-      picshow: false,
-      tabimg: 2,
-      pic: {
-        selecter: [],
-        data: [],
-        page: 1,
-        count: 0,
-        size: {
-          width: '',
-          height: ''
-         },
-         search: '0',
-         more: '加载更多'
+import showdown from 'showdown';
+let converter = new showdown.Converter();
+export default {
+    name: 'markdown',
+    props: {
+        source: {
+            type: String,
+            default: ''
         }
-      }
     },
-
-  methods: {
-     format() {
-       return converter.makeHtml(this.content);
-     },
-     openPic() {
-       this.tabimg = 2;
-       this.pic.selecter = [];
-       if (this.picshow && this.pic.data.length <= 0) {
-         this.getPics();
-
-       }
-     },
-     searchPic() {
-      this.pic.page = 1;
-       this.getPics();
-
-     },
-     async getPics() {
-       let arr = this.pic.search.split('-');
-       var search = "";
-       if (arr.length >= 2) {
-         search = {
-           $gt: arr[0],
-           $lt: arr[1]
-         }
-       } else {
-         search = {
-           $gt: arr[0]
-         }
-      }
-       this.pic.more = "加载中...";
-       let result = await this.$ajax.post(this.Api.file, {
-         data: {
-           page: this.pic.page,
-           query: {
-             width: search
-           },
-          num: 12},
-           token: this.$store.state.token
-         })
-         if (result.err_code == 200) {
-         let list = result.data.result;
-         if (this.pic.page > 1) {
-           for (var i = 0, len = list.length; i < len; i++) {
-             this.pic.data.push(list[i]);
-           }
-         } else {
-           this.pic.data = list;
-         }
-
-         this.pic.count = result.data.count;
-         this.pic.page++;
-
-       }
-       this.pic.more = '加载更多';
-     },
-     insertPic() {
-      this.restoreSelection();
-      let pic = '';
-      let list = this.pic.selecter;
-     for (var i = 0, len = list.length; i < len; i++) {
-        pic += `<img src="${this.Api.imgurl}${list[i]}" imgurl="${list[i]}" >`;
-     }
-      this._execCommand('insertHTML', pic);
-      this.pic.selecter = [];
-      this.picshow = false;
-
-    },
-    _execCommand(name, value) {
-
-      if (this.range === null) {
-       return false;
-      }
-      this.restoreSelection();
-      document.execCommand(name, false, value);
-      this.saveRange();
-   },
-    //恢复焦点
-    restoreSelection() {
-     const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(this.range);
-      this.saveRange();
-    },
-    queryCommandValue(name) {
-      return document.queryCommandValue(name)
-    },
-    // 封装 document.queryCommandState
-    queryCommandState(name) {
-      return document.queryCommandState(name)
-    },
-    // 封装 document.queryCommandSupported
-    queryCommandSupported(name) {
-     return document.queryCommandSupported(name)
-    },
-    saveRange(e) {
-        if (e && (!this.nodes)) {
-            this.nodes = e.target;
-        }
-        const selection = window.getSelection();
-        if (selection.rangeCount === 0) {
-            return
-       }
-       const range = selection.getRangeAt(0);
-        this.range = range;
-      },
-      updatePosition(ev) {
-        let alt = ev.altKey;
-        let ctrl = ev.ctrlKey;
-        let shift = ev.shiftKey;
-        let meta = ev.metaKey;
-
-        if ((!alt) && (!ctrl) && (!shift)) {
-          switch (ev.keyCode) {
-            case 8:
-              if (this.getContent().length < 1) {
-               ev.preventDefault();
-                this._execCommand('formatBlock', '<p>');
-                 }
-                 break;
-             }
-           }
-          let section = window.getSelection().anchorNode;
-          if (section.nodeType == 1) {
-         if (section.nodeName.toLowerCase() == "span" || section.imgurl) {
-           this.imgp = {
-             top: section.offsetTop + 'px',
-             left: section.offsetLeft + 'px'
-
-           }		}}
-           this.saveRange(ev); },
-           allowDrop(event) {
-         event.preventDefault();
-     },
-     async drap(event) {
-         event.preventDefault();
-         var self = this;
-         var file = event.dataTransfer.files; //获取文件
-        var img = await this.$tool.base64(1920, file);
-         let result = await this.$ajax.postXhr2(this.Api.uploads,{token: this.$store.state.token,data:img,type:'content'} );
-         if(result.err_code==200){
-             let list=result.data;
-             let str='';
-             for(let i =0 ,len=list.length;i<len;i++){
-                  str+=`<span value="pics"><img src="${Api.imgurl}${list[i].path}"</span>`;
-                }
-          this._execCommand("insertHTML",str);
+    data() {
+        return {
+            content: this.source,
+            picshow: false,
+            tabimg: 2,
+            pic: {
+                selecter: [],
+                data: [],
+                page: 1,
+                count: 0,
+                size: {
+                    width: '',
+                    height: ''
+                },
+                search: '0',
+                more: '加载更多'
             }
-            //this.upload(img);
-          },
-          key: function (ev) {
+        }
+    },
 
-          }
+
+    methods: {
+        format() {
+            return converter.makeHtml(this.content);
+        },
+        openPic() {
+            this.tabimg = 2;
+            this.pic.selecter = [];
+            if (this.picshow && this.pic.data.length <= 0) {
+                this.getPics();
+
+            }
+        },
+        searchPic() {
+            this.pic.page = 1;
+            this.getPics();
+
+        },
+        async getPics() {
+            let arr = this.pic.search.split('-');
+            var search = "";
+            if (arr.length >= 2) {
+                search = {
+                    $gt: arr[0],
+                    $lt: arr[1]
+                }
+            } else {
+                search = {
+                    $gt: arr[0]
+                }
+            }
+            this.pic.more = "加载中...";
+            let result = await this.$ajax.post(this.Api.file, {
+                data: {
+                    page: this.pic.page,
+                    query: {
+                        width: search
+                    },
+                    num: 12
+                },
+                token: this.$store.state.token
+            })
+            if (result.err_code == 200) {
+                let list = result.data.result;
+                if (this.pic.page > 1) {
+                    for (var i = 0, len = list.length; i < len; i++) {
+                        this.pic.data.push(list[i]);
+                    }
+                } else {
+                    this.pic.data = list;
+                }
+
+                this.pic.count = result.data.count;
+                this.pic.page++;
+
+            }
+            this.pic.more = '加载更多';
+        },
+        insertPic() {
+            this.restoreSelection();
+            let pic = '';
+            let list = this.pic.selecter;
+            for (var i = 0, len = list.length; i < len; i++) {
+                pic += `<img src="${this.Api.imgurl}${list[i]}" imgurl="${list[i]}" >`;
+            }
+            this._execCommand('insertHTML', pic);
+            this.pic.selecter = [];
+            this.picshow = false;
+
+        },
+
+        //选中文字
+        setSelectText(startPos, endPos) {
+            let textDom = this.$refs.text;
+            var startPos = parseInt(startPos),
+                endPos = parseInt(endPos),
+                textLength = textDom.value.length;
+            if (textLength) {
+                if (!startPos) {
+                    startPos = 0;
+                }
+                if (!endPos) {
+                    endPos = textLength;
+                }
+                if (startPos > textLength) {
+                    startPos = textLength;
+                }
+                if (endPos > textLength) {
+                    endPos = textLength;
+                }
+                if (startPos < 0) {
+                    startPos = textLength + startPos;
+                }
+                if (endPos < 0) {
+                    endPos = textLength + endPos;
+                }
+                if (textDom.createTextRange) {
+                    // IE Support
+                    var range = textDom.createTextRange();
+                    range.moveStart("character", -textLength);
+                    range.moveEnd("character", -textLength);
+                    range.moveStart("character", startPos);
+                    range.moveEnd("character", endPos);
+                    range.select();
+                } else {
+                    // Firefox support
+                    textDom.setSelectionRange(startPos, endPos);
+                    textDom.focus();
+                }
+            }
+        },
+        updatePosition(ev) { //保存text光标位置
+            let textDom = this.$refs.text;
+            var cursorPos = 0;
+            if (document.selection) {
+                // IE Support
+                textDom.focus();
+                var selectRange = document.selection.createRange();
+                selectRange.moveStart('character', -textDom.value.length);
+                cursorPos = selectRange.text.length;
+            } else if (textDom.selectionStart || textDom.selectionStart == '0') {
+                // Firefox support
+                cursorPos = textDom.selectionStart;
+            }
+            this.range = cursorPos;
+
+
+
+        },
+        setCaretPosition(textDom, pos) {
+            if (textDom.setSelectionRange) {
+                // IE Support
+                textDom.focus();
+                textDom.setSelectionRange(pos, pos);
+            } else if (textDom.createTextRange) {
+                // Firefox support
+
+                var range = textDom.createTextRange();
+                range.collapse(true);
+                range.moveEnd('character', pos);
+                range.moveStart('character', pos);
+                range.select();
+            }
+        },
+        //在光标后面插入文字或选中的文字中插入文字
+        insertAfterText(value) {
+            let textDom = this.$refs.text;
+            var selectRange;
+            if (document.selection) {
+                // IE Support
+                textDom.focus();
+                selectRange = document.selection.createRange();
+                selectRange.text = value;
+                textDom.focus();
+            } else if (textDom.selectionStart || textDom.selectionStart == '0') {
+                // Firefox support
+                var startPos = textDom.selectionStart;
+                var endPos = textDom.selectionEnd;
+                var scrollTop = textDom.scrollTop;
+                textDom.value = textDom.value.substring(0, startPos) + value + textDom.value.substring(endPos, textDom.value.length);
+                textDom.focus();
+                textDom.selectionStart = startPos + value.length;
+                textDom.selectionEnd = startPos + value.length;
+                textDom.scrollTop = scrollTop;
+            } else {
+                textDom.value += value;
+                textDom.focus();
+            }
+        },
+        allowDrop(event) {
+            event.preventDefault();
+        },
+        async drap(event) {
+            event.preventDefault();
+            var self = this;
+            var file = event.dataTransfer.files; //获取文件
+            var img = await this.$tool.base64(1920, file);
+            let result = await this.$ajax.postXhr2(this.Api.uploads, {
+                data: img,
+                token: this.$store.state.user.token,
+                type: 'content'
+            });
+
+
+            // if (result.err_code == 200) {
+            //     let list = result.data;
+            //     let str = '';
+            //     for (let i = 0, len = list.length; i < len; i++) {
+            //         str += `<span value="pics"><img src="${Api.imgurl}${list[i].path}"</span>`;
+            //     }
+            //     this._execCommand("insertHTML", str);
+            // }
+            //this.upload(img);
+        },
+        key: function(ev) {
 
         }
- }
- </script>
+
+    }
+}
+</script>
