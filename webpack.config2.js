@@ -77,7 +77,7 @@ module.exports ={
       ]
     },
     plugins: [
-        //new ExtractTextPlugin('../style/styles.css'),
+        new ExtractTextPlugin('../style/styles.css'),
         // new webpack.optimize.UglifyJsPlugin({
         //     compress: {
         //         warnings: false

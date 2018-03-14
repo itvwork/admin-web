@@ -562,7 +562,7 @@
                 var self = this;
                 var file = event.dataTransfer.files; //获取文件
                 var img = await this.$tool.base64(1920, file);
-                let result = await this.$ajax.postXhr2(this.Api.uploads,{token: this.$store.state.token,data:img,type:'content'} );
+                let result = await this.$ajax.postXhr2(this.Api.uploads,{token: this.$store.state.user.token,data:img,type:'content'} );
                 if(result.err_code==200){
                     let list=result.data;
                     let str='';
@@ -570,7 +570,6 @@
                          str+=`<span value="pics"><img src="${Api.imgurl}${list[i].path}"</span>`;
                     }
                     this._execCommand("insertHTML",str);
-
                 }
 
                 //this.upload(img);
@@ -613,7 +612,7 @@
 
                 let result = await this.$ajax.post(this.Api.file, {
                     data: {page: this.pic.page, query:{width:search}, num: 12},
-                    token: this.$store.state.token
+                    token: this.$store.state.user.token
                 });
                 if (result.err_code == 200) {
                     let list = result.data.result;
@@ -654,17 +653,18 @@
             },
             //恢复焦点
             restoreSelection: function () {
+                this.$refs.content.focus();
                 const selection = window.getSelection();
                 selection.removeAllRanges();
                 selection.addRange(this.range);
                 this.saveRange();
             },
-            color: function (color) {
+            color(color) {
 
                 this._execCommand('foreColor', color)
             },
             //
-            backColor: function (color) {
+            backColor (color) {
                 this.restoreSelection();
                 let section = window.getSelection().anchorNode;
                 let node = section;
@@ -681,7 +681,7 @@
                 node.style.backgroundColor = style;
             },
             //quote
-            quoteColor: function (color) {
+            quoteColor (color) {
                 this._execCommand('formatBlock', '<blockquote>')
                 let section = window.getSelection().anchorNode;
                 let node = section;
@@ -761,7 +761,7 @@
                 return document.queryCommandSupported(name)
             },
             //颜色转换为rgb
-            colorRgb: function (sColor) {
+            colorRgb (sColor) {
                 var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
                 var sColor = sColor.toLowerCase();
                 if (sColor && reg.test(sColor)) {
@@ -783,7 +783,7 @@
                     return sColor;
                 }
             },
-            key: function (ev) {
+            key (ev) {
                 let alt = ev.altKey;
                 let ctrl = ev.ctrlKey;
                 let shift = ev.shiftKey;
@@ -904,7 +904,7 @@
 
                 //console.log(this.queryCommandValue('formatBlock'));
             },
-            insertP: function () {
+            insertP() {
                 for (let i in this.meun) {
                     this.meun[i] = false;
                 }
@@ -923,21 +923,22 @@
                     return ''
                 }
             },
-            getNodeName: function () {
+            getNodeName () {
                 const elem = this.range;
                 return elem.anchorNode
             },
-            getFocus: function () {
+            getFocus () {
                 this.meun.linkopen = !this.meun.linkopen;
                 this.linkTitle = this.getSelectionText();
             },
-            insertLink: function () {
+            insertLink () {
+
                 this._execCommand('insertHTML', `<a href="${this.link}">${this.linkTitle}</a>`);
                 this.link = '';
                 this.linkTitle = '';
                 this.meun.linkopen = !this.meun.linkopen;
             },
-            delLink: function () {
+            delLink() {
                 this.restoreSelection();
                 const selection = window.getSelection();
                 this._execCommand('insertHTML', '<span>' + this.getSelectionText() + '</span>');

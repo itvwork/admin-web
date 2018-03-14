@@ -75,7 +75,7 @@ export default {
             this.state = 0;
 
 
-            let ret = await this.$ajax.post(this.Api.login, {rsa:this.sub});
+            let ret = await this.$ajax.post(this.Api.login, this.sub);
             if (ret.err_code == 200) {
                 VukTook.setSession('itvusername',ret.data)
                 this.$store.state.user = ret.data;

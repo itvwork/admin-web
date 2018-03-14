@@ -74,7 +74,7 @@
             page: this.$route.query.page ? this.$route.query.page : 1,
             num: 10
           },
-          token: this.$store.state.token
+          token: this.$store.state.user.token
         });
         ui.loading.close();
         let list = data.data;
@@ -116,7 +116,7 @@
         // });
       },
       async deldata(id) {
-        
+
         // ui.loading.show("删除中…");
         // ui.confirm.close();
         // let data = await this.$ajax.rsapost(self.Api.adDel, {
