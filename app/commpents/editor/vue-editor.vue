@@ -643,17 +643,22 @@
                 this.color('#' + value);
             },
             _execCommand: function (name, value) {
-
                 if (this.range === null) {
-                    return false;
+                      this.range=document.createRange();
+
+                      this.range.setStart(this.$refs.content,0);
+                      this.range.setEnd(this.$refs.content,0);
+                      //return false;
+
                 }
+                console.log(this.range);
                 this.restoreSelection();
                 document.execCommand(name, false, value);
                 this.saveRange();
             },
             //恢复焦点
             restoreSelection: function () {
-                this.$refs.content.focus();
+
                 const selection = window.getSelection();
                 selection.removeAllRanges();
                 selection.addRange(this.range);
@@ -788,7 +793,7 @@
                 let ctrl = ev.ctrlKey;
                 let shift = ev.shiftKey;
                 let meta = ev.metaKey;
-
+              console.log(ev);
                 if ((!alt) && (!ctrl) && (!shift)) {
                     switch (ev.keyCode) {
                         case 13:
