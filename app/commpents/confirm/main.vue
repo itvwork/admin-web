@@ -4,7 +4,7 @@
         <div class="ui-wrap" :class="style" draggable="true" v-show="visible">
 
             <div class="ui-outdoor">
-                <em class="ui-icon ui-icon-close" @click="close()"></em>
+                <em class="ui-icon ui-icon-close" @click="close()" v-if="isClose"></em>
                 <div class="ui-top">
                     <p class="ui-icon ui-icon-title"></p>
                     <h2>{{title}}</h2>
@@ -37,10 +37,12 @@ export default {
             sureFun: '',
             part: '',
             style: 'warn',
-            cancel: '',
             sure: '',
             surevalue:'',
-            visible: false
+            visible: false,
+            autoClose:true,
+            closeTime:3000,
+            isClose:true
 
         }
     },
@@ -49,17 +51,19 @@ export default {
     },
     methods: {
         cancels() {
-            this.visible = false;
             if (typeof this.cancel==='function') {
                 this.cancel();
             }
         },
         close() {
+            if(!this.isClose){
+              return false;
+            }
             this.visible = false;
         },
         surebtn() {
             if (typeof this.sure ==='function') {
-                this.sure(this.surevalue);
+                this.sure();
             }
         },
         destroyElement() {

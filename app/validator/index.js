@@ -92,7 +92,6 @@ Validator.prototype = {
       } else {
           return true;
       }
-
     },
     phone: function(str) {
       var result = str.match(/^1[34578]\d{9}$/);
@@ -122,8 +121,12 @@ Validator.prototype = {
         for(let i =0 ; i<child.length;i++){
             if(child[i].rule){
                 if(child[i].valtVal()!==true&&oneerr===true){
-                    
-                    child[i].focus();
+
+                    try {
+
+                    } catch (e) {
+                        child[i].focus();
+                    }
                     oneerr=false;
                 }
             }

@@ -6,7 +6,7 @@ let instance={};
 let instances = [];
 let seed = 1;
 
-const Confirm = function(options) {
+const Confirm = function(options,sure,cancel) {
   instance = new MessageConstructor({
     data: options
   });
@@ -23,6 +23,8 @@ const Confirm = function(options) {
   instance.vm.onClose=function(id){
       Confirm.close(id);
   }
+  instance.vm['sure']=sure;
+  instance.vm['cancel']=cancel;
   instance.dom = instance.vm.$el;
   instances.push(instance);
   return instance.vm;

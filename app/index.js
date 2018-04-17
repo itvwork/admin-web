@@ -39,6 +39,7 @@ import vueTips from './commpents/ui/vue-tips.vue';
 import VueMarkdown from './commpents/editor/vue-markdown';
 import stateManage from './modules/index';
 import VukNode from './commpents/input/vuk-node';
+import VukPop from  './commpents/pop/vukpop';
 
 
 
@@ -65,7 +66,8 @@ export let Components = {
     vueTips,
     VueMarkdown,
     VueSelect,
-    VukNode
+    VukNode,
+    VukPop
 
 };
 

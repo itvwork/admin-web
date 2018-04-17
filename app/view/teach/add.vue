@@ -7,6 +7,8 @@
     <textarea-edit tw="1rem"  title="标签：" tips="请输入课程简介" :value.sync="data.info" ></textarea-edit>
     <textarea-edit tw="1rem"  title="知识点：" tips="请输入讲到知识点" :value.sync="data.knowledge" ></textarea-edit>
     <vuk-node toggleTitle=1 title="标签：" tw="1rem"  :value.sync="data.tags" ></vuk-node>
+
+
     <div class="sub-bar" style="padding-left: 1.3rem">
       <button class="btns btn-sub" @click="send()">{{subword}}</button>
     </div>
@@ -59,38 +61,15 @@ export default {
   created() {
     let self = this;
     this.getSort();
-    // delete this.$root.uievent._events['teachAdd'];
-    // delete this.$root.uievent._events['close'];
-    // this.$root.uievent.$on('teachAdd', function() {
-    //   self.$store.commit('uiclose', {
-    //     type: 'confirm'
-    //   });
-    //   self.$router.push({
-    //     name: 'teach'
-    //   })
-    // });
-    // this.$root.uievent.$on('close', function() {
-    //   self.$store.commit('uiclose', {
-    //     type: 'confirm'
-    //   });
-    //   self.data = {
-    //     sort: '',
-    //     cover: '',
-    //     author: '',
-    //     content: ''
-    //   };
-    //   self.subword = '提交'
-    // });
+
 
   },
   watch: {
-
     '$route': function(to, from) {
       if (this.$route.query.page) {
         this.$refs.page.change({});
       }
     }
-
   },
   methods: {
     async getSort() {
@@ -108,8 +87,9 @@ export default {
       if (!this.schema.allvalt()) {
           return false;
       }
+      alert('wwww');
       // this.subword = "数据提交中…"
-      let data = await this.$ajax.post(this.Api.teachAdd, {data: this.data, token: this.$store.state.token});
+      //let data = await this.$ajax.post(this.Api.teachAdd, {data: this.data, token: this.$store.state.token});
     //   if (data.err_code == 200) {
     //       this.$store.commit('uishow', {
     //           wrap: 'success',

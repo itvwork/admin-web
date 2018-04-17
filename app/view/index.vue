@@ -37,6 +37,7 @@
                 <router-link :to="{ name:'teach' }"><i class="icon-teach"></i>网络学堂</router-link>
                 <div class="meun-sub">
                     <router-link :to="{ name:'teachlist' }">教程列表</router-link>
+                    <router-link :to="{ name: 'teachTags' }">教程标签</router-link>
                     <router-link :to="{ name: 'teachSort' }">教程分类</router-link>
                 </div>
             </div>
