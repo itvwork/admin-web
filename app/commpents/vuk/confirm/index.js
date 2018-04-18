@@ -12,7 +12,7 @@ const Confirm = function(options,sure,cancel) {
   });
 
   if(instances.length>0){
-      console.log(instances.length);
+    
       instance.index=instances[instances.length-1].index+1;
   }else{
       instance.index=2000;

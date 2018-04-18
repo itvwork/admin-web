@@ -8,7 +8,7 @@ import Vuex from 'vuex';
 
 import Schema from './validator/index.js';
 import http from './common/http';
-import Vuk from './commpents';
+import Vuk from './commpents/vuk';
 //import VueTouch from 'vue-touch';
 import './style/styles.less'
 window.ui = {};

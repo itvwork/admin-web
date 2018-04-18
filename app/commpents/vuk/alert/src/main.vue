@@ -8,7 +8,7 @@
   </transition>
 </template>
 <style lang="less">
-  @import "../../const.less";
+  @import "../../../const.less";
   .vuk-message-box{
     position: fixed;
     z-index: 2000;

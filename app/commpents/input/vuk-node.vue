@@ -3,7 +3,7 @@
     <div class="row-title" v-if="toggleTitle==1" :style="{width:tw}">{{title}}</div>
     <div class="text-outdoor">
         <div class="vuk-node-tips" v-for="(item,index) in value">
-            <span ref="edit" contenteditable="true" @blur="changeVal($event,index)">{{item.title}}</span>
+            <span ref="edit" contenteditable="true" @blur="changeVal($event,index)" v-text="item.title"></span>
             <i class="icon icon-closex" @dblclick="del(index)"></i>
         </div>
 
@@ -105,15 +105,15 @@ export default {
             this.err = err;
         },
         changeVal(e, i) {
+
             let content=e.target.innerHTML.replace(/<\/?.+?>/ig, "");
+          
             if(content&&content==this.value[i]['title']){
               return false
             }
-            let arr = this.value.concat();
-            arr[i]['title']=content;
-            this.$emit('update:value', arr);
-            this.$emit('change',i);
-              
+
+
+            this.$emit('change',{data:content,index:i});
         },
         add() {
             let arr = this.value.concat();

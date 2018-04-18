@@ -39,6 +39,8 @@ export default {
      teachSortDel:url+'teachSort/del',
      lessionAdd:url+'lession/add',
      lessionList:url+'lession/list',
+     teachTags:url+'teachtags/index',
+     teachTagsAddOrUpdate:url+'teachtags/addorupdate',
 
 
      adList:url+'ad/index',

@@ -13,7 +13,8 @@
 </div>
 </template>
 <style lang="less">
-@import "../const.less";
+
+@import "../../const.less";
 .vuk-circle-percent{
   position: absolute;
   .tranxy(-50%,-50%);

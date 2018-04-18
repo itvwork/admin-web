@@ -2,7 +2,6 @@
 <section class="ui">
     <transition enter-active-class="atm fadeIn" leave-active-class="atm fadeOut" @after-leave="destroyElement()">
         <div class="ui-wrap" :class="style" draggable="true" v-show="visible">
-
             <div class="ui-outdoor">
                 <em class="ui-icon ui-icon-close" @click="close()" v-if="isClose"></em>
                 <div class="ui-top">
