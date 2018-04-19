@@ -46,7 +46,7 @@ export default {
         }
     },
     created() {
-
+        
     },
     methods: {
         cancels() {
@@ -70,8 +70,6 @@ export default {
             this.$el.parentNode.removeChild(this.$el);
             this.onClose(this.index);
         }
-
-
     }
 };
 </script>

@@ -1,36 +1,36 @@
 import Vue from 'vue';
 import Main from './main.vue';
-let MessageConstructor = Vue.extend(Main);
-
+let Ctrl= Vue.extend(Main);
 let instance={};
 let instances = [];
 let seed = 1;
 
-const Confirm = function(options,sure,cancel) {
-  instance = new MessageConstructor({
+const Tips = function(self,options) {
+
+  instance = new Ctrl({
     data: options
   });
 
-
   if(instances.length>0){
-
       instance.index=instances[instances.length-1].index+1;
   }else{
       instance.index=2000;
   }
+
   instance.vm = instance.$mount();
   instance.vm.visible = true;
   document.body.appendChild(instance.vm.$el);
   instance.vm.onClose=function(id){
-      Confirm.close(id);
+      Tips.close(id)
   }
-  instance.vm['sure']=sure;
-  instance.vm['cancel']=cancel;
+  instance.vm.closeAll=function(){
+    tips.closeAll();
+  }
   instance.dom = instance.vm.$el;
-  instances.push(instance);
+  this.$vukvm=instance.vm;
   return instance.vm;
 };
-Confirm.close=function(id){
+Tips.close=function(id){
       for(let i=0,l=instances.length;i<l;i++){
           if(instances[i].index==id){
               instances.splice(i,1);
@@ -39,8 +39,8 @@ Confirm.close=function(id){
       }
 }
 
-Confirm.closeAll=function(id){
-
+Tips.closeAll=function(id){
+    instances=[];
 }
 
-export default Confirm;
+export default Tips;

@@ -151,7 +151,7 @@ export default {
                 let box = domchildren[i].querySelector('a');
                 var bstyle = window.getComputedStyle ? window.getComputedStyle(box, null) : null || box.currentStyle;
                 domchildren[i].style.height=bstyle.height;
-                console.log(height);
+              
             }
             let sub=active.querySelector('.meun-sub');
             if(sub){

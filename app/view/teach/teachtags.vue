@@ -8,8 +8,9 @@
 </template>
 
 <script>
+import Vuk from '../../common/vuk.js';
 export default {
-
+    mixins:[Vuk],
     data() {
         return {
             tags: [{
@@ -23,6 +24,11 @@ export default {
         }
     },
     watch: {
+        $route(to,from){
+
+        }
+    },
+    beforeDestroy(){
 
     },
     mounted() {
@@ -30,24 +36,24 @@ export default {
     },
 
     created() {
-
+        console.log(this);
+        var tips = this.tips(this, {
+            content: '成功'
+        });
         this.getData();
     },
     methods: {
         async update(data) {
-
             this.tags[data.index]['title'] = data.data;
-
             let res = await this.$ajax.post(this.Api.teachTagsAddOrUpdate, {
                 token: this.$store.state.user.token,
                 data: this.tags[data.index]
 
             });
             if (res.err_code == 200) {
-              res['data']?this.tags[data.index] = res.data:"";
-
-
+                res['data'] ? this.tags[data.index] = res.data : "";
             }
+
         },
         async getData() {
             let data = await this.$ajax.post(this.Api.teachTags, {
