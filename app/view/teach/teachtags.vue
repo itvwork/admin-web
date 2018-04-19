@@ -1,16 +1,15 @@
 <template>
 <indoor>
-    <vuk-node :toggleTitle="false" @change="update" tw="1rem" :value.sync="tags"></vuk-node>
-    <vuk-pop :content="cons">
-        <vuk-node :toggleTitle="false" @change="update" tw="1rem" :value.sync="tags"></vuk-node>
-    </vuk-pop>
+    <vuk-node :toggleTitle="false" @change="update" tw="1rem" @del="del" :value.sync="tags"></vuk-node>
+    <!-- <vuk-pop :content="cons">
+        </vuk-pop> -->
 </indoor>
 </template>
 
 <script>
-import Vuk from '../../common/vuk.js';
+
 export default {
-    mixins:[Vuk],
+
     data() {
         return {
             tags: [{
@@ -20,7 +19,7 @@ export default {
                 _id: "dsadsad",
                 title: 'js'
             }],
-            cons: "5456465456"
+          
         }
     },
     watch: {
@@ -36,11 +35,8 @@ export default {
     },
 
     created() {
-        console.log(this);
-        var tips = this.tips(this, {
-            content: '成功'
-        });
         this.getData();
+
     },
     methods: {
         async update(data) {
@@ -48,7 +44,6 @@ export default {
             let res = await this.$ajax.post(this.Api.teachTagsAddOrUpdate, {
                 token: this.$store.state.user.token,
                 data: this.tags[data.index]
-
             });
             if (res.err_code == 200) {
                 res['data'] ? this.tags[data.index] = res.data : "";
@@ -56,10 +51,10 @@ export default {
 
         },
         async getData() {
+
             let data = await this.$ajax.post(this.Api.teachTags, {
                 token: this.$store.state.user.token,
                 data: ''
-
             });
             if (data.err_code = 200) {
                 this.tags = data.data;
@@ -69,7 +64,19 @@ export default {
         async getSort() {
 
         },
-        async del(id) {
+        async del(index) {
+          let res = await this.$ajax.post(this.Api.teachTagsDel, {
+              token: this.$store.state.user.token,
+              data: this.tags[index]
+          });
+          if(res.err_code==200){
+              this.tags.splice(index,1);
+          }else{
+              this.$vuk.tips({
+                content:res.err_msg
+              })
+          }
+
 
         },
         async deldata(deldata) {

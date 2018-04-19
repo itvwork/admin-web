@@ -31,30 +31,29 @@ export default {
     data() {
         return {
             content: '',
-            visible:false
+            visible:false,
+            auto:true,
+            speed:3000
         }
     },
     created() {
-
+      console.log(this);
+        setTimeout(()=>{
+          this.visible=false;
+        },this.speed)
 
     },
     watch:{
 
     },
-    beforeDestroy(){
-      this.destroyElement();
-    },
+
     methods: {
 
         destroyElement() {
             this.$destroy(true);
-            this.$el.parentNode.removeChild(this.$el);
+            document.body.removeChild(this.$el);
             this.onClose(this.index);
-        },
-        remove(){
-          this.destroyElement();
         }
-
     }
 
 };

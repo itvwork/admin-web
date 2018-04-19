@@ -5,7 +5,7 @@ let instance={};
 let instances = [];
 let seed = 1;
 
-const Tips = function(self,options) {
+const Tips = function(options) {
 
   instance = new Ctrl({
     data: options
@@ -27,7 +27,7 @@ const Tips = function(self,options) {
     tips.closeAll();
   }
   instance.dom = instance.vm.$el;
-  this.$vukvm=instance.vm;
+
   return instance.vm;
 };
 Tips.close=function(id){

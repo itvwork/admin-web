@@ -6,14 +6,13 @@
     <code-box width=450 imgtype="cover" :value.sync="data.cover" toggleTitle=1 tw="1rem" title="封面:" :schema="schema" rule="cover"></code-box>
     <textarea-edit tw="1rem"  title="标签：" tips="请输入课程简介" :value.sync="data.info" ></textarea-edit>
     <textarea-edit tw="1rem"  title="知识点：" tips="请输入讲到知识点" :value.sync="data.knowledge" ></textarea-edit>
-    <vuk-node toggleTitle=1 title="标签：" tw="1rem"  :value.sync="data.tags" ></vuk-node>
-
-
     <div class="sub-bar" style="padding-left: 1.3rem">
       <button class="btns btn-sub" @click="send()">{{subword}}</button>
     </div>
   </form-edit>
-
+  <vuk-pop>
+      
+  </vuk-pop>
 </indoor>
 </template>
 <script>

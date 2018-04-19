@@ -41,6 +41,7 @@ export default {
      lessionList:url+'lession/list',
      teachTags:url+'teachtags/index',
      teachTagsAddOrUpdate:url+'teachtags/addorupdate',
+     teachTagsDel:url+'teachtags/del',
 
 
      adList:url+'ad/index',

@@ -17,11 +17,6 @@ const install = function(Vue, opts = {}) {
     circle:Circle,
     tips:Tips
   };
-  Vue.prototype.message=Message;
-  Vue.prototype.confirm=Confirm;
-  Vue.prototype.circle=Circle;
-  Vue.prototype.tips=Tips;
-
 };
 
 if (typeof window !== 'undefined' && window.Vue) {

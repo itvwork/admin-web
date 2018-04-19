@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     async getData(page) {
-      ui.loading.show("加载中…");
+
       let data = await this.$ajax.post(this.Api.teachList, {
         data: {
           page: this.$route.query.page ? this.$route.query.page : 1,
@@ -74,7 +74,7 @@ export default {
         },
         token: this.$store.state.token
       });
-      ui.loading.close();
+
       let list = data.data;
       this.list = list.result;
       this.rows = list.count;
