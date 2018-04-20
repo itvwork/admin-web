@@ -1,6 +1,7 @@
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
     "resolve": {
         "extensions": [
@@ -59,7 +60,7 @@ module.exports = {
 
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: ['css-loader', 'less-loader','postcss-loader']
+                    use: ['css-loader', 'less-loader', 'postcss-loader']
                 })
                 // use: ExtractTextPlugin.extract({
                 //     fallback: 'style-loader',
@@ -100,22 +101,22 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('index.css'),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // }),
-        // new webpack.DefinePlugin({
-        //     'process.env': {
-        //         NODE_ENV: '"production"'
-        //     }
-        // })
+        new ExtractTextPlugin({
+            filename: 'index.css',
+            allChunks: true
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        }),
 
-
-        new webpack.NoEmitOnErrorsPlugin(),
-
-
+        new webpack.NoEmitOnErrorsPlugin()
 
     ]
 
