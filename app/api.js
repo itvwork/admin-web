@@ -28,6 +28,7 @@ export default {
      newsSortDel:url+'newsSort/del',
 
      teachList:url+'teach/index',
+     teachMsg:url+'teach/msg',
      teachAdd:url+'teach/add',
      teachDetail:url+'teach/detail',
      teachEdit:url+'teach/updata',

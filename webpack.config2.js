@@ -16,6 +16,7 @@ module.exports = {
     entry: {
         index: './app/index.js',
         vendor: ['./app/other/lrz.bundle.js', './app/other/polyfill.js', './app/other/fun.js']
+
         //api:'./app/index1.js'
         // polyfill: './app/other/polyfill.js',
         // jquery:'./app/other/jquery.js'
@@ -25,6 +26,8 @@ module.exports = {
         filename: '[name].js',
         publicPath: '/style/admin/js/',
         path: path.resolve(__dirname, 'dist/style/admin/js/'),
+        chunkFilename: '[name].[hash:5].js'
+
     },
     module: {
         rules: [{
@@ -56,15 +59,23 @@ module.exports = {
 
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: ['css-loader', 'less-loader',{
-                      loader: "postcss-loader",
-                      options: { // 如果没有options这个选项将会报错 No PostCSS Config found
-                              plugins: (loader) => [
-                                  require('autoprefixer')(), //CSS浏览器兼容
-                              ]
-                          }
-                    }]
+                    use: ['css-loader', 'less-loader','postcss-loader']
                 })
+                // use: ExtractTextPlugin.extract({
+                //     fallback: 'style-loader',
+                //     use: ['css-loader', 'less-loader', {
+                //         loader: "postcss-loader",
+                //         options: { // 如果没有options这个选项将会报错 No PostCSS Config found
+                //             plugins: (loader) => [
+                //                 require('autoprefixer')({
+                //                     browsers: ['last 2 versions','Android >= 4.0','ie >= 9'],
+                //                     remove:false,
+                //                     add: false
+                //                 }), //CSS浏览器兼容
+                //             ]
+                //         }
+                //     }]
+                // })
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,

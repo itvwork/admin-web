@@ -1,7 +1,14 @@
 <template>
 <indoor>
-  <addbtn :btn="btn"></addbtn>
-  <table class="list-table">
+  <ul class="teach-item-content">
+      <li class="cover"><img :src="Api.imgurl+chapter.cover" /></li>
+      <li class="info">
+        <h2>{{chapter.title}}</h2>
+        <p></p>
+        {{chapter.add_time|datesec}}
+        </li>
+  </ul>
+  <!-- <table class="list-table">
     <thead>
       <tr>
         <th>序号</th>
@@ -24,12 +31,25 @@
         </td>
       </tr>
     </tbody>
-  </table>
-
-  <page ref="page" sub=10 v-if="rows>10" :rows.sync="rows"></page>
+  </table> -->
+  <!-- <page ref="page" sub=10 v-if="rows>10" :rows.sync="rows"></page> -->
 </indoor>
 </template>
 
+<style lang="less">
+@import "../../commpents/const.less";
+.teach-item-content{
+  display: flex;
+   border-radius: 5px;
+  .cover{
+    width: 140px;
+    height: 140px;
+    img{ width: 100%; height: 100%;}
+
+  }
+  .info{flex: 1;}
+}
+</style>
 <script>
 import addbtn from '../../commpents/meun/addbtn'
 export default {
@@ -52,24 +72,26 @@ export default {
       tips: '',
       rows: 0,
       loading: '',
-      sort: ''
+      sort: '',
+      chapter:{}
     }
   },
   watch: {
-    '$route': function(to, from) {
-      this.getData();
-    }
+
   },
   created() {
     this.getData();
   },
   methods: {
     async getData() {
-        let data = await this.$ajax.post(this.Api.lessionList,{data:{pid:this.$route.params.id}, token: this.$store.state.token});
-        this.list=data.data;
+        let res = await this.$ajax.post(this.Api.teachMsg,{data:{_id:this.$route.params.id}, token: this.$store.state.token});
+        if(res.err_code==200){
+          this.chapter=res.data;
+        }
+
     },
     async getSort() {
-
+        
 
     },
     sortName(id) {

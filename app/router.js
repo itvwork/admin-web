@@ -322,37 +322,35 @@ export default[
                 }
               }, {
                 name: 'chapter',
-                path: 'chapter',
+                path: 'chapter/:id',
                 meta: {
                   title: '查看章节'
                 },
-                redirect: {
-                  name: 'chapterlist'
-                },
+
                 component: function(resolve) {
-                  require(['./commpents/router/index-box.vue'], resolve);
-                },
-                children: [
-                  {
-                    name: 'chapterlist',
-                    path: 'index/:id',
-                    meta: {
-                      title: '查看章节'
-                    },
-                    component: function(resolve) {
-                      require(['./view/teach/itemlist.vue'], resolve);
-                    }
-                  }, {
-                    name: 'addchapter',
-                    path: 'add/:id',
-                    meta: {
-                      title: '添加章节'
-                    },
-                    component: function(resolve) {
-                      require(['./view/teach/itemadd.vue'], resolve);
-                    }
-                  }
-                ]
+                  require(['./view/teach/itemlist.vue'], resolve);
+                }
+                // children: [
+                //   {
+                //     name: 'chapterlist',
+                //     path: 'index/:id',
+                //     meta: {
+                //       title: '查看章节'
+                //     },
+                //     component: function(resolve) {
+                //       require(['./view/teach/itemlist.vue'], resolve);
+                //     }
+                //   }, {
+                //     name: 'addchapter',
+                //     path: 'add/:id',
+                //     meta: {
+                //       title: '添加章节'
+                //     },
+                //     component: function(resolve) {
+                //       require(['./view/teach/itemadd.vue'], resolve);
+                //     }
+                //   }
+                // ]
               }
             ]
           }, {

@@ -10,11 +10,30 @@
       <button class="btns btn-sub" @click="send()">{{subword}}</button>
     </div>
   </form-edit>
-  <vuk-pop>
-      
+  <vuk-pop :bg="true">
+      <div  class="tags-wrap" >
+          <vuk-list-checkbox :tags="tagsed" :arr="tags"></vuk-list-checkbox>
+      </div>
   </vuk-pop>
 </indoor>
 </template>
+<style lang="less">
+@import '../../commpents/const.less';
+.tags-wrap{
+  position: absolute;
+  z-index: 101;
+  top: 50%;
+  left: 50%;
+  background-color: @white;
+  min-height:300px;
+  max-width: 600px;
+  max-height: 600px;
+  width: 100%;
+  height: 100%;
+  .tranxy;
+  .border-radius(0,4px);
+}
+</style>
 <script>
 import addbtn from '../../commpents/meun/addbtn';
 
@@ -54,12 +73,15 @@ export default {
       forbid: true,
       subword: "提交",
       schema: new Schema(schema, this),
-      tips: ''
+      tips: '',
+      tags:[],
+      tagsed:[]
     }
   },
   created() {
     let self = this;
     this.getSort();
+    this.getTags();
 
 
   },
@@ -78,6 +100,15 @@ export default {
       });
       this.sort = data.data;
 
+    },
+    async getTags(){
+      let data = await this.$ajax.post(this.Api.teachTags, {
+          token: this.$store.state.user.token,
+          data: ''
+      });
+      if (data.err_code = 200) {
+          this.tags = data.data;
+      }
     },
     async send() {
       // if (this.subword == "数据提交中…") {

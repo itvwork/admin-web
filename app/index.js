@@ -37,10 +37,11 @@ import api from './api';
 import loading from './commpents/ui/loading.vue';
 import vueTips from './commpents/ui/vue-tips.vue';
 import VueMarkdown from './commpents/editor/vue-markdown';
+import VukListCheckbox from './commpents/input/input-checkbox';
 import stateManage from './modules/index';
 import VukNode from './commpents/input/vuk-node';
 import VukPop from  './commpents/pop/vukpop';
-
+import filter from './filter/filter';
 
 
 export let Components = {
@@ -67,13 +68,19 @@ export let Components = {
     VueMarkdown,
     VueSelect,
     VukNode,
-    VukPop
+    VukPop,
+    VukListCheckbox
 
 };
 
 for (let i in Components) {
     let name = i.replace('_', '-');
     Vue.component(name, Components[i]);
+};
+
+for (let i in filter) {
+    Vue.filter(i,filter[i]);
+
 };
 
 Vue.use(VueRouter);

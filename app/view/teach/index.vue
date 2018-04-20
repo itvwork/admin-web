@@ -19,7 +19,7 @@
         <td>{{$tool.formatDate(item.add_time)}}</td>
         <td>
           <router-link :to="{ name:'teachEdit',params:{id:item._id} }">修改</router-link>
-          <router-link :to="{ name:'chapterlist', params:{id:item._id} }">查看章节</router-link>
+          <router-link :to="{ name:'chapter', params:{id:item._id} }">查看章节</router-link>
           <button @click="del(item._id)">删除</button>
         </td>
       </tr>
@@ -66,7 +66,6 @@ export default {
   },
   methods: {
     async getData(page) {
-
       let data = await this.$ajax.post(this.Api.teachList, {
         data: {
           page: this.$route.query.page ? this.$route.query.page : 1,
