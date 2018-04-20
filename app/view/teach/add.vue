@@ -12,7 +12,7 @@
   </form-edit>
   <vuk-pop :bg="true">
       <div  class="tags-wrap" >
-          <vuk-list-checkbox :tags="tagsed" :arr="tags"></vuk-list-checkbox>
+          <vuk-list-checkbox :tags.sync="tagsed" :arr.sync="tags"></vuk-list-checkbox>
       </div>
   </vuk-pop>
 </indoor>
