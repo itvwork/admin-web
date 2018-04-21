@@ -60,17 +60,20 @@ export default {
     },
     watch: {
         checked(news, olds) {
-            this.$emit('update:tags', news)
+          if(this.state==1)return;
+            this.$emit('update:tags', news);
         },
         tags(news,olds){
           if(this.tags.length==this.arr.length){
-            this.allCheck="全不选"
+            this.allCheck="全不选";
+
           }else{
-            this.allCheck="全选"
+            this.allCheck="全选";
+
           }
+          this.state=0;
         },
         allCheck(news,olds){
-
             if(news=="全不选"){
                 let arr=[];
                 for(let i=0,l=this.arr.length;i<l;i++){
@@ -78,8 +81,14 @@ export default {
                 }
                 this.checked=arr;
             }else{
+              if(this.state==0){
+                this.state==1;
+                this.checked=this.tags;
+                thhis.state=0;
+              }else{
+                this.checked=[];
+              }
 
-              this.checked=[];
             }
         }
 
