@@ -1,9 +1,8 @@
 <template>
 <div class="vuk-list-checkbox">
-    <label class="vuk-list-checkbox-lable">
-      <input class="picon" type="checkbox"  v-model="allCheck" true-value="全不选" false-value="全选"/>
-      {{allCheck}}
-  </label>
+    <button class="picon" :class="{'active':arr.length==checked.length }" @click="propAll()">
+          {{arr.length==checked.length?"全不选":"全选"}}
+    </button>
     <label class="vuk-list-checkbox-lable" v-for="(item,index) in arr">
         <input class="picon" type="checkbox" :value="item._id" v-model="checked"/>
         {{item.title}}
@@ -11,16 +10,31 @@
 </div>
 </template>
 <style lang="less">
+
+@import '../const.less';
 .vuk-list-checkbox {
     display: flex;
-}
-@import '../const.less';
-.vuk-list-checkbox-lable {
-    display: block;
+    button{
+      padding: 15px;
+      padding-left: 0px;
 
+      font-size: 0.12rem;
+      &::before {
+          content: '\e720';
+          font-size: 0.16rem;
+      }
+
+      &.active::before{
+        content: '\e721';
+        font-size: 0.16rem;
+          color: @blue;
+      }
+    }
+}
+.vuk-list-checkbox-lable {
+    padding: 15px;
     input {
         opacity: 1;
-
         &::after {
             content: '\e720';
             font-size: 0.16rem;
@@ -55,45 +69,30 @@ export default {
         return {
             checked: this.tags,
             allCheck:'全选',
-            state: 1
+          
         }
     },
     watch: {
         checked(news, olds) {
-          if(this.state==1)return;
+
             this.$emit('update:tags', news);
-        },
-        tags(news,olds){
-          if(this.tags.length==this.arr.length){
-            this.allCheck="全不选";
-
-          }else{
-            this.allCheck="全选";
-
-          }
-          this.state=0;
-        },
-        allCheck(news,olds){
-            if(news=="全不选"){
-                let arr=[];
-                for(let i=0,l=this.arr.length;i<l;i++){
-                  arr.push(this.arr[i]['_id']);
-                }
-                this.checked=arr;
-            }else{
-              if(this.state==0){
-                this.state==1;
-                this.checked=this.tags;
-                thhis.state=0;
-              }else{
-                this.checked=[];
-              }
-
-            }
         }
-
     },
     methods: {
+      propAll(){
+          if(this.arr.length==this.checked.length){
+            this.checked=[];
+
+          }else{
+            let arr=[];
+            for(let i=0,l=this.arr.length;i<l;i++){
+              arr.push(this.arr[i]['_id']);
+            }
+            this.checked=arr;
+          }
+      }
+    },
+    filters: {
 
     }
 

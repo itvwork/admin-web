@@ -71,7 +71,7 @@ export default {
           page: this.$route.query.page ? this.$route.query.page : 1,
           num: 10
         },
-        token: this.$store.state.token
+        token: this.$store.state.user.token
       });
 
       let list = data.data;
@@ -81,7 +81,7 @@ export default {
     async getSort() {
       let data = await this.$ajax.post(this.Api.teachSort, {
         data: '',
-        token: this.$store.state.token
+        token: this.$store.state.user.token
       });
       this.sort = data.data;
 
@@ -110,7 +110,7 @@ export default {
       ui.loading.show("删除中…");
       let data = await this.$ajax.post(self.Api.teachDel, {
         data: {_id:deldata},
-        token: self.$store.state.token
+        token: self.$store.state.user.token
       });
       if (data.err_code == 200) {
 

@@ -6,15 +6,19 @@
     <code-box width=450 imgtype="cover" :value.sync="data.cover" toggleTitle=1 tw="1rem" title="封面:" :schema="schema" rule="cover"></code-box>
     <textarea-edit tw="1rem"  title="标签：" tips="请输入课程简介" :value.sync="data.info" ></textarea-edit>
     <textarea-edit tw="1rem"  title="知识点：" tips="请输入讲到知识点" :value.sync="data.knowledge" ></textarea-edit>
+    <label class="vuk-list-checkbox-lable">
+        <div class="row-title" style="width: 1rem;">标签：</div>
+        <div class="text-outdoor"><vuk-list-checkbox :tags.sync="data.tags" :arr.sync="tags"></vuk-list-checkbox></div>
+    </label>
     <div class="sub-bar" style="padding-left: 1.3rem">
       <button class="btns btn-sub" @click="send()">{{subword}}</button>
     </div>
   </form-edit>
-  <vuk-pop :bg="true">
+  <!-- <vuk-pop :bg="true">
       <div  class="tags-wrap" >
           <vuk-list-checkbox :tags.sync="tagsed" :arr.sync="tags"></vuk-list-checkbox>
       </div>
-  </vuk-pop>
+  </vuk-pop> -->
 </indoor>
 </template>
 <style lang="less">
@@ -65,7 +69,7 @@ export default {
         sort: '',
         cover: '',
         info: 'ui设计课程ui设计课程ui设计课程ui设计课程',
-        tags:['none.js','javascript','vue','react'],
+        tags:[],
         knowledge:'vue,angular,js,app'
       },
       sort: [],
@@ -75,7 +79,7 @@ export default {
       schema: new Schema(schema, this),
       tips: '',
       tags:[],
-      tagsed:[]
+
     }
   },
   created() {
@@ -111,14 +115,15 @@ export default {
       }
     },
     async send() {
-      // if (this.subword == "数据提交中…") {
-      //     return false;
-      // }
+      if (this.subword == "数据提交中…") {
+          return false;
+      }
       if (!this.schema.allvalt()) {
           return false;
       }
-      alert('wwww');
-      // this.subword = "数据提交中…"
+      this.subword = "提交中…";
+      let data = await this.$ajax.post(this.Api.teachAdd, {data: this.data, token: this.$store.state.user.token});
+
       //let data = await this.$ajax.post(this.Api.teachAdd, {data: this.data, token: this.$store.state.token});
     //   if (data.err_code == 200) {
     //       this.$store.commit('uishow', {

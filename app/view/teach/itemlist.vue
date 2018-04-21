@@ -84,14 +84,14 @@ export default {
   },
   methods: {
     async getData() {
-        let res = await this.$ajax.post(this.Api.teachMsg,{data:{_id:this.$route.params.id}, token: this.$store.state.token});
+        let res = await this.$ajax.post(this.Api.teachMsg,{data:{_id:this.$route.params.id}, token: this.$store.state.user.token});
         if(res.err_code==200){
           this.chapter=res.data;
         }
 
     },
     async getSort() {
-        
+
 
     },
     sortName(id) {

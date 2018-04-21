@@ -65,6 +65,7 @@ export default function(Vue, opt) {
                 var jsencrypt = new JSEncrypt();
                 jsencrypt.setPublicKey(rsa);
                 var rsas = jsencrypt.encrypt(data.rsa, 'base64');
+
                 data['rsa']=rsas;
             } catch (e) {
                 console.log(e);
