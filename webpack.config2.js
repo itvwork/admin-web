@@ -16,7 +16,7 @@ module.exports = {
     },
     entry: {
         index: './app/index.js',
-        vendor: ['./app/other/lrz.bundle.js', './app/other/polyfill.js', './app/other/fun.js']
+        vendor: ['./app/other/crypto.aes.js','./app/other/lrz.bundle.js', './app/other/polyfill.js', './app/other/fun.js']
 
         //api:'./app/index1.js'
         // polyfill: './app/other/polyfill.js',
@@ -27,7 +27,8 @@ module.exports = {
         filename: '[name].js',
         publicPath: '/style/admin/js/',
         path: path.resolve(__dirname, 'dist/style/admin/js/'),
-        chunkFilename: '[name].[hash:5].js'
+        chunkFilename: '[name].js',
+        //chunkFilename: '[name].[hash:5].js'
 
     },
     module: {

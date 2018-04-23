@@ -44,6 +44,7 @@ import VukPop from  './commpents/pop/vukpop';
 import filter from './filter/filter';
 
 
+
 export let Components = {
     VueSelect,
     form_edit,
@@ -94,6 +95,7 @@ window.Vue = Vue || {};
 window.Vuex = Vuex || {};
 window.Schema = Schema || {};
 window.Api = api;
+
 
 Vue.config.devtools = true;
 

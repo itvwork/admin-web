@@ -77,10 +77,12 @@ export default {
       let list = data.data;
       this.list = list.result;
       this.rows = list.count;
+
+
     },
     async getSort() {
       let data = await this.$ajax.post(this.Api.teachSort, {
-        data: '',
+
         token: this.$store.state.user.token
       });
       this.sort = data.data;

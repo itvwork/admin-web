@@ -56,20 +56,24 @@ export default function(Vue, opt) {
             return argFormat(obj);
         },
         post: function(url, ps) {
+          // var encrypted = CryptoJS.TripleDES.encrypt(ency, key);
+          // var decrypted = CryptoJS.TripleDES.decrypt(encrypted.toString(), key);
+          // var ls = JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+            var deskey=this.randomArr(200);
             var self = this;
-            var data={rsa:ps};
-            try {
-                data.rsa['timetemp']=this.time();
-                data.rsa = JSON.stringify(data.rsa);
-                var rsa = '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAydjYzX9HlsMBzN8ij73xY40tj7QPzGfsrSrT81Lruv90qn+o3J/ppK+prOuFVMMGV0vna8tu+BnBw8GsKbHLSU9dcSMyGcRL/IHo0aRZ7WCDKvTZeKSJtS3Qn8ltUflDe1DW3d9vlvHEV8trkQiY4YpZ/ZgTk0v7tREOqgbAiu0W4wEKLAavqUPtyUQFj0bAa46wrH86boZMr1leGD8cueoK1M9Idom6i213UpOpbMKOfpLz0QWT5y52qseTJ/IpivTvq+lDcNxNx1kNLrMWQsTKgbHC9Y9SQMF9ArcY661So/bAi5n+3h62+FpY+1ce4+qSHJo67S+VA7yGh33S2wIDAQAB-----END PUBLIC KEY-----'
-                var jsencrypt = new JSEncrypt();
-                jsencrypt.setPublicKey(rsa);
-                var rsas = jsencrypt.encrypt(data.rsa, 'base64');
+            var data = {
+                data:CryptoJS.AES.encrypt(JSON.stringify(ps.data), deskey).toString(),
+                key:this.rsaEncrypt(deskey),
+            };
 
-                data['rsa']=rsas;
-            } catch (e) {
-                console.log(e);
+            if(ps.token){
+              data['token']={
+                key:ps.token,
+                timetemp:this.time()
+              }
+              data['token']=this.rsaEncrypt(JSON.stringify(data['data']));
             }
+
 
 
             return new Promise(function(resolve, reject) {
@@ -82,7 +86,12 @@ export default function(Vue, opt) {
                 xmlhttp.onreadystatechange = function() {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                         try {
-                            resolve(JSON.parse(xmlhttp.responseText));
+                            let res =JSON.parse(xmlhttp.responseText);
+                            if(res.data){
+                              var decrypted = CryptoJS.AES.decrypt(res.data, deskey);
+                              res.data = JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+                            }
+                            resolve(res);
                         } catch (e) {
                             resolve(xmlhttp.responseText);
                         }
@@ -277,9 +286,21 @@ export default function(Vue, opt) {
             var rsa = '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAydjYzX9HlsMBzN8ij73xY40tj7QPzGfsrSrT81Lruv90qn+o3J/ppK+prOuFVMMGV0vna8tu+BnBw8GsKbHLSU9dcSMyGcRL/IHo0aRZ7WCDKvTZeKSJtS3Qn8ltUflDe1DW3d9vlvHEV8trkQiY4YpZ/ZgTk0v7tREOqgbAiu0W4wEKLAavqUPtyUQFj0bAa46wrH86boZMr1leGD8cueoK1M9Idom6i213UpOpbMKOfpLz0QWT5y52qseTJ/IpivTvq+lDcNxNx1kNLrMWQsTKgbHC9Y9SQMF9ArcY661So/bAi5n+3h62+FpY+1ce4+qSHJo67S+VA7yGh33S2wIDAQAB-----END PUBLIC KEY-----'
 
             return rsa;
+        },
+        randomArr: function(num) {
+            var str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMMOPQRSTUVWXYZ!@#$%^&*()_+~￥。';
+            var key = "";
+            for (var i = 0; i < num; i++) {
+                key += str[parseInt(Math.random() * (str.length - 1))];
+            }
+            return key;
+        },
+        rsaEncrypt(str){
+          var rsa = '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAydjYzX9HlsMBzN8ij73xY40tj7QPzGfsrSrT81Lruv90qn+o3J/ppK+prOuFVMMGV0vna8tu+BnBw8GsKbHLSU9dcSMyGcRL/IHo0aRZ7WCDKvTZeKSJtS3Qn8ltUflDe1DW3d9vlvHEV8trkQiY4YpZ/ZgTk0v7tREOqgbAiu0W4wEKLAavqUPtyUQFj0bAa46wrH86boZMr1leGD8cueoK1M9Idom6i213UpOpbMKOfpLz0QWT5y52qseTJ/IpivTvq+lDcNxNx1kNLrMWQsTKgbHC9Y9SQMF9ArcY661So/bAi5n+3h62+FpY+1ce4+qSHJo67S+VA7yGh33S2wIDAQAB-----END PUBLIC KEY-----';
+          var jsencrypt = new JSEncrypt();
+          jsencrypt.setPublicKey(rsa);
+          return jsencrypt.encrypt(str, 'base64');
         }
-
-
 
 
     }
