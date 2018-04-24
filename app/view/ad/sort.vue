@@ -92,7 +92,7 @@ export default {
             this.list = data.data;
         },
         async del(id, cover) {
-          alert(id);
+
             // this.$store.commit('uishow', {
             //     wrap: 'warn',
             //     title: '警告',

@@ -60,7 +60,7 @@ export default {
         async getData() {
             let data = await this.$ajax.post(this.Api.teachSort, {
                 data: '',
-                token: this.$store.state.token
+                token: this.$store.state.user.token
             });
             this.list = data.data;
         },

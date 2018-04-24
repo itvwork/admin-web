@@ -69,7 +69,7 @@
       async getData(page) {
 
         ui.loading.show("加载中…");
-        let data= await this.$ajax.rsapost(this.Api.adList, {
+        let data= await this.$ajax.post(this.Api.adList, {
           data: {
             page: this.$route.query.page ? this.$route.query.page : 1,
             num: 10
@@ -80,15 +80,7 @@
         let list = data.data;
         this.list = list.result;
         this.rows = list.count;
-         await this.$ajax.post('http://localhost:8099/plane/city/index', {
-             data: {
-                 flightType: 1,
-                 departCity: 'CAN',
-                 arriveCity: 'SHA',
-                 departDate: '2018-05-23',
-                 classType: 0
-             }
-         });
+
       },
       sortName(id) {
         for (let i = 0, len = this.sort.length; i < len; i++) {
