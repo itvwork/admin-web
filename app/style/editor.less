@@ -788,6 +788,33 @@ editor-oper-bar {
     }
 }
 
+.vue-editor-table{
+  position: absolute;
+  top: 0.4rem;
+  font-size: .14rem;
+  border: @gray solid 1px;
+  padding: 15px;
+  width: 4rem;
+  background-color: @white;
+  ul{
+    li{
+      i{
+        margin: .02rem;
+        border: lighten(@gray,50%) solid 1px;
+        display: inline-block;
+        width: .24rem;
+        height: .24rem;
+        cursor: pointer;
+        background-color: lighten(@gray,60%);
+        &.active{
+          border: lighten(blue,40%) solid 1px;
+          background-color: lighten(blue,40%) ;
+        }
+      }
+    }
+  }
+}
+
 //---------------------------------markdwon
 .markdown-editor {
     width: 500px;

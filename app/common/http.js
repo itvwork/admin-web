@@ -87,13 +87,15 @@ export default function(Vue, opt) {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                         try {
                             let res =JSON.parse(xmlhttp.responseText);
+
                             if(res.data){
                               var decrypted = CryptoJS.AES.decrypt(res.data, deskey);
                               res.data = JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
                             }
+                            
                             resolve(res);
                         } catch (e) {
-                            resolve(xmlhttp.responseText);
+                            resolve( JSON.parse(xmlhttp.responseText));
                         }
                     }
                 };
